@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>WMS GetCapabilities Viewer</title>
-
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="http://openlayers.org/en/v3.10.1/css/ol.css" type="text/css">
@@ -27,10 +27,11 @@
 
 </div>
 <script>
-var parser = new ol.format.WMSCapabilities();
+var olParser = new ol.format.WMSCapabilities();
 
-$.ajax('data/ogcsample.xml').then(function(response) {
-  var result = parser.read(response);
+$.ajax('testdata/capabilities_1_1_1.xml').then(function(response) {
+  var result = olParser.read(response);
+  console.log(result)
   $('#log').html(window.JSON.stringify(result, null, 2));
 });
 

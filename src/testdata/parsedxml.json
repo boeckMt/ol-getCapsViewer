@@ -1,0 +1,473 @@
+{
+  "version": "1.1.1",
+  "Service": {
+    "Name": "OGC:WMS",
+    "Title": "Acme Corp. Map Server",
+    "Abstract": "WMT Map Server maintained by Acme Corporation.  Contact: webmaster@wmt.acme.com.  High-quality maps showing roadrunner nests and possible ambush locations.",
+    "KeywordList": [
+      "bird",
+      "roadrunner",
+      "ambush"
+    ],
+    "OnlineResource": "http://hostname/",
+    "ContactInformation": {
+      "ContactPersonPrimary": {
+        "ContactPerson": "Jeff deLaBeaujardiere",
+        "ContactOrganization": "NASA"
+      },
+      "ContactPosition": "Computer Scientist",
+      "ContactAddress": {
+        "AddressType": "postal",
+        "Address": "NASA Goddard Space Flight Center, Code 933",
+        "City": "Greenbelt",
+        "StateOrProvince": "MD",
+        "PostCode": "20771",
+        "Country": "USA"
+      },
+      "ContactVoiceTelephone": "+1 301 286-1569",
+      "ContactFacsimileTelephone": "+1 301 286-1777",
+      "ContactElectronicMailAddress": "delabeau@iniki.gsfc.nasa.gov"
+    },
+    "Fees": "none",
+    "AccessConstraints": "none"
+  },
+  "Capability": {
+    "Request": {
+      "GetCapabilities": {
+        "Format": [
+          "application/vnd.ogc.wms_xml"
+        ],
+        "DCPType": [
+          {
+            "HTTP": {
+              "Get": {
+                "OnlineResource": "http://hostname:port/path"
+              },
+              "Post": {
+                "OnlineResource": "http://hostname:port/path"
+              }
+            }
+          }
+        ]
+      },
+      "GetMap": {
+        "Format": [
+          "image/gif",
+          "image/png",
+          "image/jpeg"
+        ],
+        "DCPType": [
+          {
+            "HTTP": {
+              "Get": {
+                "OnlineResource": "http://hostname:port/path"
+              }
+            }
+          }
+        ]
+      },
+      "GetFeatureInfo": {
+        "Format": [
+          "application/vnd.ogc.gml",
+          "text/plain",
+          "text/html"
+        ],
+        "DCPType": [
+          {
+            "HTTP": {
+              "Get": {
+                "OnlineResource": "http://hostname:port/path"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Exception": [
+      "application/vnd.ogc.se_xml",
+      "application/vnd.ogc.se_inimage",
+      "application/vnd.ogc.se_blank"
+    ],
+    "Layer": {
+      "Title": "Acme Corp. Map Server",
+      "AuthorityURL": [
+        {
+          "OnlineResource": "http://gcmd.gsfc.nasa.gov/difguide/whatisadif.html",
+          "name": "DIF_ID"
+        }
+      ],
+      "Layer": [
+        {
+          "Name": "ROADS_RIVERS",
+          "Title": "Roads and Rivers",
+          "BoundingBox": [
+            {
+              "crs": null,
+              "extent": [
+                -71.63,
+                41.75,
+                -70.78,
+                42.9
+              ],
+              "res": [
+                0.01,
+                0.01
+              ]
+            },
+            {
+              "crs": null,
+              "extent": [
+                189000,
+                834000,
+                285000,
+                962000
+              ],
+              "res": [
+                1,
+                1
+              ]
+            }
+          ],
+          "Attribution": {
+            "Title": "State College University",
+            "OnlineResource": "http://www.university.edu/",
+            "LogoURL": {
+              "Format": "image/gif",
+              "OnlineResource": "http://www.university.edu/icons/logo.gif",
+              "size": [
+                100,
+                100
+              ]
+            }
+          },
+          "Identifier": [
+            "123456"
+          ],
+          "FeatureListURL": [
+            {
+              "Format": "application/vnd.ogc.se_xml\"",
+              "OnlineResource": "http://www.university.edu/data/roads_rivers.gml"
+            }
+          ],
+          "Style": [
+            {
+              "Name": "USGS",
+              "Title": "USGS Topo Map Style",
+              "Abstract": "Features are shown in a style like that used in USGS topographic maps.",
+              "LegendURL": [
+                {
+                  "Format": "image/gif",
+                  "OnlineResource": "http://www.university.edu/legends/usgs.gif",
+                  "size": [
+                    72,
+                    72
+                  ]
+                }
+              ],
+              "StyleSheetURL": {
+                "Format": "text/xsl",
+                "OnlineResource": "http://www.university.edu/stylesheets/usgs.xsl"
+              }
+            }
+          ],
+          "Layer": [
+            {
+              "Name": "ROADS_1M",
+              "Title": "Roads at 1:1M scale",
+              "Abstract": "Roads at a scale of 1 to 1 million.",
+              "KeywordList": [
+                "road",
+                "transportation",
+                "atlas"
+              ],
+              "Identifier": [
+                "123456"
+              ],
+              "MetadataURL": [
+                {
+                  "Format": "text/plain",
+                  "OnlineResource": "http://www.university.edu/metadata/roads.txt",
+                  "type": "FGDC"
+                },
+                {
+                  "Format": "text/xml",
+                  "OnlineResource": "http://www.university.edu/metadata/roads.xml",
+                  "type": "FGDC"
+                }
+              ],
+              "Style": [
+                {
+                  "Name": "ATLAS",
+                  "Title": "Road atlas style",
+                  "Abstract": "Roads are shown in a style like that used in a commercial road atlas.",
+                  "LegendURL": [
+                    {
+                      "Format": "image/gif",
+                      "OnlineResource": "http://www.university.edu/legends/atlas.gif",
+                      "size": [
+                        72,
+                        72
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Name": "USGS",
+                  "Title": "USGS Topo Map Style",
+                  "Abstract": "Features are shown in a style like that used in USGS topographic maps.",
+                  "LegendURL": [
+                    {
+                      "Format": "image/gif",
+                      "OnlineResource": "http://www.university.edu/legends/usgs.gif",
+                      "size": [
+                        72,
+                        72
+                      ]
+                    }
+                  ],
+                  "StyleSheetURL": {
+                    "Format": "text/xsl",
+                    "OnlineResource": "http://www.university.edu/stylesheets/usgs.xsl"
+                  }
+                }
+              ],
+              "queryable": true,
+              "opaque": false,
+              "noSubsets": false,
+              "BoundingBox": [
+                {
+                  "crs": null,
+                  "extent": [
+                    -71.63,
+                    41.75,
+                    -70.78,
+                    42.9
+                  ],
+                  "res": [
+                    0.01,
+                    0.01
+                  ]
+                },
+                {
+                  "crs": null,
+                  "extent": [
+                    189000,
+                    834000,
+                    285000,
+                    962000
+                  ],
+                  "res": [
+                    1,
+                    1
+                  ]
+                }
+              ],
+              "Attribution": {
+                "Title": "State College University",
+                "OnlineResource": "http://www.university.edu/",
+                "LogoURL": {
+                  "Format": "image/gif",
+                  "OnlineResource": "http://www.university.edu/icons/logo.gif",
+                  "size": [
+                    100,
+                    100
+                  ]
+                }
+              }
+            },
+            {
+              "Name": "RIVERS_1M",
+              "Title": "Rivers at 1:1M scale",
+              "Abstract": "Rivers at a scale of 1 to 1 million.",
+              "KeywordList": [
+                "river",
+                "canal",
+                "waterway"
+              ],
+              "queryable": true,
+              "opaque": false,
+              "noSubsets": false,
+              "Style": [
+                {
+                  "Name": "USGS",
+                  "Title": "USGS Topo Map Style",
+                  "Abstract": "Features are shown in a style like that used in USGS topographic maps.",
+                  "LegendURL": [
+                    {
+                      "Format": "image/gif",
+                      "OnlineResource": "http://www.university.edu/legends/usgs.gif",
+                      "size": [
+                        72,
+                        72
+                      ]
+                    }
+                  ],
+                  "StyleSheetURL": {
+                    "Format": "text/xsl",
+                    "OnlineResource": "http://www.university.edu/stylesheets/usgs.xsl"
+                  }
+                }
+              ],
+              "BoundingBox": [
+                {
+                  "crs": null,
+                  "extent": [
+                    -71.63,
+                    41.75,
+                    -70.78,
+                    42.9
+                  ],
+                  "res": [
+                    0.01,
+                    0.01
+                  ]
+                },
+                {
+                  "crs": null,
+                  "extent": [
+                    189000,
+                    834000,
+                    285000,
+                    962000
+                  ],
+                  "res": [
+                    1,
+                    1
+                  ]
+                }
+              ],
+              "Attribution": {
+                "Title": "State College University",
+                "OnlineResource": "http://www.university.edu/",
+                "LogoURL": {
+                  "Format": "image/gif",
+                  "OnlineResource": "http://www.university.edu/icons/logo.gif",
+                  "size": [
+                    100,
+                    100
+                  ]
+                }
+              }
+            }
+          ],
+          "queryable": false,
+          "opaque": false,
+          "noSubsets": false,
+          "AuthorityURL": [
+            {
+              "OnlineResource": "http://gcmd.gsfc.nasa.gov/difguide/whatisadif.html",
+              "name": "DIF_ID"
+            }
+          ]
+        },
+        {
+          "Title": "Weather Forecast Data",
+          "Dimension": [
+            {
+              "name": "time",
+              "units": "ISO8601",
+              "unitSymbol": null,
+              "default": null,
+              "values": ""
+            }
+          ],
+          "Layer": [
+            {
+              "Name": "Clouds",
+              "Title": "Forecast cloud cover",
+              "queryable": false,
+              "opaque": false,
+              "noSubsets": false,
+              "Dimension": [
+                {
+                  "name": "time",
+                  "units": "ISO8601",
+                  "unitSymbol": null,
+                  "default": null,
+                  "values": ""
+                }
+              ]
+            },
+            {
+              "Name": "Temperature",
+              "Title": "Forecast temperature",
+              "queryable": false,
+              "opaque": false,
+              "noSubsets": false,
+              "Dimension": [
+                {
+                  "name": "time",
+                  "units": "ISO8601",
+                  "unitSymbol": null,
+                  "default": null,
+                  "values": ""
+                }
+              ]
+            },
+            {
+              "Name": "Pressure",
+              "Title": "Forecast barometric pressure",
+              "Dimension": [
+                {
+                  "name": "time",
+                  "units": "ISO8601",
+                  "unitSymbol": null,
+                  "default": null,
+                  "values": ""
+                },
+                {
+                  "name": "elevation",
+                  "units": "EPSG:5030",
+                  "unitSymbol": null,
+                  "default": null,
+                  "values": ""
+                }
+              ],
+              "queryable": false,
+              "opaque": false,
+              "noSubsets": false
+            }
+          ],
+          "queryable": true,
+          "opaque": false,
+          "noSubsets": false,
+          "AuthorityURL": [
+            {
+              "OnlineResource": "http://gcmd.gsfc.nasa.gov/difguide/whatisadif.html",
+              "name": "DIF_ID"
+            }
+          ]
+        },
+        {
+          "Name": "ozone_image",
+          "Title": "Global ozone distribution (1992)",
+          "queryable": false,
+          "opaque": true,
+          "noSubsets": true,
+          "fixedWidth": 512,
+          "fixedHeight": 256,
+          "AuthorityURL": [
+            {
+              "OnlineResource": "http://gcmd.gsfc.nasa.gov/difguide/whatisadif.html",
+              "name": "DIF_ID"
+            }
+          ]
+        },
+        {
+          "Name": "population",
+          "Title": "World population, annual",
+          "queryable": false,
+          "cascaded": 1,
+          "opaque": false,
+          "noSubsets": false,
+          "AuthorityURL": [
+            {
+              "OnlineResource": "http://gcmd.gsfc.nasa.gov/difguide/whatisadif.html",
+              "name": "DIF_ID"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

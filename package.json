@@ -1,40 +1,40 @@
 {
-    "name": "ol-getCapsVieweropenlayers",
-    "version": "0.0.1",
-    "author": "Mathias Boeck",
-    "description": "OGC (WMS) GetCapabilities Viewer with openlayers 3",
-    "keywords": [
-        "map",
-        "mapping",
-        "ol3",
-        "OGC",
-        "WMS",
-        "GetCapabilities"
-    ],
-    "scripts": {
-        "install": "node tasks/install.js",
-        "postinstall": "closure-util update",
-        "start": "node tasks/serve.js",
-        "test": "node tasks/test.js",
-        "debug-server": "node tasks/serve-lib.js"
-    },
-    "main": "",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/boeckMt/ol-getCapsViewer.git"
-    },
-    "license": "BSD-2-Clause",
-    "bugs": {
-        "url": "https://github.com/boeckMt/ol-getCapsViewer/issues"
-    },
-    "dependencies": {
-        
-    },
-    "devDependencies": {
-
-    },
-    "engines": {
-        "node": ">=0.12.0",
-        "npm": ">=2.0.0"
-    }
+  "name": "ol-getCapsVieweropenlayers",
+  "version": "0.0.1",
+  "author": "Mathias Boeck",
+  "description": "OGC (WMS) GetCapabilities Viewer with openlayers 3",
+  "keywords": [
+    "map",
+    "mapping",
+    "ol3",
+    "OGC",
+    "WMS",
+    "GetCapabilities"
+  ],
+  "scripts": {
+    "install": "",
+    "postinstall": "",
+    "start": "",
+    "test": "",
+    "serve": "gulp webserver"
+  },
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boeckMt/ol-getCapsViewer.git"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/boeckMt/ol-getCapsViewer/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-server-livereload": "^1.5.4",
+    "openlayers": "^3.10.1"
+  },
+  "engines": {
+    "node": ">=0.12.0",
+    "npm": ">=2.0.0"
+  }
 }
