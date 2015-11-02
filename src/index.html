@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WMS GetCapabilities Viewer</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://openlayers.org/en/v3.10.1/css/ol.css" type="text/css">
+<script src="http://openlayers.org/en/v3.10.1/build/ol.js"></script>
+
+<style>
+.log-container {
+  height: 400px;
+  overflow: scroll;
+}
+
+</style>
+</head>
+<body>
+<div class="container-fluid">
+
+<div class="row-fluid">
+  <div class="span12">
+    <pre class="log-container"><code id="log"></code></pre>
+  </div>
+</div>
+
+</div>
+<script>
+var parser = new ol.format.WMSCapabilities();
+
+$.ajax('data/ogcsample.xml').then(function(response) {
+  var result = parser.read(response);
+  $('#log').html(window.JSON.stringify(result, null, 2));
+});
+
+</script>
+</body>
+</html>
