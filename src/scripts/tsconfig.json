@@ -12,7 +12,8 @@
         "removeComments": true,
         "noLib": false,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "./js"
     },
     "filesGlob": [
         "**/*.ts",
@@ -20,6 +21,7 @@
         "!node_modules/**"
     ],
     "files": [
-        "main.ts"
+        "main.ts",
+        "wmsCaps.ts"
     ]
 }
