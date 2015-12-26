@@ -9,6 +9,6 @@ gulp.task('webserver', function() {
       defaultFile: "index.html",
       open: true,
       port:9005,
-      proxies: [{source: '/geoserver/wms', target: 'http://demo.boundlessgeo.com/geoserver/wms'}]
+      proxies: [{source: '/geoserver/wms', target: '*'}]
     }));
 });

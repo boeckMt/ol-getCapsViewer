@@ -16,7 +16,9 @@
     "postinstall": "",
     "start": "",
     "test": "",
-    "serve": "gulp webserver"
+    "//serve": "xdg-open http://localhost:8080 & http-server",
+    "serve": "gulp webserver",
+    "tsc": "tsc --watch -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators --jsx react ./src/wms-app.ts"
   },
   "main": "",
   "repository": {
@@ -27,11 +29,19 @@
   "bugs": {
     "url": "https://github.com/boeckMt/ol-getCapsViewer/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "angular2": "2.0.0-alpha.52",
+    "events": "1.0.2",
+    "fbjs": "0.3.1",
+    "flux": "2.1.1",
+    "openlayers": "3.6.0",
+    "rxjs": "5.0.0-alpha.14"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-server-livereload": "^1.5.4",
-    "openlayers": "^3.10.1"
+    "openlayers": "3.6.0",
+    "typescript": "^1.7.3"
   },
   "engines": {
     "node": ">=0.12.0",

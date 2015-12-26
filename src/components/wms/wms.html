@@ -1,0 +1,24 @@
+<div class="row">
+
+    <nav>
+      <div class="nav-wrapper">
+        <form on-submit="loadGetCapabilities()">
+          <div class="input-field">
+            <input bindon-ngModel="wmsUrl" id="search" type="search" required>
+            <label for="search">
+              <span on-click="loadGetCapabilities()"><i class="mdi mdi-action-search"></i></span>
+            </label>
+            <i class="mdi mdi-navigation-close"></i>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <div class="col s4" style="height: 800px; overflow-y: scroll;">
+      <layer-list bind-layersarray="capabilities.Capability.Layer.Layer"></layer-list>
+   </div>
+
+    <div class="col s8">
+        <layer-detail bind-capabilities="capabilities"></layer-detail>
+    </div>
+</div>
