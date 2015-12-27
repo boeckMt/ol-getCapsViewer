@@ -65,7 +65,7 @@ export class LayerDetail {
     // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
     _layer.url = this.capabilities.url;
     this.removeAllLayers();
-    console.log(this.map)
+    console.log(_layer)
 
     var layer = new ol.layer.Tile({
       extent: [-13884991, 2870341, -7455066, 6338219],

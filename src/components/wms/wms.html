@@ -16,6 +16,13 @@
 
     <div class="col s4" style="height: 800px; overflow-y: scroll;">
       <layer-list bind-layersarray="capabilities.Capability.Layer.Layer"></layer-list>
+
+      <div *ngIf="loadError" class="card-panel teal">
+        <span class="white-text">
+          There was an error loding the WMSCapabilities
+        </span>
+      </div>
+
    </div>
 
     <div class="col s8">

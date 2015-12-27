@@ -30,19 +30,38 @@ var Wms = (function () {
             Service: {},
             version: ''
         };
+        this.loadError = false;
         this.loadGetCapabilities();
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
-        console.log(this.wmsUrl);
-        var url = this.wmsUrl + "?service=" + this.service + "&version=" + this.version + "&request=" + this.request;
-        this.http.get(url).map(function (res) { return res.text(); }).subscribe(function (res) {
-            var capsJson = _this.olParser.read(res);
-            _this.capabilities = capsJson;
-            _this.capabilities.url = _this.wmsUrl;
-            _this.capsLoaded.next('caps loaded');
-            console.log(capsJson);
-        });
+        var body = {
+            proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.version + "&request=" + this.request
+        };
+        this.http.request(new http_1.Request({
+            method: http_1.RequestMethod.Post,
+            url: '/proxy',
+            body: JSON.stringify(body),
+            headers: new http_1.Headers({ 'Content-Type': 'application/json' })
+        })).map(function (res) { return res.text(); }).subscribe(function (res) { return _this.handleResult(res); }, function (err) { return _this.handleError(err); });
+    };
+    Wms.prototype.handleResult = function (res) {
+        var capsJson = this.olParser.read(res);
+        if (capsJson) {
+            this.loadError = false;
+            this.capabilities = capsJson;
+            this.capabilities.url = this.wmsUrl;
+            this.capsLoaded.next('caps loaded');
+        }
+    };
+    Wms.prototype.handleError = function (err) {
+        this.capabilities = {
+            Capability: { Layer: { Layer: [] } },
+            Service: {},
+            version: ''
+        };
+        this.loadError = true;
+        console.error("There was an error:" + err);
     };
     Wms.prototype.getLinkStyle = function (path) {
         return this.location.path().indexOf(path) > -1;
