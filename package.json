@@ -16,9 +16,8 @@
     "postinstall": "",
     "start": "",
     "test": "",
-    "//serve": "xdg-open http://localhost:8080 & http-server",
-    "serve": "gulp webserver",
-    "proxy": "gulp proxyserver",
+    "serve":"gulp proxyserver",
+    "serveLive": "gulp webserver",
     "tsc": "tsc --watch -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators --jsx react ./src/wms-app.ts"
   },
   "main": "",

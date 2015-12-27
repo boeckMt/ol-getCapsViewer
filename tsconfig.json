@@ -21,6 +21,7 @@
         "!../node_modules/**"
     ],
     "files": [
+        "gulpfile.ts",
         "node_modules/angular2/angular2.d.ts",
         "node_modules/angular2/animate.d.ts",
         "node_modules/angular2/animate/testing.d.ts",
