@@ -3267,6 +3267,11 @@ declare module ol {
             static circular(sphere: ol.Sphere, center: ol.Coordinate, radius: number, n?: number): ol.geom.Polygon;
 
             /**
+            * experimental Create a polygon from an extent. The layout used is XY
+            */
+            static fromExtent(extent: ol.Extent): ol.geom.Polygon;
+
+            /**
              * Append the passed linear ring to this polygon.
              * @param linearRing Linear ring.
              */
@@ -3340,6 +3345,7 @@ declare module ol {
              * @param layout Layout.
              */
             setCoordinates(coordinates: Array<Array<ol.Coordinate>>, layout?: ol.geom.GeometryLayout): void;
+
         }
         /**
          * Abstract base class; only used for creating subclasses; do not instantiate

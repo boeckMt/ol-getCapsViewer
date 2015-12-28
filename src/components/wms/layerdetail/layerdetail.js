@@ -1,4 +1,4 @@
-"use strict";
+/// <reference path="../../../typings/tsd.d.ts" />
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,6 +41,8 @@ var LayerDetail = (function () {
         }
     }
     LayerDetail.prototype.addLayer = function (_layer) {
+        // create a service that we can subscribe to and submit events
+        // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
         _layer.url = this.capabilities.url;
         this.removeAllLayers();
         console.log(_layer);
@@ -58,17 +60,18 @@ var LayerDetail = (function () {
                 serverType: 'geoserver'
             })
         });
+        this.addBboxLayer(_extent);
         this.map.addLayer(layer);
         this.map.getView().fitExtent(_extent, this.map.getSize());
     };
     LayerDetail.prototype.removeAllLayers = function () {
         var _this = this;
         var layers = this.map.getLayers();
-        var overlays = this.map.getOverlays();
         layers.forEach(function (layer, index) {
-            if (index > 0) {
+            if (index != 0) {
                 _this.map.removeLayer(layer);
             }
+            //console.log(layer, index)
         });
     };
     LayerDetail.prototype.checkExtentLatLng = function (extent) {
@@ -88,6 +91,14 @@ var LayerDetail = (function () {
         return isLatLng;
     };
     LayerDetail.prototype.addBboxLayer = function (extent) {
+        this.removeAllLayers();
+        var polygonFeature = new ol.Feature(ol.geom.Polygon.fromExtent(extent));
+        var extentLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [polygonFeature]
+            })
+        });
+        this.map.addLayer(extentLayer);
     };
     __decorate([
         angular2_1.Input(), 

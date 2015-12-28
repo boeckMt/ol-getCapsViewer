@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "underscore": "~1.8.3",
-    "Materialize": "materialize#~0.97.3"
+    "Materialize": "materialize#~0.97.3",
+    "system": "http://cdnjs.cloudflare.com/ajax/libs/systemjs/0.18.4/system.src.js"
   }
 }

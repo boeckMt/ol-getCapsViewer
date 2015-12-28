@@ -60,7 +60,7 @@ export class LayerDetail {
   }
 
 
-  addLayer(_layer: any) {
+  addLayer(_layer: any): void {
     // create a service that we can subscribe to and submit events
     // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
     _layer.url = this.capabilities.url;
@@ -69,7 +69,7 @@ export class LayerDetail {
     var _url = _layer.url;
     var _layers = _layer.Name;
     var _extent = _layer.BoundingBox[0].extent;
-    if(this.checkExtentLatLng(_extent)){
+    if (this.checkExtentLatLng(_extent)) {
       _extent = ol.proj.transformExtent(_extent, 'EPSG:4326', 'EPSG:3857')
     }
 
@@ -82,25 +82,25 @@ export class LayerDetail {
       })
     })
 
-    this.map.addLayer(layer)
+    this.addBboxLayer(_extent);
+    this.map.addLayer(layer);
     this.map.getView().fitExtent(_extent, this.map.getSize());
 
   }
 
-  removeAllLayers() {
+  removeAllLayers(): void {
     var layers = this.map.getLayers();
-    var overlays = this.map.getOverlays()
 
     layers.forEach((layer, index) => {
-      //console.log(layer, index)
-      if (index > 0) {
+      if (index != 0) {
         this.map.removeLayer(layer)
       }
+      //console.log(layer, index)
     })
 
   }
 
-  checkExtentLatLng(extent: Array<number>){
+  checkExtentLatLng(extent: Array<number>): boolean {
     var max: number;
     var numbers: Array<number> = [];
     var isLatLng: boolean = false;
@@ -109,36 +109,27 @@ export class LayerDetail {
       numbers.push(numdigits);
     })
 
-    if(Math.max(...numbers) <= 3){
+    if (Math.max(...numbers) <= 3) {
       isLatLng = true;
-    }else{
+    } else {
       isLatLng = false;
     }
 
     return isLatLng;
   }
 
-  addBboxLayer(extent) {
-    /*
-    var polygonFeature = new ol.Feature(
-      new ol.geom.Polygon([[[-3e6, -1e6], [-3e6, 1e6],
-        [-1e6, 1e6], [-1e6, -1e6], [-3e6, -1e6]]]));
+  addBboxLayer(extent: __Ol.Extent): void {
+    this.removeAllLayers();
 
-    new ol.layer.Vector({
+    var polygonFeature = new ol.Feature(ol.geom.Polygon.fromExtent(extent));
+
+    var extentLayer = new ol.layer.Vector({
       source: new ol.source.Vector({
         features: [polygonFeature]
-      }),
-      style: new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          width: 3,
-          color: [255, 0, 0, 1]
-        }),
-        fill: new ol.style.Fill({
-          color: [0, 0, 255, 0.6]
-        })
       })
     })
-    */
+
+    this.map.addLayer(extentLayer)
   }
 
 
