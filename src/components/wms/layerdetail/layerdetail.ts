@@ -66,33 +66,80 @@ export class LayerDetail {
     _layer.url = this.capabilities.url;
     this.removeAllLayers();
     console.log(_layer)
+    var _url = _layer.url;
+    var _layers = _layer.Name;
+    var _extent = _layer.BoundingBox[0].extent;
+    if(this.checkExtentLatLng(_extent)){
+      _extent = ol.proj.transformExtent(_extent, 'EPSG:4326', 'EPSG:3857')
+    }
 
     var layer = new ol.layer.Tile({
-      extent: [-13884991, 2870341, -7455066, 6338219],
+      extent: _extent,
       source: new ol.source.TileWMS({
-        url: _layer.url,
-        params: { 'LAYERS': _layer.Name, 'TILED': true },
+        url: _url,
+        params: { 'LAYERS': _layers, 'TILED': true },
         serverType: 'geoserver'
       })
     })
 
     this.map.addLayer(layer)
+    this.map.getView().fitExtent(_extent, this.map.getSize());
 
   }
 
-  removeAllLayers(){
+  removeAllLayers() {
     var layers = this.map.getLayers();
     var overlays = this.map.getOverlays()
 
-    //this.map.removeLayer()
-    layers.forEach((layer, index)=> {
-      //var props: any = layer.getProperties();
-      console.log(layer, index)
-      if(index > 0){
+    layers.forEach((layer, index) => {
+      //console.log(layer, index)
+      if (index > 0) {
         this.map.removeLayer(layer)
       }
     })
 
   }
+
+  checkExtentLatLng(extent: Array<number>){
+    var max: number;
+    var numbers: Array<number> = [];
+    var isLatLng: boolean = false;
+    extent.forEach(num => {
+      var numdigits = Math.abs(num).toString().split(".")[0].length;
+      numbers.push(numdigits);
+    })
+
+    if(Math.max(...numbers) <= 3){
+      isLatLng = true;
+    }else{
+      isLatLng = false;
+    }
+
+    return isLatLng;
+  }
+
+  addBboxLayer(extent) {
+    /*
+    var polygonFeature = new ol.Feature(
+      new ol.geom.Polygon([[[-3e6, -1e6], [-3e6, 1e6],
+        [-1e6, 1e6], [-1e6, -1e6], [-3e6, -1e6]]]));
+
+    new ol.layer.Vector({
+      source: new ol.source.Vector({
+        features: [polygonFeature]
+      }),
+      style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          width: 3,
+          color: [255, 0, 0, 1]
+        }),
+        fill: new ol.style.Fill({
+          color: [0, 0, 255, 0.6]
+        })
+      })
+    })
+    */
+  }
+
 
 }

@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,33 +41,53 @@ var LayerDetail = (function () {
         }
     }
     LayerDetail.prototype.addLayer = function (_layer) {
-        // create a service that we can subscribe to and submit events
-        // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
         _layer.url = this.capabilities.url;
         this.removeAllLayers();
         console.log(_layer);
+        var _url = _layer.url;
+        var _layers = _layer.Name;
+        var _extent = _layer.BoundingBox[0].extent;
+        if (this.checkExtentLatLng(_extent)) {
+            _extent = ol.proj.transformExtent(_extent, 'EPSG:4326', 'EPSG:3857');
+        }
         var layer = new ol.layer.Tile({
-            extent: [-13884991, 2870341, -7455066, 6338219],
+            extent: _extent,
             source: new ol.source.TileWMS({
-                url: _layer.url,
-                params: { 'LAYERS': _layer.Name, 'TILED': true },
+                url: _url,
+                params: { 'LAYERS': _layers, 'TILED': true },
                 serverType: 'geoserver'
             })
         });
         this.map.addLayer(layer);
+        this.map.getView().fitExtent(_extent, this.map.getSize());
     };
     LayerDetail.prototype.removeAllLayers = function () {
         var _this = this;
         var layers = this.map.getLayers();
         var overlays = this.map.getOverlays();
-        //this.map.removeLayer()
         layers.forEach(function (layer, index) {
-            //var props: any = layer.getProperties();
-            console.log(layer, index);
             if (index > 0) {
                 _this.map.removeLayer(layer);
             }
         });
+    };
+    LayerDetail.prototype.checkExtentLatLng = function (extent) {
+        var max;
+        var numbers = [];
+        var isLatLng = false;
+        extent.forEach(function (num) {
+            var numdigits = Math.abs(num).toString().split(".")[0].length;
+            numbers.push(numdigits);
+        });
+        if (Math.max.apply(Math, numbers) <= 3) {
+            isLatLng = true;
+        }
+        else {
+            isLatLng = false;
+        }
+        return isLatLng;
+    };
+    LayerDetail.prototype.addBboxLayer = function (extent) {
     };
     __decorate([
         angular2_1.Input(), 

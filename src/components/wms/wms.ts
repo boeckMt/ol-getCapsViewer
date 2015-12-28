@@ -24,6 +24,7 @@ export class Wms {
   capabilities: any; //__Ol.format.WMSCapabilities;
   layers: Array<Object>;
   wmsUrl: string;
+  getCapsUrl: string;
   version: string;
   service: string;
   request: string;
@@ -39,6 +40,7 @@ export class Wms {
     this.version = '1.1.1';
     this.request = 'GetCapabilities';
     this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
+    this.getCapsUrl = '';
     //  './httpSampleData/getcapabilities_1.1.1.xml'
     //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
     this.capabilities = {
@@ -52,8 +54,9 @@ export class Wms {
   }
 
   loadGetCapabilities() {
+    this.getCapsUrl = `${this.wmsUrl}?service=${this.service}&version=${this.version}&request=${this.request}`;
     var body = {
-      proxy: `${this.wmsUrl}?service=${this.service}&version=${this.version}&request=${this.request}`
+      proxy: this.getCapsUrl
     };
 
     this.http.request(new Request({
@@ -72,6 +75,7 @@ export class Wms {
       this.loadError = false;
       this.capabilities = capsJson;
       this.capabilities.url = this.wmsUrl;
+      this.capabilities.fullUrl = this.getCapsUrl;
       this.capsLoaded.next('caps loaded');
     }
   }
