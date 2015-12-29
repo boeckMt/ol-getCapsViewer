@@ -31,7 +31,6 @@ var Wms = (function () {
             version: ''
         };
         this.loadError = false;
-        this.loadGetCapabilities();
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;

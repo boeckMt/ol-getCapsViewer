@@ -51,7 +51,7 @@ export class Wms {
 
     this.loadError = false;
 
-    this.loadGetCapabilities();
+    //this.loadGetCapabilities();
   }
 
   loadGetCapabilities() {

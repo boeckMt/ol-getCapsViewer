@@ -2131,7 +2131,7 @@ declare module ol {
          * @param extent Extent.
          * @param size Box pixel size.
          */
-        fitExtent(extent: ol.Extent, size: ol.Size): void;
+        fit(extent: ol.Extent, size: ol.Size): void;
 
         /**
          * Fit the given geometry into the view based on the given map size and border.
@@ -4004,6 +4004,7 @@ declare module ol {
         }
 
         class XYZ {
+          constructor(options: any);
         }
 
         class Zoomify {

@@ -33,17 +33,28 @@ export class LayerDetail {
 
     if (!_target.hasChildNodes()) {
       this.viewOptions = {
-        center: ol.proj.fromLonLat([-100.9687542915344, 40.11168866559598], 'EPSG:3857'),
-        zoom: 3
+        center: ol.proj.fromLonLat([0, 0], 'EPSG:3857'),
+        zoom: 2
       }
 
       this.view = new ol.View(this.viewOptions)
 
       this.options = {
         target: _target,
+        //controls: ol.control.defaults({ attribution: false }).extend([new ol.control.Attribution()]),
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
+/*
+            opacity: 0.5,
+            source: new ol.source.XYZ({
+              url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+              attributions: new ol.Attribution({
+                html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
+              })
+            })
+*/
+
           })
         ],
         view: this.view
@@ -69,16 +80,37 @@ export class LayerDetail {
     var _url = _layer.url;
     var _layers = _layer.Name;
     var crs = 'EPSG:4326';
-    var _extent = _layer.BoundingBox[0].extent;
+    var _extent;
 
-    if (_layer.BoundingBox[0].crs) {
-      crs = _layer.BoundingBox[0].crs;
+
+    //version 1.3.0
+    if (_layer.EX_GeographicBoundingBox) {
+      crs = 'EPSG:4326';
+      _extent = _layer.EX_GeographicBoundingBox;
+    } else { //version 1.1.1
+      _extent = _layer.BoundingBox[0].extent;
+
+      if (_layer.BoundingBox[0].crs) {
+        crs = _layer.BoundingBox[0].crs;
+      }
     }
 
     if (this.checkExtentLatLng(_extent)) {
+
+      //change -/+ 180 and 90 values
+      for (let i = 0; i < _extent.length; i++) {
+        if (i == 0 || i == 2) {
+          _extent[i] = this.adjustLngInfCoos(_extent[i]);
+        } else if (i == 1 || i == 3) {
+          _extent[i] = this.adjustLatInfCoos(_extent[i]);
+        }
+      }
+
       _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857')
     }
+    console.log(_extent)
 
+    //--------------------------------------------------------------------------
     var layer = new ol.layer.Tile({
       extent: _extent,
       source: new ol.source.TileWMS({
@@ -93,7 +125,7 @@ export class LayerDetail {
 
     this.addBboxLayer(_extent);
     this.map.addLayer(layer);
-    this.map.getView().fitExtent(_extent, this.map.getSize());
+    this.map.getView().fit(_extent, this.map.getSize());
 
   }
 
@@ -127,6 +159,30 @@ export class LayerDetail {
     return isLatLng;
   }
 
+  adjustLatInfCoos(coordinate: number): number {
+    var _coordinate;
+    if (coordinate >= 90) {
+      _coordinate = 89;
+    } else if (coordinate <= -90) {
+      _coordinate = -89;
+    } else {
+      _coordinate = coordinate;
+    }
+    return _coordinate;
+  }
+
+  adjustLngInfCoos(coordinate: number): number {
+    var _coordinate;
+    if (coordinate >= 180) {
+      _coordinate = 179;
+    } else if (coordinate <= -180) {
+      _coordinate = -179;
+    } else {
+      _coordinate = coordinate;
+    }
+    return _coordinate;
+  }
+
   addBboxLayer(extent: __Ol.Extent): void {
     this.removeAllLayers();
 
@@ -140,6 +196,8 @@ export class LayerDetail {
 
     this.map.addLayer(extentLayer)
   }
+
+
 
 
 }

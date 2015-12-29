@@ -20,8 +20,8 @@ var LayerDetail = (function () {
         var _target = document.getElementById("map");
         if (!_target.hasChildNodes()) {
             this.viewOptions = {
-                center: ol.proj.fromLonLat([-100.9687542915344, 40.11168866559598], 'EPSG:3857'),
-                zoom: 3
+                center: ol.proj.fromLonLat([0, 0], 'EPSG:3857'),
+                zoom: 2
             };
             this.view = new ol.View(this.viewOptions);
             this.options = {
@@ -47,13 +47,29 @@ var LayerDetail = (function () {
         var _url = _layer.url;
         var _layers = _layer.Name;
         var crs = 'EPSG:4326';
-        var _extent = _layer.BoundingBox[0].extent;
-        if (_layer.BoundingBox[0].crs) {
-            crs = _layer.BoundingBox[0].crs;
+        var _extent;
+        if (_layer.EX_GeographicBoundingBox) {
+            crs = 'EPSG:4326';
+            _extent = _layer.EX_GeographicBoundingBox;
+        }
+        else {
+            _extent = _layer.BoundingBox[0].extent;
+            if (_layer.BoundingBox[0].crs) {
+                crs = _layer.BoundingBox[0].crs;
+            }
         }
         if (this.checkExtentLatLng(_extent)) {
+            for (var i = 0; i < _extent.length; i++) {
+                if (i == 0 || i == 2) {
+                    _extent[i] = this.adjustLngInfCoos(_extent[i]);
+                }
+                else if (i == 1 || i == 3) {
+                    _extent[i] = this.adjustLatInfCoos(_extent[i]);
+                }
+            }
             _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
         }
+        console.log(_extent);
         var layer = new ol.layer.Tile({
             extent: _extent,
             source: new ol.source.TileWMS({
@@ -64,7 +80,7 @@ var LayerDetail = (function () {
         });
         this.addBboxLayer(_extent);
         this.map.addLayer(layer);
-        this.map.getView().fitExtent(_extent, this.map.getSize());
+        this.map.getView().fit(_extent, this.map.getSize());
     };
     LayerDetail.prototype.removeAllLayers = function () {
         var _this = this;
@@ -90,6 +106,32 @@ var LayerDetail = (function () {
             isLatLng = false;
         }
         return isLatLng;
+    };
+    LayerDetail.prototype.adjustLatInfCoos = function (coordinate) {
+        var _coordinate;
+        if (coordinate >= 90) {
+            _coordinate = 89;
+        }
+        else if (coordinate <= -90) {
+            _coordinate = -89;
+        }
+        else {
+            _coordinate = coordinate;
+        }
+        return _coordinate;
+    };
+    LayerDetail.prototype.adjustLngInfCoos = function (coordinate) {
+        var _coordinate;
+        if (coordinate >= 180) {
+            _coordinate = 179;
+        }
+        else if (coordinate <= -180) {
+            _coordinate = -179;
+        }
+        else {
+            _coordinate = coordinate;
+        }
+        return _coordinate;
     };
     LayerDetail.prototype.addBboxLayer = function (extent) {
         this.removeAllLayers();

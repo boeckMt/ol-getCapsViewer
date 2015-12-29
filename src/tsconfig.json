@@ -25,7 +25,6 @@
         "components/wms/helpers/startswithpipe.ts",
         "components/wms/layerdetail/layerdetail.ts",
         "components/wms/layerlist/layerlist.ts",
-        "components/wms/select/select.ts",
         "components/wms/wms.ts",
         "typings/openlayers/openlayers.d.ts",
         "typings/react/react.d.ts",
