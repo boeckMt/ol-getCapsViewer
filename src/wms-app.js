@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,11 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 require('rxjs/operator/map');
 require('rxjs/operator/mergeMap');
 require('rxjs/observable/interval');
-var http_1 = require('angular2/http');
 var angular2_1 = require('angular2/angular2');
+var http_1 = require('angular2/http');
+var router_1 = require('angular2/router');
 var about_1 = require('./components/about/about');
 var wms_1 = require('./components/wms/wms');
-var router_1 = require('angular2/router');
 var eventservice_1 = require('./components/wms/helpers/eventservice');
 var WmsApp = (function () {
     function WmsApp(router, location) {
@@ -51,12 +52,5 @@ var WmsApp = (function () {
     ], WmsApp);
     return WmsApp;
 })();
-/*
-class ComponentHelper {
-  static LoadComponentAsync(name, path) {
-    return System.import(path).then(c => c[name]);
-  }
-}
-*/
 angular2_1.bootstrap(WmsApp, [eventservice_1.EventService, router_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS,
     angular2_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })]);

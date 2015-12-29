@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21,12 +22,9 @@ var Wms = (function () {
         this.location = location;
         this.http = http;
         this.service = 'wms';
-        this.version = '1.1.1';
+        this.wmsversion = '1.1.1';
         this.request = 'GetCapabilities';
         this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
-        this.getCapsUrl = '';
-        //  './httpSampleData/getcapabilities_1.1.1.xml'
-        //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
         this.capabilities = {
             Capability: { Layer: { Layer: [] } },
             Service: {},
@@ -37,9 +35,8 @@ var Wms = (function () {
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
-        this.getCapsUrl = this.wmsUrl + "?service=" + this.service + "&version=" + this.version + "&request=" + this.request;
         var body = {
-            proxy: this.getCapsUrl
+            proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
         };
         this.http.request(new http_1.Request({
             method: http_1.RequestMethod.Post,
@@ -54,8 +51,9 @@ var Wms = (function () {
             this.loadError = false;
             this.capabilities = capsJson;
             this.capabilities.url = this.wmsUrl;
-            this.capabilities.fullUrl = this.getCapsUrl;
+            this.capabilities.fullUrl = this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request;
             this.capsLoaded.next('caps loaded');
+            console.log(this.capabilities);
         }
     };
     Wms.prototype.handleError = function (err) {

@@ -1,50 +1,59 @@
 <html>
+
 <head>
-    <title>Ol3-Ng2 WMS Capabilities</title>
+  <title>Ol3-Ng2 WMS Capabilities</title>
 
-    <script src="../bower_components/underscore/underscore-min.js"></script>
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <script href="../bower_components/Materialize/dist/js/materialize.min.js"></script>
-    <script src="../node_modules/openlayers/dist/ol.js"></script>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- <link href="../bower_components/Materialize/dist/css/materialize.min.css" rel="stylesheet"> -->
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" media="screen,projection" />
+
+  <link href="../node_modules/openlayers/dist/ol.css" rel="stylesheet">
+  <link href="./styles/site.css?v=1" rel="stylesheet">
+
+  <script src="../bower_components/underscore/underscore-min.js"></script>
+  <script src="../node_modules/openlayers/dist/ol.js"></script>
 
 
-    <script src="lib/custom-require.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script href="../bower_components/Materialize/dist/js/materialize.min.js"></script>
 
 
-   <script>
-        //var __React = React;
-        var Dispatcher = require('../node_modules/flux/dist/Flux').Dispatcher;
-        var EventEmitter = require('../node_modules/events/events').EventEmitter;
-    </script>
+  <script src="lib/custom-require.js"></script>
 
-    <script src="../bower_components/system/index.js"></script>
 
-    <script>
-        System.config({
-            defaultJSExtensions: true,
-            paths: {
-                'rxjs/observable/*' : '../node_modules/rxjs/add/observable/*.js',
-                'rxjs/operator/*' : '../node_modules/rxjs/add/operator/*.js',
-                'rxjs/*' : '../node_modules/rxjs/*.js'
-            }
-        });
-    </script>
+  <script>
+    //var __React = React;
+    var Dispatcher = require('../node_modules/flux/dist/Flux').Dispatcher;
+    var EventEmitter = require('../node_modules/events/events').EventEmitter;
+  </script>
 
-    <script src="../node_modules/angular2/bundles/angular2.js"></script>
-    <script src="../node_modules/angular2/bundles/http.dev.js"></script>
-    <script src="../node_modules/angular2/bundles/router.dev.js"></script>
+  <script src="../bower_components/system/index.js"></script>
 
-    <link href="../bower_components/Materialize/dist/css/materialize.min.css" rel="stylesheet">
-    <link href="../node_modules/openlayers/dist/ol.css" rel="stylesheet">
+  <script>
+    System.config({
+      defaultJSExtensions: true,
+      paths: {
+        'rxjs/observable/*': '../node_modules/rxjs/add/observable/*.js',
+        'rxjs/operator/*': '../node_modules/rxjs/add/operator/*.js',
+        'rxjs/*': '../node_modules/rxjs/*.js'
+      }
+    });
+  </script>
 
-    <link href="./styles/site.css?v=1" rel="stylesheet">
-
+  <script src="../node_modules/angular2/bundles/angular2.js"></script>
+  <script src="../node_modules/angular2/bundles/http.dev.js"></script>
+  <script src="../node_modules/angular2/bundles/router.dev.js"></script>
 </head>
+
 <body>
 
-<wms-app></wms-app>
+  <wms-app></wms-app>
 
-<script>System.import('./wms-app');</script>
+  <script>
+    System.import('./wms-app');
+  </script>
 
 
 </body>

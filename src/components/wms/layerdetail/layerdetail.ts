@@ -78,9 +78,12 @@ export class LayerDetail {
       source: new ol.source.TileWMS({
         url: _url,
         params: { 'LAYERS': _layers, 'TILED': true },
+        //params:{'BBOX':'', 'CRS':'', 'FORMAT':'', 'HEIGHT':'', 'LAYERS':'', 'REQUEST':'', 'SERVICE':'', 'STYLES':'', 'TILED	':'',
+        //'TRANSPARENT':'', 'VERSION':'', 'WIDTH':''}
         serverType: 'geoserver'
       })
     })
+
 
     this.addBboxLayer(_extent);
     this.map.addLayer(layer);

@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,8 +41,6 @@ var LayerDetail = (function () {
         }
     }
     LayerDetail.prototype.addLayer = function (_layer) {
-        // create a service that we can subscribe to and submit events
-        // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
         _layer.url = this.capabilities.url;
         this.removeAllLayers();
         console.log(_layer);
@@ -71,7 +69,6 @@ var LayerDetail = (function () {
             if (index != 0) {
                 _this.map.removeLayer(layer);
             }
-            //console.log(layer, index)
         });
     };
     LayerDetail.prototype.checkExtentLatLng = function (extent) {

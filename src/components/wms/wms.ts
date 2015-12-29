@@ -24,39 +24,40 @@ export class Wms {
   capabilities: any; //__Ol.format.WMSCapabilities;
   layers: Array<Object>;
   wmsUrl: string;
-  getCapsUrl: string;
-  version: string;
+  wmsversion: string;
   service: string;
   request: string;
   http: Http;
   olParser: any = new __Ol.format.WMSCapabilities();
   capsLoaded = new EventEmitter();
   loadError: boolean;
+  form;
 
   constructor(location: Location, http: Http) {
     this.location = location;
     this.http = http;
+
     this.service = 'wms';
-    this.version = '1.1.1';
+    this.wmsversion = '1.1.1';
     this.request = 'GetCapabilities';
     this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
-    this.getCapsUrl = '';
-    //  './httpSampleData/getcapabilities_1.1.1.xml'
+
+//  './httpSampleData/getcapabilities_1.1.1.xml'
     //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
     this.capabilities = {
       Capability: { Layer: { Layer: [] } },
       Service: {},
       version: ''
     };
+
     this.loadError = false;
 
     this.loadGetCapabilities();
   }
 
   loadGetCapabilities() {
-    this.getCapsUrl = `${this.wmsUrl}?service=${this.service}&version=${this.version}&request=${this.request}`;
     var body = {
-      proxy: this.getCapsUrl
+      proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
     };
 
     this.http.request(new Request({
@@ -75,8 +76,9 @@ export class Wms {
       this.loadError = false;
       this.capabilities = capsJson;
       this.capabilities.url = this.wmsUrl;
-      this.capabilities.fullUrl = this.getCapsUrl;
+      this.capabilities.fullUrl = `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`;
       this.capsLoaded.next('caps loaded');
+      console.log(this.capabilities)
     }
   }
 

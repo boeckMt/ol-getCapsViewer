@@ -3,13 +3,12 @@ import 'rxjs/operator/map';
 import 'rxjs/operator/mergeMap';
 import 'rxjs/observable/interval'
 
-import {HTTP_PROVIDERS} from 'angular2/http';
 import {Component, View, bootstrap, provide} from 'angular2/angular2';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import {ROUTER_DIRECTIVES, RouteConfig, Location, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, Route, Router} from 'angular2/router';
+
 import {About} from './components/about/about';
 import {Wms} from './components/wms/wms';
-import {ROUTER_DIRECTIVES, RouteConfig, Location, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, Route, AsyncRoute, Router} from 'angular2/router';
-
-
 import {EventService} from './components/wms/helpers/eventservice';
 
 declare var System: any;
@@ -53,14 +52,6 @@ class WmsApp {
     }
   }
 }
-
-/*
-class ComponentHelper {
-  static LoadComponentAsync(name, path) {
-    return System.import(path).then(c => c[name]);
-  }
-}
-*/
 
 bootstrap(WmsApp, [EventService, ROUTER_PROVIDERS, HTTP_PROVIDERS,
   provide(LocationStrategy, { useClass: HashLocationStrategy })]);
