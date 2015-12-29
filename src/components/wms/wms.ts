@@ -31,7 +31,6 @@ export class Wms {
   olParser: any = new __Ol.format.WMSCapabilities();
   capsLoaded = new EventEmitter();
   loadError: boolean;
-  form;
 
   constructor(location: Location, http: Http) {
     this.location = location;

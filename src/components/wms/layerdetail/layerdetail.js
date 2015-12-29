@@ -46,15 +46,19 @@ var LayerDetail = (function () {
         console.log(_layer);
         var _url = _layer.url;
         var _layers = _layer.Name;
+        var crs = 'EPSG:4326';
         var _extent = _layer.BoundingBox[0].extent;
+        if (_layer.BoundingBox[0].crs) {
+            crs = _layer.BoundingBox[0].crs;
+        }
         if (this.checkExtentLatLng(_extent)) {
-            _extent = ol.proj.transformExtent(_extent, 'EPSG:4326', 'EPSG:3857');
+            _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
         }
         var layer = new ol.layer.Tile({
             extent: _extent,
             source: new ol.source.TileWMS({
                 url: _url,
-                params: { 'LAYERS': _layers, 'TILED': true },
+                params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version },
                 serverType: 'geoserver'
             })
         });
