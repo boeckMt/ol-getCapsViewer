@@ -6,6 +6,7 @@ import {ComponentInstruction, Location} from 'angular2/router';
 import {Http, Request, Response, RequestMethod, Headers} from 'angular2/http';
 
 import __Ol = ol;
+import __Wms1_1_1 = Wms1_1_1;
 
 import {LayerList} from './layerlist/layerlist';
 import {LayerDetail} from './layerdetail/layerdetail';
@@ -22,6 +23,7 @@ import {EventService} from './helpers/eventservice';
 export class Wms {
   location: Location;
   capabilities: any; //__Ol.format.WMSCapabilities;
+  emptyCaps:__Wms1_1_1.GetCapabilities;
   layers: Array<Object>;
   wmsUrl: string;
   wmsversion: string;
@@ -44,21 +46,33 @@ export class Wms {
     this.request = 'GetCapabilities';
     this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
 
-//  './httpSampleData/getcapabilities_1.1.1.xml'
-    //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
-    this.capabilities = {
-      Capability: { Layer: { Layer: [] } },
-      Service: {},
+    //If you want an empty object of an interface, you can do just:
+    this.emptyCaps = <__Wms1_1_1.GetCapabilities> {
+      Capability: <__Wms1_1_1.Capability> {},
+      Service: <__Wms1_1_1.Service> {},
       version: ''
     };
+
+
+
+    this.capabilities = this.emptyCaps;
     this.loading = false;
     this.loadError = false;
 
+    //in route change
+    this.evt.capsEmitter.next('clear Map');
+
     //this.loadGetCapabilities();
+    //  './httpSampleData/getcapabilities_1.1.1.xml'
+    //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
+    // https://geodienste.sachsen.de/wms_geosn_dtk-p-color/guest
+    // http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.xml
   }
 
   loadGetCapabilities() {
     this.loading = true;
+    this.loadError = false;
+    this.capabilities = this.emptyCaps;
 
     var body = {
       proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
@@ -69,7 +83,6 @@ export class Wms {
       url: '/proxy',
       body: JSON.stringify(body),
       headers: new Headers({ 'Content-Type': 'application/json' })
-      //search: 'param=value'
     })).map((res: Response) => res.text()).subscribe(res => this.handleResult(res), err => this.handleError(err));
 
   }
@@ -83,24 +96,16 @@ export class Wms {
       this.capabilities = capsJson;
       this.capabilities.url = this.wmsUrl;
       this.capabilities.fullUrl = `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`;
-      this.evt.capsEmitter.next('loaded');
+      this.evt.capsEmitter.next(this.capabilities);
       console.log(this.capabilities)
     }
   }
 
   handleError(err) {
-    this.capabilities = {
-      Capability: { Layer: { Layer: [] } },
-      Service: {},
-      version: ''
-    };
+    this.capabilities = this.emptyCaps;
     this.loadError = true;
+    this.loading = false;
     console.error(`There was an error:${err}`);
   }
 
-/*
-  getLinkStyle(path) {
-    return this.location.path().indexOf(path) > -1;
-  }
-*/
 }

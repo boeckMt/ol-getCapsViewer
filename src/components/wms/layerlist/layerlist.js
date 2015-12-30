@@ -13,17 +13,24 @@ var startswithpipe_1 = require('../helpers/startswithpipe');
 var eventservice_1 = require('../helpers/eventservice');
 var LayerList = (function () {
     function LayerList(evt) {
+        var _this = this;
+        this.layersarray = [];
         this.filter = '';
         this.evt = evt;
+        evt.capsEmitter.subscribe(function (data) {
+            _this.capabilitys = data;
+            if (!data.Capability.Layer.Layer) {
+                _this.layersarray = [data.Capability.Layer];
+            }
+            else {
+                _this.layersarray = data.Capability.Layer.Layer;
+            }
+        });
     }
     LayerList.prototype.sendLayerData = function (layer) {
         this.selectedLayer = layer.Name;
         this.evt.layerEmitter.next(layer);
     };
-    __decorate([
-        angular2_1.Input(), 
-        __metadata('design:type', Array)
-    ], LayerList.prototype, "layersarray", void 0);
     LayerList = __decorate([
         angular2_1.Component({
             selector: 'layer-list',

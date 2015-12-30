@@ -29,6 +29,7 @@
         "typings/openlayers/openlayers.d.ts",
         "typings/react/react.d.ts",
         "typings/tsd.d.ts",
+        "typings/wms/wms.d.ts",
         "wms-app.ts"
     ],
     "atom": {

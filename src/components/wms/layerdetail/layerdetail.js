@@ -13,14 +13,6 @@ var eventservice_1 = require('../helpers/eventservice');
 var LayerDetail = (function () {
     function LayerDetail(evt) {
         var _this = this;
-        evt.layerEmitter.subscribe(function (data) {
-            console.log(data);
-            _this.ldetail = data;
-            _this.addLayer(data);
-        });
-        evt.capsEmitter.subscribe(function (data) {
-            _this.removeOverlays();
-        });
         var _target = document.getElementById("map");
         if (!_target.hasChildNodes()) {
             this.viewOptions = {
@@ -48,6 +40,16 @@ var LayerDetail = (function () {
             this.map.on('click', function (evt) {
                 var coos = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
                 console.log(coos);
+            });
+        }
+        if (this.map) {
+            evt.layerEmitter.subscribe(function (data) {
+                console.log(data);
+                _this.ldetail = data;
+                _this.addLayer(data);
+            });
+            evt.capsEmitter.subscribe(function (data) {
+                _this.removeOverlays();
             });
         }
     }
@@ -149,6 +151,32 @@ var LayerDetail = (function () {
             })
         });
         return extentLayer;
+    };
+    LayerDetail.prototype.extentBuilder = function (layer) {
+        var _extent;
+        var crs = 'EPSG:4326';
+        if (layer.EX_GeographicBoundingBox) {
+            crs = 'EPSG:4326';
+            _extent = layer.EX_GeographicBoundingBox;
+        }
+        else {
+            _extent = layer.BoundingBox[0].extent;
+            if (layer.BoundingBox[0].crs) {
+                crs = layer.BoundingBox[0].crs;
+            }
+        }
+        if (this.checkExtentLatLng(_extent)) {
+            for (var i = 0; i < _extent.length; i++) {
+                if (i == 0 || i == 2) {
+                    _extent[i] = this.adjustLngInfCoos(_extent[i]);
+                }
+                else if (i == 1 || i == 3) {
+                    _extent[i] = this.adjustLatInfCoos(_extent[i]);
+                }
+            }
+            _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
+        }
+        return _extent;
     };
     __decorate([
         angular2_1.Input(), 

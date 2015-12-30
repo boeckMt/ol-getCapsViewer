@@ -6,6 +6,9 @@ import {Component, CORE_DIRECTIVES, Input, Output, EventEmitter} from 'angular2/
 import {StartsWithPipe} from '../helpers/startswithpipe';
 import {EventService} from '../helpers/eventservice';
 
+import __Ol = ol;
+import __Wms1_1_1 = Wms1_1_1;
+
 
 @Component({
   selector: 'layer-list',
@@ -15,17 +18,28 @@ import {EventService} from '../helpers/eventservice';
 })
 
 export class LayerList {
-  @Input() layersarray:Array<Object>; // stored value
-  //@Input() selected: Object;
-  //@Output() selectedChange: EventEmitter<Object> = new EventEmitter();
-
   filter: string;
   selectedLayer: string;
   evt: any;
 
+  capabilitys: __Wms1_1_1.GetCapabilities;
+  layersarray: Array<__Wms1_1_1.Layer> = [];
+  layer: __Wms1_1_1.Layer;
+
+
   constructor(evt: EventService) {
     this.filter = '';
     this.evt = evt;
+
+    evt.capsEmitter.subscribe((data: __Wms1_1_1.GetCapabilities) => {
+      this.capabilitys = data;
+
+      if(!data.Capability.Layer.Layer){
+        this.layersarray = [data.Capability.Layer];
+      }else{
+          this.layersarray = data.Capability.Layer.Layer;
+      }
+    });
   }
 
   sendLayerData(layer: any) {

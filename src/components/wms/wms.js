@@ -25,17 +25,21 @@ var Wms = (function () {
         this.wmsversion = '1.1.1';
         this.request = 'GetCapabilities';
         this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
-        this.capabilities = {
-            Capability: { Layer: { Layer: [] } },
+        this.emptyCaps = {
+            Capability: {},
             Service: {},
             version: ''
         };
+        this.capabilities = this.emptyCaps;
         this.loading = false;
         this.loadError = false;
+        this.evt.capsEmitter.next('clear Map');
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
         this.loading = true;
+        this.loadError = false;
+        this.capabilities = this.emptyCaps;
         var body = {
             proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
         };
@@ -54,17 +58,14 @@ var Wms = (function () {
             this.capabilities = capsJson;
             this.capabilities.url = this.wmsUrl;
             this.capabilities.fullUrl = this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request;
-            this.evt.capsEmitter.next('loaded');
+            this.evt.capsEmitter.next(this.capabilities);
             console.log(this.capabilities);
         }
     };
     Wms.prototype.handleError = function (err) {
-        this.capabilities = {
-            Capability: { Layer: { Layer: [] } },
-            Service: {},
-            version: ''
-        };
+        this.capabilities = this.emptyCaps;
         this.loadError = true;
+        this.loading = false;
         console.error("There was an error:" + err);
     };
     Wms = __decorate([

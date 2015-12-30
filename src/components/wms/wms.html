@@ -20,11 +20,11 @@
   </div>
 
   <div class="list-view col s4">
-    <layer-list bind-layersarray="capabilities.Capability.Layer.Layer"></layer-list>
+    <layer-list></layer-list>
 
     <div *ngIf="loadError" class="card-panel teal">
-      <span class="white-text">
-        There was an error loding the WMSCapabilities
+      <span class="white-text center-align">
+        <b>There was an error loding the WMSCapabilities!</b>
       </span>
     </div>
 

@@ -2,6 +2,7 @@
 
 import {Component, CORE_DIRECTIVES, Input, Output, EventEmitter} from 'angular2/angular2';
 
+import __Wms1_1_1 = Wms1_1_1;
 import __Ol = ol;
 
 import {EventService} from '../helpers/eventservice';
@@ -26,16 +27,6 @@ export class LayerDetail {
   ldetail: Object;
 
   constructor(evt: EventService) {
-    evt.layerEmitter.subscribe((data) => {
-      console.log(data)
-      this.ldetail = data;
-      this.addLayer(data);
-    });
-
-    evt.capsEmitter.subscribe((data) => {
-      this.removeOverlays();
-    });
-
     var _target: HTMLElement = document.getElementById("map");
 
     if (!_target.hasChildNodes()) {
@@ -71,6 +62,18 @@ export class LayerDetail {
       })
 
     }
+
+    if (this.map) {
+      evt.layerEmitter.subscribe((data) => {
+        console.log(data)
+        this.ldetail = data;
+        this.addLayer(data);
+      });
+
+      evt.capsEmitter.subscribe((data) => {
+        this.removeOverlays();
+      });
+    }
   }
 
 
@@ -82,6 +85,9 @@ export class LayerDetail {
     console.log(_layer)
     var _url = _layer.url;
     var _layers = _layer.Name;
+
+
+
     var crs = 'EPSG:4326';
     var _extent;
 
@@ -111,6 +117,8 @@ export class LayerDetail {
 
       _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857')
     }
+
+
     //console.log(_extent)
 
     //--------------------------------------------------------------------------
@@ -184,7 +192,7 @@ export class LayerDetail {
     return _coordinate;
   }
 
-  createBboxLayer(extent: __Ol.Extent): ol.layer.Vector  {
+  createBboxLayer(extent: __Ol.Extent): ol.layer.Vector {
     var polygonFeature = new ol.Feature(ol.geom.Polygon.fromExtent(extent));
 
     var extentLayer = new ol.layer.Vector({
@@ -194,6 +202,39 @@ export class LayerDetail {
     })
 
     return extentLayer;
+  }
+
+  extentBuilder(layer: __Wms1_1_1.Layer): __Ol.Extent {
+    var _extent;
+    var crs = 'EPSG:4326';
+
+    //version 1.3.0
+    if (layer.EX_GeographicBoundingBox) {
+      crs = 'EPSG:4326';
+      _extent = layer.EX_GeographicBoundingBox;
+    } else { //version 1.1.1
+      _extent = layer.BoundingBox[0].extent;
+
+      if (layer.BoundingBox[0].crs) {
+        crs = layer.BoundingBox[0].crs;
+      }
+    }
+
+    if (this.checkExtentLatLng(_extent)) {
+
+      //change -/+ 180 and 90 values
+      for (let i = 0; i < _extent.length; i++) {
+        if (i == 0 || i == 2) {
+          _extent[i] = this.adjustLngInfCoos(_extent[i]);
+        } else if (i == 1 || i == 3) {
+          _extent[i] = this.adjustLatInfCoos(_extent[i]);
+        }
+      }
+
+      _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857')
+    }
+
+    return _extent;
   }
 
 
