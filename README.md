@@ -15,13 +15,18 @@ Start a Webserver and launch index.html: npm run serve
 
 
 #### Features
-* Wms URL as Input
-* Parse the wms GetCapabilities with openlayers3 and a proxy (e.g. express-http-proxy)
-* Generate a Table with all Layers and show further Capabilities
-* Get Layer Details on Table click and add layer to a map
+* WMS URL and Version as Input
+* Get the WMS GetCapabilities XML through a custom express-proxy-server (for SOP)
+* Parse the WMS GetCapabilities with openlayers3
+* Generate a Table with all Layers
+* Show Layer Details, add WMS-and Bbox-Layer on Table click
+* Zoom to the Layer Extent
 
 ## Status: in development !!!
+* Handle versions 1.1.1 and 1.3.0
+* Handle Projections...
+* Show further Capabilities like the [Geoportal Capabilities-Viewer](https://geoportal.bayern.de/getcapabilities)
 
 
 ---
-This Project is developed with the [Atom Editor](https://atom.io/), [atom-typescript](https://atom.io/packages/atom-typescript), [stylus-autocompile](https://atom.io/packages/stylus-autocompile) and [gulp-server-livereload](gulp-server-livereload)
+This Project is developed with the [Atom Editor](https://atom.io/), [atom-typescript](https://atom.io/packages/atom-typescript) and [stylus-autocompile](https://atom.io/packages/stylus-autocompile)
