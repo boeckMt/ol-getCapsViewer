@@ -30,6 +30,7 @@ export class Wms {
   http: Http;
   olParser: any = new __Ol.format.WMSCapabilities();
   loadError: boolean;
+  loading: boolean;
   evt: any;
 
   constructor(location: Location, http: Http, evt: EventService) {
@@ -50,13 +51,15 @@ export class Wms {
       Service: {},
       version: ''
     };
-
+    this.loading = false;
     this.loadError = false;
 
     //this.loadGetCapabilities();
   }
 
   loadGetCapabilities() {
+    this.loading = true;
+
     var body = {
       proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
     };
@@ -75,6 +78,8 @@ export class Wms {
     var capsJson: JSON = this.olParser.read(res);
     if (capsJson) {
       this.loadError = false;
+      this.loading = false;
+
       this.capabilities = capsJson;
       this.capabilities.url = this.wmsUrl;
       this.capabilities.fullUrl = `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`;

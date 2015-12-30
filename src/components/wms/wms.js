@@ -30,10 +30,12 @@ var Wms = (function () {
             Service: {},
             version: ''
         };
+        this.loading = false;
         this.loadError = false;
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
+        this.loading = true;
         var body = {
             proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
         };
@@ -48,6 +50,7 @@ var Wms = (function () {
         var capsJson = this.olParser.read(res);
         if (capsJson) {
             this.loadError = false;
+            this.loading = false;
             this.capabilities = capsJson;
             this.capabilities.url = this.wmsUrl;
             this.capabilities.fullUrl = this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request;
