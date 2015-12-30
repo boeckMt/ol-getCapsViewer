@@ -18,7 +18,7 @@ var LayerList = (function () {
     }
     LayerList.prototype.sendLayerData = function (layer) {
         this.selectedLayer = layer.Name;
-        this.evt.emitter.next(layer);
+        this.evt.layerEmitter.next(layer);
     };
     __decorate([
         angular2_1.Input(), 

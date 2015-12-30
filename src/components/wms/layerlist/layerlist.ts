@@ -30,7 +30,7 @@ export class LayerList {
 
   sendLayerData(layer: any) {
     this.selectedLayer = layer.Name;
-    this.evt.emitter.next(layer);
+    this.evt.layerEmitter.next(layer);
   }
 
 }

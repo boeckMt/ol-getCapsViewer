@@ -17,17 +17,24 @@ export class LayerDetail {
   //@Input() layer: Object;
 
   map: ol.Map;
+  baseLayer: ol.layer.Tile;
+  wmsLayer: ol.layer.Tile;
+  bboxLayer: ol.layer.Vector;
   options: olx.MapOptions;
   viewOptions: olx.ViewOptions;
   view: any;
   ldetail: Object;
 
   constructor(evt: EventService) {
-    evt.emitter.subscribe((data) => {
+    evt.layerEmitter.subscribe((data) => {
+      console.log(data)
       this.ldetail = data;
       this.addLayer(data);
     });
 
+    evt.capsEmitter.subscribe((data) => {
+      this.removeOverlays();
+    });
 
     var _target: HTMLElement = document.getElementById("map");
 
@@ -38,24 +45,20 @@ export class LayerDetail {
       }
 
       this.view = new ol.View(this.viewOptions)
+      this.baseLayer = new ol.layer.Tile({
+        opacity: 0.5,
+        source: new ol.source.XYZ({
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+          attributions: [new ol.Attribution({
+            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
+          })]
+        })
+      })
 
       this.options = {
         target: _target,
-        //controls: ol.control.defaults({ attribution: false }).extend([new ol.control.Attribution()]),
         layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-/*
-            opacity: 0.5,
-            source: new ol.source.XYZ({
-              url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
-              attributions: new ol.Attribution({
-                html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
-              })
-            })
-*/
-
-          })
+          this.baseLayer
         ],
         view: this.view
       }
@@ -75,7 +78,7 @@ export class LayerDetail {
     // create a service that we can subscribe to and submit events
     // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
     _layer.url = this.capabilities.url;
-    this.removeAllLayers();
+    this.removeOverlays();
     console.log(_layer)
     var _url = _layer.url;
     var _layers = _layer.Name;
@@ -108,10 +111,10 @@ export class LayerDetail {
 
       _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857')
     }
-    console.log(_extent)
+    //console.log(_extent)
 
     //--------------------------------------------------------------------------
-    var layer = new ol.layer.Tile({
+    this.wmsLayer = new ol.layer.Tile({
       extent: _extent,
       source: new ol.source.TileWMS({
         url: _url,
@@ -122,23 +125,21 @@ export class LayerDetail {
       })
     })
 
+    this.bboxLayer = this.createBboxLayer(_extent);
 
-    this.addBboxLayer(_extent);
-    this.map.addLayer(layer);
+
+
+    this.map.addLayer(this.wmsLayer);
+    this.map.addLayer(this.bboxLayer);
+
     this.map.getView().fit(_extent, this.map.getSize());
-
+    console.log(this.map.getLayers().getArray())
   }
 
-  removeAllLayers(): void {
-    var layers = this.map.getLayers();
-
-    layers.forEach((layer, index) => {
-      if (index != 0) {
-        this.map.removeLayer(layer)
-      }
-      //console.log(layer, index)
-    })
-
+  removeOverlays(): void {
+    this.map.removeLayer(this.bboxLayer)
+    this.map.removeLayer(this.wmsLayer)
+    console.log(this.map.getLayers().getArray())
   }
 
   checkExtentLatLng(extent: Array<number>): boolean {
@@ -183,9 +184,7 @@ export class LayerDetail {
     return _coordinate;
   }
 
-  addBboxLayer(extent: __Ol.Extent): void {
-    this.removeAllLayers();
-
+  createBboxLayer(extent: __Ol.Extent): ol.layer.Vector  {
     var polygonFeature = new ol.Feature(ol.geom.Polygon.fromExtent(extent));
 
     var extentLayer = new ol.layer.Vector({
@@ -194,7 +193,7 @@ export class LayerDetail {
       })
     })
 
-    this.map.addLayer(extentLayer)
+    return extentLayer;
   }
 
 

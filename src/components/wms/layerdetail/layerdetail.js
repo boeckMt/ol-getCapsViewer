@@ -13,9 +13,13 @@ var eventservice_1 = require('../helpers/eventservice');
 var LayerDetail = (function () {
     function LayerDetail(evt) {
         var _this = this;
-        evt.emitter.subscribe(function (data) {
+        evt.layerEmitter.subscribe(function (data) {
+            console.log(data);
             _this.ldetail = data;
             _this.addLayer(data);
+        });
+        evt.capsEmitter.subscribe(function (data) {
+            _this.removeOverlays();
         });
         var _target = document.getElementById("map");
         if (!_target.hasChildNodes()) {
@@ -24,12 +28,19 @@ var LayerDetail = (function () {
                 zoom: 2
             };
             this.view = new ol.View(this.viewOptions);
+            this.baseLayer = new ol.layer.Tile({
+                opacity: 0.5,
+                source: new ol.source.XYZ({
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+                    attributions: [new ol.Attribution({
+                            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
+                        })]
+                })
+            });
             this.options = {
                 target: _target,
                 layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    })
+                    this.baseLayer
                 ],
                 view: this.view
             };
@@ -42,7 +53,7 @@ var LayerDetail = (function () {
     }
     LayerDetail.prototype.addLayer = function (_layer) {
         _layer.url = this.capabilities.url;
-        this.removeAllLayers();
+        this.removeOverlays();
         console.log(_layer);
         var _url = _layer.url;
         var _layers = _layer.Name;
@@ -69,8 +80,7 @@ var LayerDetail = (function () {
             }
             _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
         }
-        console.log(_extent);
-        var layer = new ol.layer.Tile({
+        this.wmsLayer = new ol.layer.Tile({
             extent: _extent,
             source: new ol.source.TileWMS({
                 url: _url,
@@ -78,18 +88,16 @@ var LayerDetail = (function () {
                 serverType: 'geoserver'
             })
         });
-        this.addBboxLayer(_extent);
-        this.map.addLayer(layer);
+        this.bboxLayer = this.createBboxLayer(_extent);
+        this.map.addLayer(this.wmsLayer);
+        this.map.addLayer(this.bboxLayer);
         this.map.getView().fit(_extent, this.map.getSize());
+        console.log(this.map.getLayers().getArray());
     };
-    LayerDetail.prototype.removeAllLayers = function () {
-        var _this = this;
-        var layers = this.map.getLayers();
-        layers.forEach(function (layer, index) {
-            if (index != 0) {
-                _this.map.removeLayer(layer);
-            }
-        });
+    LayerDetail.prototype.removeOverlays = function () {
+        this.map.removeLayer(this.bboxLayer);
+        this.map.removeLayer(this.wmsLayer);
+        console.log(this.map.getLayers().getArray());
     };
     LayerDetail.prototype.checkExtentLatLng = function (extent) {
         var max;
@@ -133,15 +141,14 @@ var LayerDetail = (function () {
         }
         return _coordinate;
     };
-    LayerDetail.prototype.addBboxLayer = function (extent) {
-        this.removeAllLayers();
+    LayerDetail.prototype.createBboxLayer = function (extent) {
         var polygonFeature = new ol.Feature(ol.geom.Polygon.fromExtent(extent));
         var extentLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 features: [polygonFeature]
             })
         });
-        this.map.addLayer(extentLayer);
+        return extentLayer;
     };
     __decorate([
         angular2_1.Input(), 

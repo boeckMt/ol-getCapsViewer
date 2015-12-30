@@ -9,13 +9,13 @@ import __Ol = ol;
 
 import {LayerList} from './layerlist/layerlist';
 import {LayerDetail} from './layerdetail/layerdetail';
+import {EventService} from './helpers/eventservice';
 
 
 @Component({
   selector: 'wms',
   templateUrl: './components/wms/wms.html',
-  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, LayerList, LayerDetail],
-  events: ['capsLoaded']
+  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, LayerList, LayerDetail]
 })
 
 
@@ -29,11 +29,13 @@ export class Wms {
   request: string;
   http: Http;
   olParser: any = new __Ol.format.WMSCapabilities();
-  capsLoaded = new EventEmitter();
   loadError: boolean;
+  evt: any;
 
-  constructor(location: Location, http: Http) {
-    this.location = location;
+  constructor(location: Location, http: Http, evt: EventService) {
+
+    //this.location = location;
+    this.evt = evt;
     this.http = http;
 
     this.service = 'wms';
@@ -76,7 +78,7 @@ export class Wms {
       this.capabilities = capsJson;
       this.capabilities.url = this.wmsUrl;
       this.capabilities.fullUrl = `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`;
-      this.capsLoaded.next('caps loaded');
+      this.evt.capsEmitter.next('loaded');
       console.log(this.capabilities)
     }
   }
@@ -91,8 +93,9 @@ export class Wms {
     console.error(`There was an error:${err}`);
   }
 
-
+/*
   getLinkStyle(path) {
     return this.location.path().indexOf(path) > -1;
   }
+*/
 }

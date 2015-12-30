@@ -15,11 +15,11 @@ var http_1 = require('angular2/http');
 var __Ol = ol;
 var layerlist_1 = require('./layerlist/layerlist');
 var layerdetail_1 = require('./layerdetail/layerdetail');
+var eventservice_1 = require('./helpers/eventservice');
 var Wms = (function () {
-    function Wms(location, http) {
+    function Wms(location, http, evt) {
         this.olParser = new __Ol.format.WMSCapabilities();
-        this.capsLoaded = new angular2_1.EventEmitter();
-        this.location = location;
+        this.evt = evt;
         this.http = http;
         this.service = 'wms';
         this.wmsversion = '1.1.1';
@@ -51,7 +51,7 @@ var Wms = (function () {
             this.capabilities = capsJson;
             this.capabilities.url = this.wmsUrl;
             this.capabilities.fullUrl = this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request;
-            this.capsLoaded.next('caps loaded');
+            this.evt.capsEmitter.next('loaded');
             console.log(this.capabilities);
         }
     };
@@ -64,17 +64,13 @@ var Wms = (function () {
         this.loadError = true;
         console.error("There was an error:" + err);
     };
-    Wms.prototype.getLinkStyle = function (path) {
-        return this.location.path().indexOf(path) > -1;
-    };
     Wms = __decorate([
         angular2_1.Component({
             selector: 'wms',
             templateUrl: './components/wms/wms.html',
-            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.CORE_DIRECTIVES, layerlist_1.LayerList, layerdetail_1.LayerDetail],
-            events: ['capsLoaded']
+            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.CORE_DIRECTIVES, layerlist_1.LayerList, layerdetail_1.LayerDetail]
         }), 
-        __metadata('design:paramtypes', [router_2.Location, http_1.Http])
+        __metadata('design:paramtypes', [router_2.Location, http_1.Http, eventservice_1.EventService])
     ], Wms);
     return Wms;
 })();
