@@ -25,7 +25,7 @@ var LayerDetail = (function () {
                 source: new ol.source.XYZ({
                     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
                     attributions: [new ol.Attribution({
-                            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
+                            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer" target="_blank">ArcGIS</a>'
                         })]
                 })
             });
@@ -54,45 +54,34 @@ var LayerDetail = (function () {
         }
     }
     LayerDetail.prototype.addLayer = function (_layer) {
-        _layer.url = this.capabilities.url;
-        this.removeOverlays();
         console.log(_layer);
-        var _url = _layer.url;
+        this.removeOverlays();
+        var _url = _layer.url = this.capabilities.url;
         var _layers = _layer.Name;
-        var crs = 'EPSG:4326';
-        var _extent;
-        if (_layer.EX_GeographicBoundingBox) {
-            crs = 'EPSG:4326';
-            _extent = _layer.EX_GeographicBoundingBox;
+        var _attribution;
+        if (!_layer.Attribution) {
+            _attribution = new ol.Attribution({
+                html: "&copy <a href=\"" + _url + "\" target=\"_blank\">" + _layer.Name + "</a>"
+            });
         }
         else {
-            _extent = _layer.BoundingBox[0].extent;
-            if (_layer.BoundingBox[0].crs) {
-                crs = _layer.BoundingBox[0].crs;
-            }
+            _attribution = new ol.Attribution({
+                html: "&copy <a href=\"" + _url + "\" target=\"_blank\">" + _layer.Attribution + "</a>"
+            });
         }
-        if (this.checkExtentLatLng(_extent)) {
-            for (var i = 0; i < _extent.length; i++) {
-                if (i == 0 || i == 2) {
-                    _extent[i] = this.adjustLngInfCoos(_extent[i]);
-                }
-                else if (i == 1 || i == 3) {
-                    _extent[i] = this.adjustLatInfCoos(_extent[i]);
-                }
-            }
-            _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
-        }
+        var _extent = this.extentBuilder(_layer);
         this.wmsLayer = new ol.layer.Tile({
             extent: _extent,
             source: new ol.source.TileWMS({
                 url: _url,
                 params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version },
-                serverType: 'geoserver'
+                serverType: 'geoserver',
+                attributions: []
             })
         });
         this.bboxLayer = this.createBboxLayer(_extent);
-        this.map.addLayer(this.wmsLayer);
         this.map.addLayer(this.bboxLayer);
+        this.map.addLayer(this.wmsLayer);
         this.map.getView().fit(_extent, this.map.getSize());
         console.log(this.map.getLayers().getArray());
     };

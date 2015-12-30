@@ -23,6 +23,7 @@ Start a Webserver and launch index.html: npm run serve
 * Zoom to the Layer Extent
 
 ## Status: in development !!!
+* Check Layer crs and Extent...
 * Show further Capabilities like the [Geoportal Capabilities-Viewer](https://geoportal.bayern.de/getcapabilities)
 * Handle versions 1.1.1 and 1.3.0
 * Handle Projections...

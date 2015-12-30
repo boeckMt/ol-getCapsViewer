@@ -10,6 +10,9 @@ body {
   -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0), 0 0 0 0 rgba(0,0,0,0);
   box-shadow: 0 0 0 0 rgba(0,0,0,0), 0 0 0 0 rgba(0,0,0,0);
 }
+.search-view nav label i {
+  cursor: pointer;
+}
 .search-view .input-field {
   height: 64px;
 }
@@ -35,13 +38,18 @@ body {
   color: #000;
   background: no-repeat #fff;
 }
+.search-view select:focus option {
+  outline: none;
+}
+.search-view select:focus option:hover {
+  color: #000;
+  background: #ee6e73;
+  -webkit-box-shadow: 0 0 10px 100px #ee6e73 inset;
+  box-shadow: 0 0 10px 100px #ee6e73 inset;
+}
 .search-view select option {
   padding: 1em;
   border: none;
-}
-.search-view select option [selected="selected"] {
-  color: #000;
-  background: no-repeat #ee6e73;
 }
 .list-view {
   height: 800px;

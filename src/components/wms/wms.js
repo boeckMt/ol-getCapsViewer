@@ -37,18 +37,23 @@ var Wms = (function () {
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
-        this.loading = true;
-        this.loadError = false;
-        this.capabilities = this.emptyCaps;
-        var body = {
-            proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
-        };
-        this.http.request(new http_1.Request({
-            method: http_1.RequestMethod.Post,
-            url: '/proxy',
-            body: JSON.stringify(body),
-            headers: new http_1.Headers({ 'Content-Type': 'application/json' })
-        })).map(function (res) { return res.text(); }).subscribe(function (res) { return _this.handleResult(res); }, function (err) { return _this.handleError(err); });
+        if (this.wmsUrl) {
+            this.loading = true;
+            this.loadError = false;
+            this.capabilities = this.emptyCaps;
+            var body = {
+                proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
+            };
+            this.http.request(new http_1.Request({
+                method: http_1.RequestMethod.Post,
+                url: '/proxy',
+                body: JSON.stringify(body),
+                headers: new http_1.Headers({ 'Content-Type': 'application/json' })
+            })).map(function (res) { return res.text(); }).subscribe(function (res) { return _this.handleResult(res); }, function (err) { return _this.handleError(err); });
+        }
+        else {
+            console.log('no url provided!');
+        }
     };
     Wms.prototype.handleResult = function (res) {
         var capsJson = this.olParser.read(res);
@@ -67,6 +72,9 @@ var Wms = (function () {
         this.loadError = true;
         this.loading = false;
         console.error("There was an error:" + err);
+    };
+    Wms.prototype.clearWmsUrl = function () {
+        this.wmsUrl = '';
     };
     Wms = __decorate([
         angular2_1.Component({

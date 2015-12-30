@@ -41,7 +41,7 @@ export class LayerDetail {
         source: new ol.source.XYZ({
           url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
           attributions: [new ol.Attribution({
-            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer">ArcGIS</a>'
+            html: '&copy <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer" target="_blank">ArcGIS</a>'
           })]
         })
       })
@@ -77,49 +77,28 @@ export class LayerDetail {
   }
 
 
-  addLayer(_layer: any): void {
+  addLayer(_layer: __Wms1_1_1.Layer): void {
     // create a service that we can subscribe to and submit events
     // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
-    _layer.url = this.capabilities.url;
-    this.removeOverlays();
     console.log(_layer)
-    var _url = _layer.url;
+    this.removeOverlays();
+
+    var _url = _layer.url = this.capabilities.url
     var _layers = _layer.Name;
+    var _attribution;
 
-
-
-    var crs = 'EPSG:4326';
-    var _extent;
-
-
-    //version 1.3.0
-    if (_layer.EX_GeographicBoundingBox) {
-      crs = 'EPSG:4326';
-      _extent = _layer.EX_GeographicBoundingBox;
-    } else { //version 1.1.1
-      _extent = _layer.BoundingBox[0].extent;
-
-      if (_layer.BoundingBox[0].crs) {
-        crs = _layer.BoundingBox[0].crs;
-      }
-    }
-
-    if (this.checkExtentLatLng(_extent)) {
-
-      //change -/+ 180 and 90 values
-      for (let i = 0; i < _extent.length; i++) {
-        if (i == 0 || i == 2) {
-          _extent[i] = this.adjustLngInfCoos(_extent[i]);
-        } else if (i == 1 || i == 3) {
-          _extent[i] = this.adjustLatInfCoos(_extent[i]);
-        }
-      }
-
-      _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857')
+    if (!_layer.Attribution) {
+      _attribution = new ol.Attribution({
+        html: `&copy <a href="${_url}" target="_blank">${_layer.Name}</a>`
+      })
+    } else {
+      _attribution = new ol.Attribution({
+        html: `&copy <a href="${_url}" target="_blank">${_layer.Attribution}</a>`
+      })
     }
 
 
-    //console.log(_extent)
+    var _extent = this.extentBuilder(_layer);
 
     //--------------------------------------------------------------------------
     this.wmsLayer = new ol.layer.Tile({
@@ -129,16 +108,16 @@ export class LayerDetail {
         params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version },
         //params:{'BBOX':'', 'CRS':'', 'FORMAT':'', 'HEIGHT':'', 'LAYERS':'', 'REQUEST':'', 'SERVICE':'', 'STYLES':'', 'TILED	':'',
         //'TRANSPARENT':'', 'VERSION':'', 'WIDTH':''}
-        serverType: 'geoserver'
+        serverType: 'geoserver',
+        attributions: []
       })
     })
 
     this.bboxLayer = this.createBboxLayer(_extent);
 
 
-
-    this.map.addLayer(this.wmsLayer);
     this.map.addLayer(this.bboxLayer);
+    this.map.addLayer(this.wmsLayer);
 
     this.map.getView().fit(_extent, this.map.getSize());
     console.log(this.map.getLayers().getArray())
@@ -208,11 +187,11 @@ export class LayerDetail {
     var _extent;
     var crs = 'EPSG:4326';
 
-    //version 1.3.0
+    // check available extents
     if (layer.EX_GeographicBoundingBox) {
       crs = 'EPSG:4326';
       _extent = layer.EX_GeographicBoundingBox;
-    } else { //version 1.1.1
+    } else {
       _extent = layer.BoundingBox[0].extent;
 
       if (layer.BoundingBox[0].crs) {

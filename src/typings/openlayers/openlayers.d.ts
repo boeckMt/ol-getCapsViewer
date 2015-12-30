@@ -156,6 +156,9 @@ declare module olx {
 
         /** experimental Whether to wrap the world horizontally. When set to false, only one world will be rendered. When true, tiles will be requested for one world only, but they will be wrapped horizontally to render multiple worlds. The default is true. */
         wrapX?: boolean;
+
+        /**  Array.<ol.Attribution> | undefined  ttributions. */
+        attributions: Array<ol.Attribution>;
     }
     /**
      * Object literal with config options for the map logo.

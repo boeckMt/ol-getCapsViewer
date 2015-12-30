@@ -69,25 +69,28 @@ export class Wms {
     // http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.xml
   }
 
-  loadGetCapabilities() {
-    this.loading = true;
-    this.loadError = false;
-    this.capabilities = this.emptyCaps;
+  loadGetCapabilities(): void {
+    if(this.wmsUrl){
+      this.loading = true;
+      this.loadError = false;
+      this.capabilities = this.emptyCaps;
 
-    var body = {
-      proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
-    };
+      var body = {
+        proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
+      };
 
-    this.http.request(new Request({
-      method: RequestMethod.Post,
-      url: '/proxy',
-      body: JSON.stringify(body),
-      headers: new Headers({ 'Content-Type': 'application/json' })
-    })).map((res: Response) => res.text()).subscribe(res => this.handleResult(res), err => this.handleError(err));
-
+      this.http.request(new Request({
+        method: RequestMethod.Post,
+        url: '/proxy',
+        body: JSON.stringify(body),
+        headers: new Headers({ 'Content-Type': 'application/json' })
+      })).map((res: Response) => res.text()).subscribe(res => this.handleResult(res), err => this.handleError(err));
+    }else{
+      console.log('no url provided!')
+    }
   }
 
-  handleResult(res) {
+  handleResult(res): void {
     var capsJson: JSON = this.olParser.read(res);
     if (capsJson) {
       this.loadError = false;
@@ -101,11 +104,15 @@ export class Wms {
     }
   }
 
-  handleError(err) {
+  handleError(err): void {
     this.capabilities = this.emptyCaps;
     this.loadError = true;
     this.loading = false;
     console.error(`There was an error:${err}`);
+  }
+
+  clearWmsUrl():void{
+    this.wmsUrl = '';
   }
 
 }
