@@ -1,4 +1,4 @@
-"use strict";
+/// <reference path="../../../typings/tsd.d.ts" />
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -54,6 +54,8 @@ var LayerDetail = (function () {
         }
     }
     LayerDetail.prototype.addLayer = function (_layer) {
+        // create a service that we can subscribe to and submit events
+        // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
         console.log(_layer);
         this.removeOverlays();
         var _url = _layer.url = this.capabilities.url;
@@ -70,11 +72,14 @@ var LayerDetail = (function () {
             });
         }
         var _extent = this.extentBuilder(_layer);
+        //--------------------------------------------------------------------------
         this.wmsLayer = new ol.layer.Tile({
             extent: _extent,
             source: new ol.source.TileWMS({
                 url: _url,
                 params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version },
+                //params:{'BBOX':'', 'CRS':'', 'FORMAT':'', 'HEIGHT':'', 'LAYERS':'', 'REQUEST':'', 'SERVICE':'', 'STYLES':'', 'TILED	':'',
+                //'TRANSPARENT':'', 'VERSION':'', 'WIDTH':''}
                 serverType: 'geoserver',
                 attributions: []
             })
@@ -144,6 +149,7 @@ var LayerDetail = (function () {
     LayerDetail.prototype.extentBuilder = function (layer) {
         var _extent;
         var crs = 'EPSG:4326';
+        // check available extents
         if (layer.EX_GeographicBoundingBox) {
             crs = 'EPSG:4326';
             _extent = layer.EX_GeographicBoundingBox;
@@ -155,6 +161,7 @@ var LayerDetail = (function () {
             }
         }
         if (this.checkExtentLatLng(_extent)) {
+            //change -/+ 180 and 90 values
             for (var i = 0; i < _extent.length; i++) {
                 if (i == 0 || i == 2) {
                     _extent[i] = this.adjustLngInfCoos(_extent[i]);

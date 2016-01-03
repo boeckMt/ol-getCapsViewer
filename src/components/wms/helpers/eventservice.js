@@ -1,4 +1,4 @@
-"use strict";
+/// <reference path="../../../typings/tsd.d.ts" />
 var angular2_1 = require('angular2/angular2');
 var EventService = (function () {
     function EventService() {

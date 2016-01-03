@@ -1,23 +1,8 @@
 var gulp = require('gulp');
-var server = require('gulp-server-livereload');
 var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var _open = require('open');
-gulp.task('webserver', function () {
-    gulp.src('./')
-        .pipe(server({
-        livereload: true,
-        directoryListing: true,
-        defaultFile: "index.html",
-        open: true,
-        port: 9005,
-        proxies: [{
-                source: '/geoserver/wms',
-                target: '*'
-            }]
-    }));
-});
 gulp.task('proxyserver', function () {
     var port = 9005;
     var app = express();
@@ -31,6 +16,7 @@ gulp.task('proxyserver', function () {
     app.post('/proxy', function (req, res) {
         var proxyUrl = req.body.proxy;
         request.get({
+            timeout: 1000,
             url: proxyUrl
         }, function (error, response, body) {
             if (error) {

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,12 +18,14 @@ var eventservice_1 = require('./helpers/eventservice');
 var Wms = (function () {
     function Wms(location, http, evt) {
         this.olParser = new __Ol.format.WMSCapabilities();
+        //this.location = location;
         this.evt = evt;
         this.http = http;
         this.service = 'wms';
         this.wmsversion = '1.1.1';
         this.request = 'GetCapabilities';
         this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
+        //If you want an empty object of an interface, you can do just:
         this.emptyCaps = {
             Capability: {},
             Service: {},
@@ -33,7 +34,13 @@ var Wms = (function () {
         this.capabilities = this.emptyCaps;
         this.loading = false;
         this.loadError = false;
+        //in route change
         this.evt.capsEmitter.next('clear Map');
+        //this.loadGetCapabilities();
+        //  './httpSampleData/getcapabilities_1.1.1.xml'
+        //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
+        // https://geodienste.sachsen.de/wms_geosn_dtk-p-color/guest
+        // http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.xml
     }
     Wms.prototype.loadGetCapabilities = function () {
         var _this = this;
