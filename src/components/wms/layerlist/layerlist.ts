@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import {Component, CORE_DIRECTIVES, Input, Output, EventEmitter} from 'angular2/angular2';
-
+import {Component,Input, Output, EventEmitter} from 'angular2/core';
+import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {StartsWithPipe} from '../helpers/startswithpipe';
 import {EventService} from '../helpers/eventservice';

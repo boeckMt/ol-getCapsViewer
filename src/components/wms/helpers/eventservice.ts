@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import {EventEmitter} from 'angular2/angular2';
+import {EventEmitter} from 'angular2/core';
 
 export class EventService {
   layerEmitter: any;

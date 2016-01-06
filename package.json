@@ -17,7 +17,8 @@
     "start": "",
     "test": "",
     "serve": "gulp proxyserver",
-    "serveLive": "gulp webserver",
+    "bundle": "gulp bundle",
+    "concat": "gulp concat",
     "tsc": "tsc --watch -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators --jsx react ./src/wms-app.ts"
   },
   "main": "",
@@ -30,7 +31,6 @@
     "url": "https://github.com/boeckMt/ol-getCapsViewer/issues"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.52",
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "jquery": "^2.1.4",
@@ -38,11 +38,21 @@
     "open": "0.0.5",
     "openlayers": "^3.12.0",
     "request": "^2.67.0",
-    "rxjs": "5.0.0-alpha.14",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+
+    "angular2": "2.0.0-beta.0",
+    "systemjs": "0.19.6",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "0.5.10"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "jspm": "^0.16.19",
+    "systemjs-builder": "^0.14.15",
     "typescript": "^1.7.3"
   },
   "engines": {

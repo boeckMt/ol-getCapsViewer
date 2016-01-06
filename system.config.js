@@ -5,9 +5,13 @@ System.config({
   paths: {
     'rxjs/observable/*': '../node_modules/rxjs/add/observable/*.js',
     'rxjs/operator/*': '../node_modules/rxjs/add/operator/*.js',
-    'rxjs/*': '../node_modules/rxjs/*.js'
+    'rxjs/*': '../node_modules/rxjs/*.js',
+    'angular2/*': '../node_modules/angular2/*.js'
   }
   /*
+  bundles: {
+    'wms-app': ['componets/wms/wms', 'componets/wms/layerlist/layerlist', 'componets/wms/layerdetail/layerdetail']
+  }
   bundles: {
     'wms-app': ['componets/wms/wms', 'componets/wms/layerlist/layerlist', 'componets/wms/layerdetail/layerdetail']
   },
