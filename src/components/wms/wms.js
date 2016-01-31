@@ -39,41 +39,46 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', 'angular
             __Ol = ol;
             Wms = (function () {
                 function Wms(location, http, evt) {
-                    this.olParser = new __Ol.format.WMSCapabilities();
-                    //this.location = location;
-                    this.evt = evt;
+                    this.location = location;
                     this.http = http;
+                    this.evt = evt;
+                    this.olParser = new __Ol.format.WMSCapabilities();
                     this.service = 'wms';
                     this.wmsversion = '1.1.1';
                     this.request = 'GetCapabilities';
                     this.wmsUrl = 'http://demo.boundlessgeo.com/geoserver/wms';
-                    //If you want an empty object of an interface, you can do just:
-                    this.emptyCaps = {
-                        Capability: {},
-                        Service: {},
-                        version: ''
-                    };
-                    this.capabilities = this.emptyCaps;
-                    this.loading = false;
-                    this.loadError = false;
-                    //in route change
-                    this.evt.capsEmitter.next('clear Map');
                     //this.loadGetCapabilities();
                     //  './httpSampleData/getcapabilities_1.1.1.xml'
                     //  http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer
                     // https://geodienste.sachsen.de/wms_geosn_dtk-p-color/guest
                     // http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.xml
+                    this.initCaps();
+                    //in route change
+                    this.evt.capsEmitter.next('clear Map');
                 }
+                Wms.prototype.initCaps = function () {
+                    var emptyCaps = {
+                        Capability: {},
+                        Service: {},
+                        version: ''
+                    };
+                    this.capabilities = emptyCaps;
+                    this.evt.capsEmitter.next(this.capabilities);
+                    this.loading = false;
+                    this.loadError = false;
+                };
                 Wms.prototype.loadGetCapabilities = function () {
                     var _this = this;
+                    this.initCaps();
                     if (this.wmsUrl) {
                         this.loading = true;
-                        this.loadError = false;
-                        this.capabilities = this.emptyCaps;
+                        //this.loadError = false;
+                        //this.capabilities = this.emptyCaps;
+                        //this.evt.capsEmitter.next(this.capabilities);
                         var body = {
                             proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
                         };
-                        this.http.request(new http_1.Request({
+                        this.reqObj = this.http.request(new http_1.Request({
                             method: http_1.RequestMethod.Post,
                             url: '/proxy',
                             body: JSON.stringify(body),
@@ -97,13 +102,18 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', 'angular
                     }
                 };
                 Wms.prototype.handleError = function (err) {
-                    this.capabilities = this.emptyCaps;
+                    this.initCaps();
                     this.loadError = true;
-                    this.loading = false;
                     console.error("There was an error:" + err);
                 };
                 Wms.prototype.clearWmsUrl = function () {
                     this.wmsUrl = '';
+                    this.cancelRequest();
+                };
+                Wms.prototype.cancelRequest = function () {
+                    //this.reqObj.next('canceled');
+                    this.reqObj.complete();
+                    this.initCaps();
                 };
                 Wms = __decorate([
                     core_1.Component({

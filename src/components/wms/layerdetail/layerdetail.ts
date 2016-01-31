@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, EventEmitter,ViewChild} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import __Wms1_1_1 = Wms1_1_1;
@@ -15,8 +15,8 @@ import {EventService} from '../helpers/eventservice';
 })
 
 export class LayerDetail {
+  @ViewChild('mapDiv') mapDiv;
   @Input() capabilities: any; // stored value
-  //@Input() layer: Object;
 
   map: ol.Map;
   baseLayer: ol.layer.Tile;
@@ -27,10 +27,18 @@ export class LayerDetail {
   view: any;
   ldetail: Object;
 
-  constructor(evt: EventService) {
-    var _target: HTMLElement = document.getElementById("map");
+  constructor(private evt: EventService) {
 
-    if (!_target.hasChildNodes()) {
+  }
+
+  ngAfterViewInit() {
+    // viewChild is updated after the view has been initialized
+    var _target: Element = this.mapDiv.nativeElement;
+    this.initMap(_target, this.evt);
+  }
+
+  initMap(_target: Element, evt: EventService){
+    if (_target && !_target.hasChildNodes()) {
       this.viewOptions = {
         center: ol.proj.fromLonLat([0, 0], 'EPSG:3857'),
         zoom: 2
@@ -75,6 +83,7 @@ export class LayerDetail {
         this.removeOverlays();
       });
     }
+
   }
 
 
@@ -127,7 +136,7 @@ export class LayerDetail {
   removeOverlays(): void {
     this.map.removeLayer(this.bboxLayer)
     this.map.removeLayer(this.wmsLayer)
-    console.log(this.map.getLayers().getArray())
+    //console.log(this.map.getLayers().getArray())
   }
 
   checkExtentLatLng(extent: Array<number>): boolean {

@@ -26,9 +26,16 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
         execute: function() {
             LayerDetail = (function () {
                 function LayerDetail(evt) {
+                    this.evt = evt;
+                }
+                LayerDetail.prototype.ngAfterViewInit = function () {
+                    // viewChild is updated after the view has been initialized
+                    var _target = this.mapDiv.nativeElement;
+                    this.initMap(_target, this.evt);
+                };
+                LayerDetail.prototype.initMap = function (_target, evt) {
                     var _this = this;
-                    var _target = document.getElementById("map");
-                    if (!_target.hasChildNodes()) {
+                    if (_target && !_target.hasChildNodes()) {
                         this.viewOptions = {
                             center: ol.proj.fromLonLat([0, 0], 'EPSG:3857'),
                             zoom: 2
@@ -66,7 +73,7 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                             _this.removeOverlays();
                         });
                     }
-                }
+                };
                 LayerDetail.prototype.addLayer = function (_layer) {
                     // create a service that we can subscribe to and submit events
                     // Then we use the dependency injection mechanism to inject that service anywhere on the application where we need it.
@@ -107,7 +114,7 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                 LayerDetail.prototype.removeOverlays = function () {
                     this.map.removeLayer(this.bboxLayer);
                     this.map.removeLayer(this.wmsLayer);
-                    console.log(this.map.getLayers().getArray());
+                    //console.log(this.map.getLayers().getArray())
                 };
                 LayerDetail.prototype.checkExtentLatLng = function (extent) {
                     var max;
@@ -188,6 +195,10 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                     }
                     return _extent;
                 };
+                __decorate([
+                    core_1.ViewChild('mapDiv'), 
+                    __metadata('design:type', Object)
+                ], LayerDetail.prototype, "mapDiv", void 0);
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)

@@ -20,24 +20,27 @@ import __Wms1_1_1 = Wms1_1_1;
 export class LayerList {
   filter: string;
   selectedLayer: string;
-  evt: any;
-
   capabilitys: __Wms1_1_1.GetCapabilities;
   layersarray: Array<__Wms1_1_1.Layer> = [];
   layer: __Wms1_1_1.Layer;
 
 
-  constructor(evt: EventService) {
+  constructor(private evt: EventService) {
     this.filter = '';
-    this.evt = evt;
 
     evt.capsEmitter.subscribe((data: __Wms1_1_1.GetCapabilities) => {
-      this.capabilitys = data;
-
-      if(!data.Capability.Layer.Layer){
-        this.layersarray = [data.Capability.Layer];
-      }else{
-          this.layersarray = data.Capability.Layer.Layer;
+      console.log(data)
+      if(data.Capability){
+        this.capabilitys = data;
+        if(Object.keys(data.Capability).length != 0){
+          if(!data.Capability.Layer.Layer){
+            this.layersarray = [data.Capability.Layer];
+          }else{
+              this.layersarray = data.Capability.Layer.Layer;
+          }
+        }else{
+          this.layersarray = [];
+        }
       }
     });
   }

@@ -30,16 +30,24 @@ System.register(['angular2/core', 'angular2/common', '../helpers/startswithpipe'
             LayerList = (function () {
                 function LayerList(evt) {
                     var _this = this;
+                    this.evt = evt;
                     this.layersarray = [];
                     this.filter = '';
-                    this.evt = evt;
                     evt.capsEmitter.subscribe(function (data) {
-                        _this.capabilitys = data;
-                        if (!data.Capability.Layer.Layer) {
-                            _this.layersarray = [data.Capability.Layer];
-                        }
-                        else {
-                            _this.layersarray = data.Capability.Layer.Layer;
+                        console.log(data);
+                        if (data.Capability) {
+                            _this.capabilitys = data;
+                            if (Object.keys(data.Capability).length != 0) {
+                                if (!data.Capability.Layer.Layer) {
+                                    _this.layersarray = [data.Capability.Layer];
+                                }
+                                else {
+                                    _this.layersarray = data.Capability.Layer.Layer;
+                                }
+                            }
+                            else {
+                                _this.layersarray = [];
+                            }
                         }
                     });
                 }

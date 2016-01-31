@@ -16,8 +16,7 @@
   <!-- ####################################################################  -->
 
 
-  <!-- <script src="../dist/node_modules.bundle.js"></script> -->
-
+<!-- <script src="../dist/node_modules.bundle.js"></script> -->
   <script src="../node_modules/underscore/underscore-min.js"></script>
   <script src="../node_modules/openlayers/dist/ol.js"></script>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
@@ -27,7 +26,9 @@
   <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
   <script src="../node_modules/angular2/bundles/http.dev.js"></script>
   <script src="../node_modules/angular2/bundles/router.dev.js"></script>
-  <script src="../node_modules/rxjs/bundles/Rx.umd.js"></script>
+  <!-- <script src="../node_modules/rxjs/bundles/Rx.umd.js"></script> -->
+  <!-- TODO bundle rxjs so that it's working... -->
+
 </head>
 
 <body>
@@ -35,6 +36,7 @@
   <wms-app></wms-app>
 
   <!-- <script src="../dist/wms-app.bundle.js"></script> -->
+  <!-- TODO bundle wms-app without rxjs and angular2????... -->
   <script>
     System.import('./wms-app');
   </script>

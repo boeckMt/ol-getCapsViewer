@@ -4,11 +4,11 @@
       <form on-submit="loadGetCapabilities()" class="input-field col s10">
         <input bindon-ngModel="wmsUrl" id="search" type="search" required>
         <label for="search">
-          <span on-click="loadGetCapabilities()">
+          <span on-click="loadGetCapabilities()" title="load">
             <i class="mdi mdi-action-search"></i>
           </span>
         </label>
-        <i class="mdi mdi-navigation-close" on-click="clearWmsUrl()"></i>
+        <i class="mdi mdi-navigation-close" on-click="clearWmsUrl()" title="clear/cancel"></i>
       </form>
       <form class="input-field col s2">
         <select id="type" bindon-ngModel="wmsversion">

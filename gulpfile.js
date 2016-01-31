@@ -16,7 +16,7 @@ gulp.task('proxyserver', function () {
     app.post('/proxy', function (req, res) {
         var proxyUrl = req.body.proxy;
         request.get({
-            timeout: 1000,
+            //timeout: 1000,
             url: proxyUrl
         }, function (error, response, body) {
             if (error) {
