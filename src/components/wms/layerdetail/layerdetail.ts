@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import {Component, Input, EventEmitter,ViewChild} from 'angular2/core';
+import {Component, Input, EventEmitter, ViewChild} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import __Wms1_1_1 = Wms1_1_1;
@@ -25,7 +25,8 @@ export class LayerDetail {
   options: olx.MapOptions;
   viewOptions: olx.ViewOptions;
   view: any;
-  ldetail: Object;
+  ldetail: any;
+  ldetailKes: Array<string>
 
   constructor(private evt: EventService) {
 
@@ -37,7 +38,7 @@ export class LayerDetail {
     this.initMap(_target, this.evt);
   }
 
-  initMap(_target: Element, evt: EventService){
+  initMap(_target: Element, evt: EventService) {
     if (_target && !_target.hasChildNodes()) {
       this.viewOptions = {
         center: ol.proj.fromLonLat([0, 0], 'EPSG:3857'),
@@ -74,13 +75,16 @@ export class LayerDetail {
 
     if (this.map) {
       evt.layerEmitter.subscribe((data) => {
-        console.log(data)
         this.ldetail = data;
+        this.ldetail.legendUrl = this.getLegentGraphic(data);
+        this.ldetailKes = Object.keys(data);
+        console.log(this.ldetail)
         this.addLayer(data);
       });
 
       evt.capsEmitter.subscribe((data) => {
         this.removeOverlays();
+        this.ldetail = null;
       });
     }
 
@@ -224,6 +228,10 @@ export class LayerDetail {
     }
 
     return _extent;
+  }
+
+  getLegentGraphic(detail){
+    return `${this.capabilities.url}?&SERVICE=WMS&VERSION=${this.capabilities.version}&REQUEST=GetLegendGraphic&LAYER=${detail.Name}&FORMAT=image/png`;
   }
 
 

@@ -65,12 +65,15 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                     }
                     if (this.map) {
                         evt.layerEmitter.subscribe(function (data) {
-                            console.log(data);
                             _this.ldetail = data;
+                            _this.ldetail.legendUrl = _this.getLegentGraphic(data);
+                            _this.ldetailKes = Object.keys(data);
+                            console.log(_this.ldetail);
                             _this.addLayer(data);
                         });
                         evt.capsEmitter.subscribe(function (data) {
                             _this.removeOverlays();
+                            _this.ldetail = null;
                         });
                     }
                 };
@@ -194,6 +197,9 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                         _extent = ol.proj.transformExtent(_extent, crs, 'EPSG:3857');
                     }
                     return _extent;
+                };
+                LayerDetail.prototype.getLegentGraphic = function (detail) {
+                    return this.capabilities.url + "?&SERVICE=WMS&VERSION=" + this.capabilities.version + "&REQUEST=GetLegendGraphic&LAYER=" + detail.Name + "&FORMAT=image/png";
                 };
                 __decorate([
                     core_1.ViewChild('mapDiv'), 
