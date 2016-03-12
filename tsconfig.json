@@ -19,12 +19,12 @@
   ],
   "files": [
     "gulpfile.ts",
+    "proxyserver/index.ts",
     "src/components/about/about.ts",
     "src/components/wms/helpers/eventservice.ts",
     "src/components/wms/helpers/startswithpipe.ts",
     "src/components/wms/layerdetail/layerdetail.ts",
     "src/components/wms/layerlist/layerlist.ts",
-    "src/components/wms/olMap/olMap.ts",
     "src/components/wms/wms.ts",
     "src/typings/openlayers/openlayers.d.ts",
     "src/typings/react/react.d.ts",
