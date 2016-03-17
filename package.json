@@ -19,6 +19,8 @@
     "serve": "node proxyserver/index.js",
     "bundle": "gulp bundle",
     "concat": "gulp concat",
+    "copy": "gulp copystyles & gulp copyhtml",
+    "template": "gulp nginlinetemplate",
     "tsc": "tsc --watch -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators --jsx react ./src/wms-app.ts"
   },
   "main": "",
@@ -35,7 +37,6 @@
     "materialize-css": "^0.97.5",
     "openlayers": "^3.12.0",
     "underscore": "^1.8.3",
-
     "angular2": "2.0.0-beta.1",
     "es6-promise": "3.0.2",
     "es6-shim": "0.33.3",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-inline-ng2-template": "^1.1.2",
     "jspm": "^0.16.19",
     "systemjs-builder": "^0.14.15",
     "typescript": "^1.7.3"

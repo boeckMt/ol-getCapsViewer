@@ -28,6 +28,7 @@ Start a Webserver and launch index.html: npm run serve
 * Handle versions 1.1.1 and 1.3.0
 * Handle Projections...
 * Get Legend if available
+* Create build task
 
 
 ---

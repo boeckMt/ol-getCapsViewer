@@ -13,7 +13,24 @@ gulp.task('concat', function () {
         "node_modules/angular2/bundles/router.dev.js",
         "node_modules/rxjs/bundles/Rx.umd.js"
     ]).pipe(concat('node_modules.bundle.js'))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest('./dist/scripts/'));
+});
+//------------------------------------------------------------------------------
+gulp.task('copystyles', function () {
+    gulp.src(["src/styles/*.css"
+    ]).pipe(gulp.dest('./dist/styles/'));
+});
+gulp.task('copyhtml', function () {
+    gulp.src(["src/index.html"
+    ]).pipe(gulp.dest('./dist/'));
+});
+//------------------------------------------------------------------------------
+var inlineNg2Template = require('gulp-inline-ng2-template');
+gulp.task('nginlinetemplate', function () {
+    //  gulp.src('./src/**/*.ts')
+    //  .pipe(inlineNg2Template({ base: '/src' }))
+    //.pipe(tsc())
+    //  .pipe(gulp.dest('./tmp/'));
 });
 //------------------------------------------------------------------------------
 var path = require("path");
@@ -23,7 +40,7 @@ var Builder = require('systemjs-builder');
 var builder = new Builder('./', './config.js');
 gulp.task('bundle', function () {
     //bundle not includes rxjs and angular2??
-    builder.buildStatic('./src/wms-app', './dist/wms-app.bundle.js', { format: 'amd', minify: false, sourceMaps: true });
+    builder.buildStatic('./src/wms-app', './dist/scripts/wms-app.bundle.js', { format: 'amd', minify: false, sourceMaps: true });
 });
 //------------------------------------------------------------------------------
 // copy dependencies
