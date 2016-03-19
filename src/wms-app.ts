@@ -1,6 +1,8 @@
-import 'rxjs/operator/map';
-import 'rxjs/operator/mergeMap';
-import 'rxjs/observable/interval'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/interval';
+
+
 
 import {Component, View, provide} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser'
@@ -12,6 +14,10 @@ import {Wms} from './components/wms/wms';
 import {EventService} from './components/wms/helpers/eventservice';
 
 declare var System: any;
+
+// run in production mode not development
+import {enableProdMode} from 'angular2/core';
+
 
 @Component(
   {
@@ -53,5 +59,6 @@ class WmsApp {
   }
 }
 
+enableProdMode();
 bootstrap(WmsApp, [EventService, ROUTER_PROVIDERS, HTTP_PROVIDERS,
   provide(LocationStrategy, { useClass: HashLocationStrategy })]);

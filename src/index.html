@@ -11,22 +11,25 @@
   <link href="./styles/site.css?v=1" rel="stylesheet">
   <!-- ####################################################################  -->
 
+  <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
+  <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
   <script src="../node_modules/systemjs/dist/system.js"></script>
   <script src="../system.config.js"></script>
   <!-- ####################################################################  -->
 
 
 <!-- <script src="../dist/scripts/node_modules.bundle.js"></script> -->
+
   <script src="../node_modules/underscore/underscore-min.js"></script>
   <script src="../node_modules/openlayers/dist/ol.js"></script>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
 
-  <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+
   <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
   <script src="../node_modules/angular2/bundles/http.dev.js"></script>
   <script src="../node_modules/angular2/bundles/router.dev.js"></script>
-  <!-- <script src="../node_modules/rxjs/bundles/Rx.umd.js"></script> -->
+  <script src="../node_modules/rxjs/bundles/Rx.min.js"></script>
   <!-- TODO bundle rxjs so that it's working... -->
 
 </head>
@@ -35,7 +38,7 @@
 
   <wms-app></wms-app>
 
-  <!-- <script src="../dist/scripts/wms-app.bundle.js"></script> -->
+  <!-- <script src="../dist/scripts/wms-app.bundle.js"></script>-->
   <!-- TODO bundle wms-app without rxjs and angular2????... -->
   <script>
     System.import('./wms-app');

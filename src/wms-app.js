@@ -1,5 +1,6 @@
-System.register(['rxjs/operator/map', 'rxjs/operator/mergeMap', 'rxjs/observable/interval', 'angular2/core', 'angular2/platform/browser', 'angular2/http', 'angular2/router', './components/about/about', './components/wms/wms', './components/wms/helpers/eventservice'], function(exports_1) {
+System.register(['rxjs/add/operator/map', 'rxjs/add/operator/mergeMap', 'rxjs/add/observable/interval', 'angular2/core', 'angular2/platform/browser', 'angular2/http', 'angular2/router', './components/about/about', './components/wms/wms', './components/wms/helpers/eventservice'], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,7 +10,7 @@ System.register(['rxjs/operator/map', 'rxjs/operator/mergeMap', 'rxjs/observable
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, browser_1, http_1, router_1, about_1, wms_1, eventservice_1;
+    var core_1, browser_1, http_1, router_1, about_1, wms_1, eventservice_1, core_2;
     var WmsApp;
     return {
         setters:[
@@ -18,6 +19,7 @@ System.register(['rxjs/operator/map', 'rxjs/operator/mergeMap', 'rxjs/observable
             function (_3) {},
             function (core_1_1) {
                 core_1 = core_1_1;
+                core_2 = core_1_1;
             },
             function (browser_1_1) {
                 browser_1 = browser_1_1;
@@ -72,7 +74,8 @@ System.register(['rxjs/operator/map', 'rxjs/operator/mergeMap', 'rxjs/observable
                     __metadata('design:paramtypes', [router_1.Router, router_1.Location])
                 ], WmsApp);
                 return WmsApp;
-            })();
+            }());
+            core_2.enableProdMode();
             browser_1.bootstrap(WmsApp, [eventservice_1.EventService, router_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS,
                 core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })]);
         }

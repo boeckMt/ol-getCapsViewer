@@ -3,8 +3,8 @@ System.config({
   defaultJSExtensions: true,
   transpiler: false,
   paths: {
-    'rxjs/observable/*': '../node_modules/rxjs/add/observable/*.js',
-    'rxjs/operator/*': '../node_modules/rxjs/add/operator/*.js',
+    'rxjs/add/observable/*': '../node_modules/rxjs/add/observable/*.js',
+    'rxjs/add/operator/*': '../node_modules/rxjs/add/operator/*.js',
     'rxjs/*': '../node_modules/rxjs/*.js',
     'angular2/*': '../node_modules/angular2/*.js'
   }

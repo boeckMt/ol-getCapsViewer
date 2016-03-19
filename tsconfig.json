@@ -18,17 +18,6 @@
     "node_modules"
   ],
   "files": [
-    "dist/components/about/about.ts",
-    "dist/components/wms/helpers/eventservice.ts",
-    "dist/components/wms/helpers/startswithpipe.ts",
-    "dist/components/wms/layerdetail/layerdetail.ts",
-    "dist/components/wms/layerlist/layerlist.ts",
-    "dist/components/wms/wms.ts",
-    "dist/typings/openlayers/openlayers.d.ts",
-    "dist/typings/react/react.d.ts",
-    "dist/typings/tsd.d.ts",
-    "dist/typings/wms/wms.d.ts",
-    "dist/wms-app.ts",
     "gulpfile.ts",
     "proxyserver/index.ts",
     "src/components/about/about.ts",
@@ -45,5 +34,8 @@
   ],
   "atom": {
     "rewriteTsconfig": true
+  },
+  "": {
+    "outFile": "./dist/scripts/tsc.bundle.js"
   }
 }
