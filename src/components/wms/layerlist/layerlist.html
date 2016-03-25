@@ -1,3 +1,48 @@
+<div class="card">
+  <ul class="collection with-header list-header">
+    <li class="collection-header">
+      <div class="row">
+        <div class="col s4">
+          <h3>Layers</h3>
+        </div>
+        <div class="col s8">
+          <div class="input-field">
+            <input bindon-ngModel="filter" id="layer_filter" type="text" class="validate">
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul class="collection list-body">
+    <a class="collection-item" *ngFor="#layer of layersarray | startsWith: 'Title': filter" [ngClass]="{active: layer.Name == selectedLayer}" on-click="sendLayerData(layer)">
+      <div>{{layer.Title}}
+        <span class="secondary-content"><i class="mdi mdi-navigation-chevron-right"></i></span>
+      </div>
+    </a>
+  </ul>
+</div>
+
+<!--
+<div class="row list-header">
+  <div class="col s4">
+    <h3>Layers</h3>
+  </div>
+  <div class="col s8">
+    <div class="input-field">
+      <input bindon-ngModel="filter" id="layer_filter" type="text" class="validate">
+    </div>
+  </div>
+</div>
+<ul class="collection list-body">
+  <a class="collection-item" *ngFor="#layer of layersarray | startsWith: 'Title': filter" [ngClass]="{active: layer.Name == selectedLayer}" on-click="sendLayerData(layer)">
+    <div>{{layer.Title}}
+      <span class="secondary-content"><i class="mdi mdi-navigation-chevron-right"></i></span>
+    </div>
+  </a>
+</ul>
+-->
+
+<!--
 <ul class="collection with-header">
   <li class="collection-header">
     <div class="row">
@@ -17,3 +62,4 @@
     </div>
   </a>
 </ul>
+-->

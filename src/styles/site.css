@@ -51,7 +51,14 @@ body {
   padding: 1em;
   border: none;
 }
-.list-view {
-  height: 800px;
-  overflow-y: scroll;
+.list-header {
+  margin: 0.5rem 0 0rem;
+  border-bottom-width: 0;
+}
+.list-body {
+  height: auto;
+  border-top-width: 0;
+  max-height: 575px;
+  overflow-y: auto;
+  margin-top: 0px;
 }
