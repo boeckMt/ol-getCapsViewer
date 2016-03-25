@@ -7,7 +7,8 @@ var _open = require('open');
 var port = 9005;
 var app = express();
 
-app.use(express.static(`./`));
+app.use('/',express.static(`./`));
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));

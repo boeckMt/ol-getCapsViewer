@@ -17,12 +17,16 @@
     "start": "",
     "test": "",
     "serve": "node proxyserver/index.js",
-    "bundle": "gulp bundle",
-    "concat": "gulp concat",
-    "copy": "gulp copystyles & gulp copyhtml",
-    "template": "gulp nginlinetemplate",
     "tsc": "tsc --watch -m commonjs -t es5 --emitDecoratorMetadata --experimentalDecorators --jsx react ./src/wms-app.ts",
-    "build": "tsc ./src/wms-app.ts --target ES5 --module system --experimentalDecorators --moduleResolution node --emitDecoratorMetadata --outFile ./dist/scripts/tsc.bundle.js"
+    "-not-used": "tsc ./src/wms-app.ts --target ES5 --module system --experimentalDecorators --moduleResolution node --emitDecoratorMetadata --outFile ./dist/scripts/tsc.bundle.js",
+    "template": "gulp nginlinetemplate",
+    "concatjs": "gulp concatjs",
+    "copy": "gulp copystyles & gulp copyfont",
+    "bundle": "gulp bundle",
+    "htmlrep": "gulp htmlreplace",
+    "prebuild": "gulp nginlinetemplate",
+    "build": "gulp concatjs & gulp copystyles & gulp copyfont & gulp htmlreplace",
+    "postbuild": "gulp bundle"
   },
   "main": "",
   "repository": {
@@ -48,8 +52,11 @@
   },
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
+    "gulp-html-replace": "^1.5.5",
     "gulp-inline-ng2-template": "^1.1.2",
+    "gulp-typescript": "^2.12.1",
     "jspm": "^0.16.19",
     "systemjs-builder": "^0.14.15",
     "typescript": "^1.7.3"

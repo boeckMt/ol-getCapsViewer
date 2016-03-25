@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "system",
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx",
+    "!./node_modules/**"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./tmp/components/about/about.ts",
+    "./tmp/components/wms/helpers/eventservice.ts",
+    "./tmp/components/wms/helpers/startswithpipe.ts",
+    "./tmp/components/wms/layerdetail/layerdetail.ts",
+    "./tmp/components/wms/layerlist/layerlist.ts",
+    "./tmp/components/wms/wms.ts",
+    "./tmp/typings/openlayers/openlayers.d.ts",
+    "./tmp/typings/react/react.d.ts",
+    "./tmp/typings/tsd.d.ts",
+    "./tmp/typings/wms/wms.d.ts",
+    "./tmp/wms-app.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "": {
+    "outFile": "./dist/scripts/tsc.bundle.js"
+  }
+}
