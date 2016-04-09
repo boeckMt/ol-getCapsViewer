@@ -83,6 +83,16 @@ export class Wms {
         body: JSON.stringify(body),
         headers: new Headers({ 'Content-Type': 'application/json' })
       })).map((res: Response) => res.text()).subscribe(res => this.handleResult(res), err => this.handleError(err));
+
+      //for use in electron.app
+      /*
+      this.reqObj = this.http.request(new Request({
+        method: RequestMethod.Get,
+        url: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`,
+        headers: new Headers({ 'Content-Type': 'application/json' })
+      })).map((res: Response) => res.text()).subscribe(res => this.handleResult(res), err => this.handleError(err));
+      */
+
     } else {
       console.log('no url provided!')
     }

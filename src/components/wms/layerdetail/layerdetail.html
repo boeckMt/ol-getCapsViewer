@@ -3,7 +3,9 @@
     <div #mapDiv style="height: 600px;"></div>
   </div>
   <div class="card-content">
-
+    <div *ngIf="ldetail" class="range-field">
+      <input type="range" [value]="getLayerOpacity()" min="0" max="100" (change)="setLayerOpacity($event.target.value)" />
+    </div>
     <table *ngIf="ldetail" class="striped responsive-table">
       <thead>
         <tr>

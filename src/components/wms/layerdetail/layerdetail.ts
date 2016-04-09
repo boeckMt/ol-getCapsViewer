@@ -57,6 +57,9 @@ export class LayerDetail {
       })
 
       this.options = {
+        controls: ol.control.defaults().extend([
+          new ol.control.FullScreen()
+        ]),
         target: _target,
         layers: [
           this.baseLayer
@@ -141,6 +144,20 @@ export class LayerDetail {
     this.map.removeLayer(this.bboxLayer)
     this.map.removeLayer(this.wmsLayer)
     //console.log(this.map.getLayers().getArray())
+  }
+
+  setLayerOpacity(value) {
+    //console.log(value)
+    if (this.wmsLayer && typeof this.wmsLayer.setOpacity === 'function') {
+      this.wmsLayer.setOpacity(value / 100)
+    }
+  }
+
+  getLayerOpacity() {
+    //console.log(value)
+    if (this.wmsLayer && typeof this.wmsLayer.getOpacity === 'function') {
+      return this.wmsLayer.getOpacity() *100;
+    }
   }
 
   checkExtentLatLng(extent: Array<number>): boolean {
@@ -230,7 +247,7 @@ export class LayerDetail {
     return _extent;
   }
 
-  getLegentGraphic(detail){
+  getLegentGraphic(detail) {
     return `${this.capabilities.url}?&SERVICE=WMS&VERSION=${this.capabilities.version}&REQUEST=GetLegendGraphic&LAYER=${detail.Name}&FORMAT=image/png`;
   }
 
