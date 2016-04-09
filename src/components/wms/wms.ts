@@ -74,7 +74,7 @@ export class Wms {
       //this.evt.capsEmitter.next(this.capabilities);
 
       var body = {
-        proxy: `${this.wmsUrl}?service=${this.service}&version=${this.wmsversion}&request=${this.request}`
+        proxy: `${this.wmsUrl}?SERVICE=${this.service}&VERSION=${this.wmsversion}&REQUEST=${this.request}`
       };
 
       this.reqObj = this.http.request(new Request({
