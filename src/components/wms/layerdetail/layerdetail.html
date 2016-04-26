@@ -36,7 +36,11 @@
           <td>{{ldetail.BoundingBox[0].crs}}</td>
           <!-- todo: more then one bbox -->
         </tr>
-        <tr>
+        <tr *ngIf="ldetail.Dimension">
+          <td>Dimension</td>
+          <td>{{ldetail.Dimension[0].units}}</td>
+        </tr>
+        <tr *ngIf="ldetail.BoundingBox">
           <td>BoundingBox</td>
           <td>{{ldetail.BoundingBox[0].extent}}</td>
         </tr>
@@ -47,6 +51,10 @@
         <tr>
           <td>Queryable</td>
           <td>{{ldetail.queryable}}</td>
+        </tr>
+        <tr>
+          <td>Attribution</td>
+          <td>{{ldetail.Attribution}}</td>
         </tr>
         <tr>
           <td>Legend</td>

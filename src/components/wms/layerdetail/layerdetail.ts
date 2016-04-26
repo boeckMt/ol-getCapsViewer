@@ -100,6 +100,7 @@ export class LayerDetail {
     var _url = _layer.url = this.capabilities.url
     var _layers = _layer.Name;
     var _attribution;
+    var _time = '';
 
     if (!_layer.Attribution) {
       _attribution = new ol.Attribution({
@@ -111,6 +112,10 @@ export class LayerDetail {
       })
     }
 
+    if(_layer.Dimension){
+      _time = new Date().toJSON().substr(0,10);
+    }
+
 
     var _extent = this.extentBuilder(_layer);
 
@@ -119,7 +124,7 @@ export class LayerDetail {
       extent: _extent,
       source: new ol.source.TileWMS({
         url: _url,
-        params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version },
+        params: { 'LAYERS': _layers, 'TILED': true, 'VERSION': this.capabilities.version, TIME: _time},
         //params:{'BBOX':'', 'CRS':'', 'FORMAT':'', 'HEIGHT':'', 'LAYERS':'', 'REQUEST':'', 'SERVICE':'', 'STYLES':'', 'TILED	':'',
         //'TRANSPARENT':'', 'VERSION':'', 'WIDTH':''}
         serverType: 'geoserver',
