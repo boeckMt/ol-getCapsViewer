@@ -52,6 +52,9 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                             })
                         });
                         this.options = {
+                            controls: ol.control.defaults().extend([
+                                new ol.control.FullScreen()
+                            ]),
                             target: _target,
                             layers: [
                                 this.baseLayer
@@ -123,6 +126,18 @@ System.register(['angular2/core', 'angular2/common', '../helpers/eventservice'],
                     this.map.removeLayer(this.bboxLayer);
                     this.map.removeLayer(this.wmsLayer);
                     //console.log(this.map.getLayers().getArray())
+                };
+                LayerDetail.prototype.setLayerOpacity = function (value) {
+                    //console.log(value)
+                    if (this.wmsLayer && typeof this.wmsLayer.setOpacity === 'function') {
+                        this.wmsLayer.setOpacity(value / 100);
+                    }
+                };
+                LayerDetail.prototype.getLayerOpacity = function () {
+                    //console.log(value)
+                    if (this.wmsLayer && typeof this.wmsLayer.getOpacity === 'function') {
+                        return this.wmsLayer.getOpacity() * 100;
+                    }
                 };
                 LayerDetail.prototype.checkExtentLatLng = function (extent) {
                     var max;

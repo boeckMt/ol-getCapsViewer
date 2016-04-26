@@ -77,7 +77,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', 'angular
                         //this.capabilities = this.emptyCaps;
                         //this.evt.capsEmitter.next(this.capabilities);
                         var body = {
-                            proxy: this.wmsUrl + "?service=" + this.service + "&version=" + this.wmsversion + "&request=" + this.request
+                            proxy: this.wmsUrl + "?SERVICE=" + this.service + "&VERSION=" + this.wmsversion + "&REQUEST=" + this.request
                         };
                         this.reqObj = this.http.request(new http_1.Request({
                             method: http_1.RequestMethod.Post,
