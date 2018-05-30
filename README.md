@@ -1,35 +1,32 @@
-# ol-getCapsViewer
-#### OGC (WMS) GetCapabilities Viewer with openlayers 3
----
+# OlGetCapsViewer
 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
 
-The project is created with [angular-2-samples](https://github.com/thelgevold/angular-2-samples) and [materializecss](http://materializecss.com)
+- [openlayers](http://openlayers.org)
+- [json2ts](http://json2ts.com/)
+- [angular](https://angular.io)
+- [cxsd](https://www.npmjs.com/package/cxsd)
 
-1-Install the TypeScript compiler: npm install -g typescript@^1.7.0
+## Development server
 
-2-Run npm install and bower install
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Start the TypeScript compiler: npm run tsc
+## Code scaffolding
 
-Start a Webserver and launch index.html: npm run serve
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Build
 
-#### Features
-* WMS URL and Version as Input
-* Get the WMS GetCapabilities XML through a custom express-proxy-server (for SOP)
-* Parse the WMS GetCapabilities with openlayers3
-* Generate a Table with all Layers
-* Show Layer Details, add WMS-and Bbox-Layer on Table click
-* Zoom to the Layer Extent
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Status: in development !!!
-* Check Layer crs and Extent...
-* Show further Capabilities like the [Geoportal Capabilities-Viewer](https://geoportal.bayern.de/getcapabilities)
-* Handle versions 1.1.1 and 1.3.0
-* Handle Projections...
-* Get Legend if available
-* Create build task
+## Running unit tests
 
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
----
-This Project is developed with the [Atom Editor](https://atom.io/), [atom-typescript](https://atom.io/packages/atom-typescript) and [stylus-autocompile](https://atom.io/packages/stylus-autocompile)
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

@@ -2,7 +2,6 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
-var _open = require('open');
 
 var port = 9055;
 var app = express();
@@ -44,4 +43,3 @@ var server = app.listen(port, () => {
   console.log('proxy server for wms-app listening at http://%s:%s', host, port);
 })
 
-_open(`http://localhost:${port}/src/index.html#/wms`, "firefox");

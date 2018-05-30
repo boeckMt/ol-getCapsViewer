@@ -1,5 +1,5 @@
 {
-  "name": "ol-getCapsVieweropenlayers-server",
+  "name": "ol-get-caps-viewer-proxy",
   "version": "0.0.1",
   "author": "Mathias Boeck",
   "description": "Proxy and static file server for OGC (WMS) GetCapabilities Viewer",
@@ -20,11 +20,13 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
-    "open": "0.0.5",
     "request": "^2.67.0"
   },
   "engines": {
-    "node": ">=0.12.0",
-    "npm": ">=2.0.0"
+    "node": ">=6.0.0",
+    "npm": ">=3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.1.4"
   }
 }

@@ -1,0 +1,36 @@
+$header-height: 64px;
+$header-height-mobile: 56px;
+$lodingbar-height: 5px;
+$footer-height: 128px;
+$footer-height-mobile: 112px;
+$aside-max-width: 250px;
+
+
+
+
+header{
+    height: $header-height;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+
+    position: absolute;
+    float: left;
+    z-index: 1;
+}
+
+main{
+    //height: calc(100% - #{$header-height});
+    height: 100%;
+}
+
+aside{
+    top: $header-height;
+    height: calc(100% - #{$header-height});
+    width: $aside-max-width;
+    background: rgba(255, 255, 255, 0.8);
+
+    position: absolute;
+    float: left;
+    z-index: 1;
+    overflow: auto;
+}
