@@ -1,0 +1,15 @@
+<!--
+<ul class="" *ngIf="hasLayers(layer)">
+  <li class="" *ngFor="let _layer of layer.Layer">
+    {{_layer.Title}}
+    <layer-tree [layer]="_layer"></layer-tree>
+  </li>
+</ul>
+-->
+
+<ng-template ngIf="hasLayers(layer)" clrIfExpanded>
+  <clr-tree-node *ngFor="let _layer of layer.Layer">
+    {{_layer.Title}}
+    <layer-tree [layer]="_layer"></layer-tree>
+  </clr-tree-node>
+</ng-template>

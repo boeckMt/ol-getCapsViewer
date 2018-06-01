@@ -1,2 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<router-outlet></router-outlet>
+<clr-main-container>
+    <div *ngIf="loading" class="progress loop top">
+        <progress></progress>
+    </div>
+    <clr-alert *ngIf="alert" [clrAlertType]="'alert-danger'" [clrAlertAppLevel]="true">
+        <clr-alert-item>
+            <span class="alert-text">
+                This is an app level alert.
+            </span>
+            <div class="alert-actions">
+                <button class="btn alert-action">Fix</button>
+            </div>
+        </clr-alert-item>
+    </clr-alert>
+    <clr-header>
+        <form class="search">
+            <label for="search_input">
+                <input id="search_input" type="text" placeholder="Search for keywords...">
+            </label>
+        </form>
+        <div class="header-nav" [clr-nav-level]="1">
+            <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active">
+                <span class="nav-text">Home</span>
+            </a>
+            <a class="nav-link" href="#" [routerLink]="['/map']" routerLinkActive="active">
+                <span class="nav-text">Map</span>
+            </a>
+        </div>
+        <div class="header-actions">
+            <clr-dropdown>
+                <button class="nav-icon" clrDropdownTrigger>
+                    <clr-icon shape="cog"></clr-icon>
+                    <clr-icon shape="caret down"></clr-icon>
+                </button>
+                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                    <a clrDropdownItem>1.1.1</a>
+                    <a clrDropdownItem>1.3.0</a>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+        </div>
+    </clr-header>
+    <router-outlet></router-outlet>
+</clr-main-container>

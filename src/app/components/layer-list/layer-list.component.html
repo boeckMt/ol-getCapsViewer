@@ -2,9 +2,23 @@
   <h3>Layers</h3>
   <input type="text" aria-label="Search in layers" name="search" placeholder="Search...">
 
+  <!--
   <ul class="">
     <li class="" *ngFor="let layer of layersarray">
-      {{layer.get('title')}} <span (click)="mapsvc.removeOverlay(layer)">[-]</span> <span (click)="mapsvc.addOverlay(layer)">[+]</span> 
+      {{layer.Title}}
+      <layer-tree [layer]="layer"></layer-tree>
     </li>
   </ul>
+-->
+
+
+
+  <clr-tree-node *ngFor="let layer of layersarray">
+    {{layer.Title}}
+    <ng-template clrIfExpanded>
+      <layer-tree [layer]="layer"></layer-tree>
+    </ng-template>
+  </clr-tree-node>
+
+
 </div>
