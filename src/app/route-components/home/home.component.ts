@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppStoreService } from '../../shared/app-store.service';
+import * as wms from '../../../../xmlns/www.opengis.net/wms';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  host: {'class': 'content-container'} //to add class to the component for clarity container height
+  host: { 'class': 'content-container' } //to add class to the component for clarity container height
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  service: wms.ServiceType;
+  capability: wms.CapabilityType;
+  private subscriber: Subscription;
 
-  constructor(private store: AppStoreService) { 
+  constructor(private store: AppStoreService) {
+    this.subscriber = store.caps$.subscribe((caps) => {
+      if (caps) {
+        this.capability = caps.Capability;
+        this.service = caps.Service;
+      }
+    })
+
 
   }
-
-  ngOnInit() {
-  }
-
-  getData(){
-    console.log(this.store.getStoreData().caps);
-  }
-
 }

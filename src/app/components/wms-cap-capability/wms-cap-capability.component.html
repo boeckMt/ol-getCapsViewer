@@ -1,0 +1,35 @@
+<span *ngIf="Capability">
+  <h3>Caps.Capability</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of Capability | omit: 'Request' : 'Layer' | keys">
+        <th>{{key}}</th>
+        <td>{{Capability[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+
+<span *ngIf="Request">
+  <h3>Caps.Capability.Request</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of Request | keys">
+        <th>{{key}}</th>
+        <td>{{Request[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+
+<span *ngIf="Layer">
+    <h3>Caps.Capability.Layer</h3>
+    <table class="table table-vertical">
+      <tbody>
+        <tr *ngFor="let key of Layer | keys">
+          <th>{{key}}</th>
+          <td>{{Layer[key]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </span>

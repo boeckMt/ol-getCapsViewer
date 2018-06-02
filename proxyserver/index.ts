@@ -18,6 +18,7 @@ app.use(bodyParser.json({
 
 app.post('/proxy', (req, res) => {
   var proxyUrl = req.body.proxy;
+  console.log(proxyUrl)
   request.get({
     //timeout: 1000,
     rejectUnauthorized: false,

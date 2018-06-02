@@ -5,7 +5,9 @@ import { ClarityModule } from "@clr/angular";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgPipesModule } from 'ngx-pipes';
 
 //services
 import { AppStoreService } from './shared/app-store.service';
@@ -22,6 +24,8 @@ import { LayerTreeComponent } from './components/layer-tree/layer-tree.component
 //route Components
 import { MapRouteComponent } from './route-components/map-route/map-route.component';
 import { HomeComponent } from './route-components/home/home.component';
+import { WmsCapServiceComponent } from './components/wms-cap-service/wms-cap-service.component';
+import { WmsCapCapabilityComponent } from './components/wms-cap-capability/wms-cap-capability.component';
 
 
 @NgModule({
@@ -32,13 +36,18 @@ import { HomeComponent } from './route-components/home/home.component';
     MapComponent,
     LayerListComponent,
     LayerTreeComponent,
-    MapRouteComponent
+    MapRouteComponent,
+    WmsCapServiceComponent,
+    WmsCapCapabilityComponent
   ],
   imports: [
     BrowserModule,
     ClarityModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    NgPipesModule
   ],
   providers: [MapService, OgcWmsService, AppStoreService],
   bootstrap: [AppComponent]

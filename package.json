@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "tsc-server": "tsc --pretty -p ./proxyserver",
+    "tsc:server": "tsc --pretty -p ./proxyserver",
+    "server": "node ./proxyserver/index.js",
     "e2e": "ng e2e",
     "cxsd": "cxsd"
   },
@@ -27,6 +28,7 @@
     "@clr/ui": "^0.11.20",
     "@webcomponents/custom-elements": "^1.0.0",
     "core-js": "^2.5.4",
+    "ngx-pipes": "^2.1.7",
     "openlayers": "^4.6.5",
     "proj4": "^2.4.4",
     "rxjs": "^6.0.0",

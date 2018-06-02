@@ -18,6 +18,11 @@ header{
     z-index: 1;
 }
 
+//restyle search for icon with click
+.header .search-box label:before, .header .search label:before, header .search-box label:before, header .search label:before{
+    display: none;
+}
+
 main{
     //height: calc(100% - #{$header-height});
     height: 100%;

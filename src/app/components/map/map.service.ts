@@ -15,6 +15,7 @@ export class MapService {
   zoom: number;
   baselayers: ol.layer.Group;
   overlays: ol.layer.Group;
+  ratio:number;
 
   constructor() {
     this.map = <any>{}
@@ -58,7 +59,7 @@ export class MapService {
         this.baselayers,
         this.overlays
       ],
-      controls: [],
+      //controls: [],
       //target: 'map'
     });
   }
@@ -66,8 +67,15 @@ export class MapService {
   setTarget(target) {
     //target: 'map'
     let _target = document.getElementById(target);
+    if(!this.ratio){
+      this.ratio = _target.clientWidth / _target.clientHeight;
+    }
+    
+    console.dir(_target.clientHeight, _target.clientWidth)
     if(_target){
       this.map.setTarget(_target);
+      this.map.setSize([_target.clientWidth,_target.clientWidth/this.ratio])
+      console.log(this.map.getSize());
     }else{
       console.log('target for map does not exist!')
     }

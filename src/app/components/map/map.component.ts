@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ElementRef } from '@angular/core';
 import * as ol from 'openlayers';
 import { MapService } from './map.service';
 
@@ -15,7 +15,7 @@ export class MapComponent implements AfterViewInit {
   overlays: ol.layer.Group;
   */
 
-  constructor(private mapsvc: MapService) {
+  constructor(private mapsvc: MapService, private el: ElementRef) {
 
   }
 
@@ -25,9 +25,12 @@ export class MapComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.dir(this.el.nativeElement)
+    //let parentele = this.el.nativeElement.parentElement
+    //let mapele = this.el.nativeElement.children[0].children[0]
     this.mapsvc.setTarget('map');
+    //this.mapsvc.map.setSize([parentele.clientHeight, parentele.clientWidth])
 
-    /*
     this.mapsvc.addOverlay(
       new ol.layer.Tile(<any>{
         title: 'osm_roads_gen3',
@@ -41,7 +44,7 @@ export class MapComponent implements AfterViewInit {
         })
       })
     );
-    */
+
   }
 
 }
