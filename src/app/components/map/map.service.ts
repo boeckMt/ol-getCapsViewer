@@ -67,6 +67,9 @@ export class MapService {
   setTarget(target) {
     //target: 'map'
     let _target = document.getElementById(target);
+    
+    //hack - target heigth changing on route change with parent container height change????
+    //not working if first route is not map...
     if(!this.ratio){
       this.ratio = _target.clientWidth / _target.clientHeight;
     }
@@ -74,6 +77,7 @@ export class MapService {
     console.dir(_target.clientHeight, _target.clientWidth)
     if(_target){
       this.map.setTarget(_target);
+      //hack - target heigth changing on route change with parent container height change????
       this.map.setSize([_target.clientWidth,_target.clientWidth/this.ratio])
       console.log(this.map.getSize());
     }else{

@@ -3,14 +3,14 @@
     <clr-tabs *ngIf="service && capability">
         <clr-tab>
             <button clrTabLink id="link1">Service</button>
-            <clr-tab-content id="content1" *clrIfActive="true">
+            <clr-tab-content id="content1" *clrIfActive="false">
                 <wms-cap-service [service]="service"></wms-cap-service>
             </clr-tab-content>
         </clr-tab>
         <clr-tab>
             <button clrTabLink>Capability</button>
-            <clr-tab-content *clrIfActive="false">
-                <wms-cap-capability [capability]="capability"></wms-cap-capability>
+            <clr-tab-content *clrIfActive="true">
+                <wms-cap-capability [capability]="capability" [serviceurl]="caps.wmsurl"></wms-cap-capability>
             </clr-tab-content>
         </clr-tab>
     </clr-tabs>

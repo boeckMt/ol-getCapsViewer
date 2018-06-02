@@ -23,13 +23,31 @@
 </span>
 
 <span *ngIf="Layer">
-    <h3>Caps.Capability.Layer</h3>
-    <table class="table table-vertical">
+  <h3>Caps.Capability.Layer</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of Layer | keys">
+        <th>{{key}}</th>
+        <td>{{Layer[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+
+<span *ngIf="Layer">
+  <h3>All Layers</h3>
+  <hr>
+  <span *ngFor="let _layer of layersarray">
+    <h4 (click)="toggleLayerTable(_layer)">Title: {{_layer.Title}}</h4>
+    <span (click)="addToMap(_layer)"><clr-icon shape="map"></clr-icon> show on map</span>
+    <table *ngIf="_layer.toggle" class="table table-vertical">
       <tbody>
-        <tr *ngFor="let key of Layer | keys">
+        <tr *ngFor="let key of _layer | omit : 'Title' : 'toggle' | keys">
           <th>{{key}}</th>
-          <td>{{Layer[key]}}</td>
+          <td>{{_layer[key]}}</td>
         </tr>
       </tbody>
     </table>
   </span>
+
+</span>

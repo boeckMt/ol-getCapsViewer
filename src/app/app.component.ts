@@ -26,7 +26,7 @@ export class AppComponent {
     this.loading = store.getLoading();
     this.alert = store.getAlert();
 
-    this.wmsurl = 'http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xml'; //'https://maps.dwd.de/geoserver/dwd/wms';
+    this.wmsurl = 'https://geoservice.dlr.de/eoc/basemap/wms'; //'http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xml'; //'https://maps.dwd.de/geoserver/dwd/wms';
     //https://geoservice.dlr.de/eoc/basemap/wms
 
     this.subscriber1 = this.store.loading$.subscribe((loading) => {
@@ -49,7 +49,7 @@ export class AppComponent {
       //this.makeLayersFlatt(result.Capability.Layer);
       //this.layersarray.push(result.Capability.Layer);
 
-
+      result['wmsurl'] = this.wmsurl;
       this.wmsversion = <any>result.version;
       this.store.setCaps(result)
       this.store.setLoading(false);

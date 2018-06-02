@@ -2,23 +2,25 @@
   <h3>Layers</h3>
   <input type="text" aria-label="Search in layers" name="search" placeholder="Search...">
 
-  <!--
+ 
   <ul class="">
     <li class="" *ngFor="let layer of layersarray">
-      {{layer.Title}}
-      <layer-tree [layer]="layer"></layer-tree>
+      {{layer.get('title')}} <clr-icon shape="trash" (click)="removeLayer(layer)"></clr-icon>
     </li>
   </ul>
--->
 
 
 
-  <clr-tree-node *ngFor="let layer of layersarray">
+<!--
+
+<clr-tree-node *ngFor="let layer of layersarray">
     {{layer.Title}}
     <ng-template clrIfExpanded>
       <layer-tree [layer]="layer"></layer-tree>
     </ng-template>
   </clr-tree-node>
+-->
+  
 
 
 </div>

@@ -31,6 +31,7 @@ export class MapComponent implements AfterViewInit {
     this.mapsvc.setTarget('map');
     //this.mapsvc.map.setSize([parentele.clientHeight, parentele.clientWidth])
 
+    /*
     this.mapsvc.addOverlay(
       new ol.layer.Tile(<any>{
         title: 'osm_roads_gen3',
@@ -44,6 +45,7 @@ export class MapComponent implements AfterViewInit {
         })
       })
     );
+    */
 
   }
 

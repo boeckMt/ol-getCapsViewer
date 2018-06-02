@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
   host: { 'class': 'content-container' } //to add class to the component for clarity container height
 })
 export class HomeComponent {
+  caps: wms.WMS_CapabilitiesType;
   service: wms.ServiceType;
   capability: wms.CapabilityType;
   private subscriber: Subscription;
@@ -17,6 +18,7 @@ export class HomeComponent {
   constructor(private store: AppStoreService) {
     this.subscriber = store.caps$.subscribe((caps) => {
       if (caps) {
+        this.caps = caps;
         this.capability = caps.Capability;
         this.service = caps.Service;
       }
