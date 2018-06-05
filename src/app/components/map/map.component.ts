@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ElementRef, Inject } from '@angular/core';
 import * as ol from 'openlayers';
 import { MapService } from './map.service';
 
@@ -15,7 +15,7 @@ export class MapComponent implements AfterViewInit {
   overlays: ol.layer.Group;
   */
 
-  constructor(private mapsvc: MapService, private el: ElementRef) {
+  constructor(@Inject(MapService) private mapsvc: MapService, private el: ElementRef) {
 
   }
 
