@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map/map.service';
-import { layer, layer } from 'openlayers';
-import { OgcWmsService } from '../../shared/ogc-wms.service';
+import { layer } from 'openlayers';
 
-import * as wms from '../../../../xmlns/www.opengis.net/wms';
-import { AppStoreService } from '../../shared/app-store.service';
 
 @Component({
   selector: 'ol-layer-list',

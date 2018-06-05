@@ -7,7 +7,7 @@ import * as wms from '../../../../xmlns/www.opengis.net/wms';
   styleUrls: ['./layer-tree.component.scss']
 })
 export class LayerTreeComponent implements OnInit {
-  @Input('layer') layer: wms.LayerType;
+  @Input('layer') layer: wms.LayerType
   constructor() {
 
   }

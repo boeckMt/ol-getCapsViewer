@@ -5,7 +5,7 @@ import * as xlink from '../www.w3.org/1999/xlink';
 // http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd
 
 
-interface BaseType {
+export interface BaseType {
 	_exists: boolean;
 	_namespace: string;
 }
@@ -18,7 +18,7 @@ interface _AttributionType extends BaseType {
 	/** The Title is for informative display to a human. */
 	Title?: string;
 }
-interface AttributionType extends _AttributionType { constructor: { new(): AttributionType }; }
+export interface AttributionType extends _AttributionType { constructor: { new(): AttributionType }; }
 
 interface _AuthorityURLType extends BaseType {
 	name: string;
@@ -27,7 +27,7 @@ interface _AuthorityURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface AuthorityURLType extends _AuthorityURLType { constructor: { new(): AuthorityURLType }; }
+export interface AuthorityURLType extends _AuthorityURLType { constructor: { new(): AuthorityURLType }; }
 
 interface _BoundingBoxType extends BaseType {
 	CRS: string;
@@ -38,7 +38,7 @@ interface _BoundingBoxType extends BaseType {
 	resx: number;
 	resy: number;
 }
-interface BoundingBoxType extends _BoundingBoxType { constructor: { new(): BoundingBoxType }; }
+export interface BoundingBoxType extends _BoundingBoxType { constructor: { new(): BoundingBoxType }; }
 
 interface _CapabilityType extends BaseType {
 	/** Individual service providers may use this element to report extended
@@ -52,7 +52,7 @@ interface _CapabilityType extends BaseType {
 	/** Available WMS Operations are listed in a Request element. */
 	Request: RequestType;
 }
-interface CapabilityType extends _CapabilityType { constructor: { new(): CapabilityType }; }
+export interface CapabilityType extends _CapabilityType { constructor: { new(): CapabilityType }; }
 
 interface _ContactAddressType extends BaseType {
 	Address: string;
@@ -62,7 +62,7 @@ interface _ContactAddressType extends BaseType {
 	PostCode: string;
 	StateOrProvince: string;
 }
-interface ContactAddressType extends _ContactAddressType { constructor: { new(): ContactAddressType }; }
+export interface ContactAddressType extends _ContactAddressType { constructor: { new(): ContactAddressType }; }
 
 interface _ContactInformationType extends BaseType {
 	ContactAddress?: ContactAddressType;
@@ -72,13 +72,13 @@ interface _ContactInformationType extends BaseType {
 	ContactPosition?: string;
 	ContactVoiceTelephone?: string;
 }
-interface ContactInformationType extends _ContactInformationType { constructor: { new(): ContactInformationType }; }
+export interface ContactInformationType extends _ContactInformationType { constructor: { new(): ContactInformationType }; }
 
 interface _ContactPersonPrimaryType extends BaseType {
 	ContactOrganization: string;
 	ContactPerson: string;
 }
-interface ContactPersonPrimaryType extends _ContactPersonPrimaryType { constructor: { new(): ContactPersonPrimaryType }; }
+export interface ContactPersonPrimaryType extends _ContactPersonPrimaryType { constructor: { new(): ContactPersonPrimaryType }; }
 
 interface _DataURLType extends BaseType {
 	/** A container for listing an available format's MIME type. */
@@ -88,13 +88,13 @@ interface _DataURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface DataURLType extends _DataURLType { constructor: { new(): DataURLType }; }
+export interface DataURLType extends _DataURLType { constructor: { new(): DataURLType }; }
 
 interface _DCPTypeType extends BaseType {
 	/** Available HTTP request methods.  At least "Get" shall be supported. */
 	HTTP: HTTPType;
 }
-interface DCPTypeType extends _DCPTypeType { constructor: { new(): DCPTypeType }; }
+export interface DCPTypeType extends _DCPTypeType { constructor: { new(): DCPTypeType }; }
 
 interface _DimensionType extends Primitive._string {
 	current: boolean;
@@ -105,7 +105,7 @@ interface _DimensionType extends Primitive._string {
 	units: string;
 	unitSymbol: string;
 }
-interface DimensionType extends _DimensionType { constructor: { new(): DimensionType }; }
+export interface DimensionType extends _DimensionType { constructor: { new(): DimensionType }; }
 
 interface _EX_GeographicBoundingBoxType extends BaseType {
 	eastBoundLongitude: number;
@@ -113,19 +113,19 @@ interface _EX_GeographicBoundingBoxType extends BaseType {
 	southBoundLatitude: number;
 	westBoundLongitude: number;
 }
-interface EX_GeographicBoundingBoxType extends _EX_GeographicBoundingBoxType { constructor: { new(): EX_GeographicBoundingBoxType }; }
+export interface EX_GeographicBoundingBoxType extends _EX_GeographicBoundingBoxType { constructor: { new(): EX_GeographicBoundingBoxType }; }
 
 interface _ExceptionType extends BaseType {
 	/** A container for listing an available format's MIME type. */
 	Format: string[];
 }
-interface ExceptionType extends _ExceptionType { constructor: { new(): ExceptionType }; }
+export interface ExceptionType extends _ExceptionType { constructor: { new(): ExceptionType }; }
 
 interface _ExtendedCapabilitiesProxyType extends BaseType {}
-interface ExtendedCapabilitiesProxyType extends _ExtendedCapabilitiesProxyType { constructor: { new(): ExtendedCapabilitiesProxyType }; }
+export interface ExtendedCapabilitiesProxyType extends _ExtendedCapabilitiesProxyType { constructor: { new(): ExtendedCapabilitiesProxyType }; }
 
 interface _ExtendedOperationProxyType extends BaseType {}
-interface ExtendedOperationProxyType extends _ExtendedOperationProxyType { constructor: { new(): ExtendedOperationProxyType }; }
+export interface ExtendedOperationProxyType extends _ExtendedOperationProxyType { constructor: { new(): ExtendedOperationProxyType }; }
 
 interface _FeatureListURLType extends BaseType {
 	/** A container for listing an available format's MIME type. */
@@ -135,7 +135,7 @@ interface _FeatureListURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface FeatureListURLType extends _FeatureListURLType { constructor: { new(): FeatureListURLType }; }
+export interface FeatureListURLType extends _FeatureListURLType { constructor: { new(): FeatureListURLType }; }
 
 interface _GetType extends BaseType {
 	/** An OnlineResource is typically an HTTP URL.  The URL is placed in
@@ -143,7 +143,7 @@ interface _GetType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface GetType extends _GetType { constructor: { new(): GetType }; }
+export interface GetType extends _GetType { constructor: { new(): GetType }; }
 
 interface _HTTPType extends BaseType {
 	/** The URL prefix for the HTTP "Get" request method. */
@@ -151,18 +151,18 @@ interface _HTTPType extends BaseType {
 	/** The URL prefix for the HTTP "Post" request method. */
 	Post?: PostType;
 }
-interface HTTPType extends _HTTPType { constructor: { new(): HTTPType }; }
+export interface HTTPType extends _HTTPType { constructor: { new(): HTTPType }; }
 
 interface _IdentifierType extends Primitive._string {
 	authority: string;
 }
-interface IdentifierType extends _IdentifierType { constructor: { new(): IdentifierType }; }
+export interface IdentifierType extends _IdentifierType { constructor: { new(): IdentifierType }; }
 
 interface _KeywordListType extends BaseType {
 	/** A single keyword or phrase. */
 	Keyword?: KeywordType[];
 }
-interface KeywordListType extends _KeywordListType { constructor: { new(): KeywordListType }; }
+export interface KeywordListType extends _KeywordListType { constructor: { new(): KeywordListType }; }
 
 interface _KeywordType extends Primitive._string {
 	vocabulary: string;
@@ -239,7 +239,7 @@ interface _LayerType extends BaseType {
 	/** The Title is for informative display to a human. */
 	Title: string;
 }
-interface LayerType extends _LayerType { constructor: { new(): LayerType }; }
+export interface LayerType extends _LayerType { constructor: { new(): LayerType }; }
 
 interface _LegendURLType extends BaseType {
 	height: number;
@@ -251,7 +251,7 @@ interface _LegendURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface LegendURLType extends _LegendURLType { constructor: { new(): LegendURLType }; }
+export interface LegendURLType extends _LegendURLType { constructor: { new(): LegendURLType }; }
 
 interface _LogoURLType extends BaseType {
 	height: number;
@@ -263,7 +263,7 @@ interface _LogoURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface LogoURLType extends _LogoURLType { constructor: { new(): LogoURLType }; }
+export interface LogoURLType extends _LogoURLType { constructor: { new(): LogoURLType }; }
 
 export type longitudeType = number;
 type _longitudeType = Primitive._number;
@@ -277,7 +277,7 @@ interface _MetadataURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface MetadataURLType extends _MetadataURLType { constructor: { new(): MetadataURLType }; }
+export interface MetadataURLType extends _MetadataURLType { constructor: { new(): MetadataURLType }; }
 
 interface _OnlineResourceType extends BaseType {
 	actuate: xlink.actuateType;
@@ -288,7 +288,7 @@ interface _OnlineResourceType extends BaseType {
 	title: string;
 	type: xlink.typeType;
 }
-interface OnlineResourceType extends _OnlineResourceType { constructor: { new(): OnlineResourceType }; }
+export interface OnlineResourceType extends _OnlineResourceType { constructor: { new(): OnlineResourceType }; }
 
 /** For each operation offered by the server, list the available output
   * formats and the online resource. */
@@ -308,7 +308,7 @@ interface _PostType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface PostType extends _PostType { constructor: { new(): PostType }; }
+export interface PostType extends _PostType { constructor: { new(): PostType }; }
 
 interface _RequestType extends BaseType {
 	ExtendedOperation?: ExtendedOperationProxyType[];
@@ -316,7 +316,7 @@ interface _RequestType extends BaseType {
 	GetFeatureInfo?: OperationType;
 	GetMap: OperationType;
 }
-interface RequestType extends _RequestType { constructor: { new(): RequestType }; }
+export interface RequestType extends _RequestType { constructor: { new(): RequestType }; }
 
 interface _ServiceType extends BaseType {
 	/** The abstract is a longer narrative description of an object. */
@@ -338,9 +338,9 @@ interface _ServiceType extends BaseType {
 	/** The Title is for informative display to a human. */
 	Title: string;
 }
-interface ServiceType extends _ServiceType { constructor: { new(): ServiceType }; }
+export interface ServiceType extends _ServiceType { constructor: { new(): ServiceType }; }
 
-type ServiceTypeNameType = "WMS";
+export type ServiceTypeNameType = "WMS";
 interface _ServiceTypeNameType extends Primitive._string { content: ServiceTypeNameType; }
 
 interface _StyleSheetURLType extends BaseType {
@@ -351,7 +351,7 @@ interface _StyleSheetURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface StyleSheetURLType extends _StyleSheetURLType { constructor: { new(): StyleSheetURLType }; }
+export interface StyleSheetURLType extends _StyleSheetURLType { constructor: { new(): StyleSheetURLType }; }
 
 interface _StyleType extends BaseType {
 	/** The abstract is a longer narrative description of an object. */
@@ -376,7 +376,7 @@ interface _StyleType extends BaseType {
 	/** The Title is for informative display to a human. */
 	Title: string;
 }
-interface StyleType extends _StyleType { constructor: { new(): StyleType }; }
+export interface StyleType extends _StyleType { constructor: { new(): StyleType }; }
 
 interface _StyleURLType extends BaseType {
 	/** A container for listing an available format's MIME type. */
@@ -386,7 +386,7 @@ interface _StyleURLType extends BaseType {
 	  * xlink:type attribute. */
 	OnlineResource: OnlineResourceType;
 }
-interface StyleURLType extends _StyleURLType { constructor: { new(): StyleURLType }; }
+export interface StyleURLType extends _StyleURLType { constructor: { new(): StyleURLType }; }
 
 interface _WMS_CapabilitiesType extends BaseType {
 	updateSequence: string;
@@ -399,7 +399,7 @@ interface _WMS_CapabilitiesType extends BaseType {
 	/** General service metadata. */
 	Service: ServiceType;
 }
-interface WMS_CapabilitiesType extends _WMS_CapabilitiesType { constructor: { new(): WMS_CapabilitiesType }; }
+export interface WMS_CapabilitiesType extends _WMS_CapabilitiesType { constructor: { new(): WMS_CapabilitiesType }; }
 
 export interface document extends BaseType {
 	/** The abstract is a longer narrative description of an object. */
