@@ -4,7 +4,7 @@
     <tbody>
       <tr *ngFor="let key of Capability | omit: 'Request' : 'Layer' | keys">
         <th>{{key}}</th>
-        <td>{{Capability[key]}}</td>
+        <td class="word-break">{{Capability[key]}}</td>
       </tr>
     </tbody>
   </table>
@@ -16,7 +16,7 @@
     <tbody>
       <tr *ngFor="let key of Request | keys">
         <th>{{key}}</th>
-        <td>{{Request[key]}}</td>
+        <td class="word-break">{{Request[key]}}</td>
       </tr>
     </tbody>
   </table>
@@ -28,7 +28,7 @@
     <tbody>
       <tr *ngFor="let key of Layer | keys">
         <th>{{key}}</th>
-        <td>{{Layer[key]}}</td>
+        <td class="word-break">{{Layer[key]}}</td>
       </tr>
     </tbody>
   </table>
@@ -38,13 +38,22 @@
   <h3>All Layers</h3>
   <hr>
   <span *ngFor="let _layer of layersarray">
-    <h4 (click)="toggleLayerTable(_layer)">Title: {{_layer.Title}}</h4>
-    <span (click)="addToMap(_layer)"><clr-icon shape="map"></clr-icon> show on map</span>
+    <div class="layer-title-expand clr-tree-node-content-container">
+      <button class="clr-treenode-caret ng-tns-c8-288" type="button" (click)="toggleLayerTable(_layer)">
+        <clr-icon class="clr-treenode-caret-icon" shape="caret" dir="{{(_layer.toggle)?'down':'right'}}"></clr-icon>
+      </button>
+      <div class="clr-treenode-content">
+        <h4 (click)="toggleLayerTable(_layer)" class="margin-right-0_25">Title: {{_layer.Title}}</h4>
+      </div>
+      <button class="btn btn-icon" type="button" (click)="addToMap(_layer)">
+        <clr-icon shape="map"></clr-icon> show on map
+      </button>
+    </div>
     <table *ngIf="_layer.toggle" class="table table-vertical">
       <tbody>
         <tr *ngFor="let key of _layer | omit : 'Title' : 'toggle' | keys">
           <th>{{key}}</th>
-          <td>{{_layer[key]}}</td>
+          <td class="word-break">{{_layer[key]}}</td>
         </tr>
       </tbody>
     </table>
