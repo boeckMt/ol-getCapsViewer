@@ -78,7 +78,7 @@ export class MapService {
     if(_target){
       this.map.setTarget(_target);
       //hack - target heigth changing on route change with parent container height change????
-      this.map.setSize([_target.clientWidth,_target.clientWidth/this.ratio])
+      //this.map.setSize([_target.clientWidth,_target.clientWidth/this.ratio])
       console.log(this.map.getSize());
     }else{
       console.log('target for map does not exist!')
@@ -96,10 +96,12 @@ export class MapService {
   createWmsLayer(layer:wms.LayerType, wmsurl) {
     return new ol.layer.Tile(<any>{
       title: layer.Title,
+      anchor: layer['anchor'],
       abstract: layer.Abstract,
-      //extent: ol.proj.transformExtent(<any>layer.EX_GeographicBoundingBox, 'EPSG:4326', 'EPSG:3857'),
+      extent: ol.proj.transformExtent(<any>layer.EX_GeographicBoundingBox, 'EPSG:4326', this.projection),
       source: new ol.source.TileWMS({
         url: wmsurl,
+        
         params: { 'LAYERS': layer.Name, 'TILED': true },
         serverType: 'geoserver',
         // Countries have transparency, so do not fade tiles:

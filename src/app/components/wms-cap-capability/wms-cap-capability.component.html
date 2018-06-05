@@ -43,7 +43,7 @@
         <clr-icon class="clr-treenode-caret-icon" shape="caret" dir="{{(_layer.toggle)?'down':'right'}}"></clr-icon>
       </button>
       <div class="clr-treenode-content">
-        <h4 (click)="toggleLayerTable(_layer)" class="margin-right-0_25">Title: {{_layer.Title}}</h4>
+        <h4 (click)="toggleLayerTable(_layer)" id="{{_layer.anchor}}" class="margin-right-0_25">Title: {{_layer.Title}}</h4>
       </div>
       <button class="btn btn-icon" type="button" (click)="addToMap(_layer)">
         <clr-icon shape="map"></clr-icon> show on map
@@ -51,7 +51,7 @@
     </div>
     <table *ngIf="_layer.toggle" class="table table-vertical">
       <tbody>
-        <tr *ngFor="let key of _layer | omit : 'Title' : 'toggle' | keys">
+        <tr *ngFor="let key of _layer | omit : 'Title' : 'toggle' : 'anchor' | keys">
           <th>{{key}}</th>
           <td class="word-break">{{_layer[key]}}</td>
         </tr>

@@ -22,7 +22,4 @@ export class LayerListComponent implements OnInit{
     console.log(layer)
     this.mapsvc.removeOverlay(layer)
   }
-
-
-
 }

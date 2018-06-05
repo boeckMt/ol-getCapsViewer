@@ -21,14 +21,17 @@ export class MapComponent implements AfterViewInit {
 
 
   ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
     console.dir(this.el.nativeElement)
     //let parentele = this.el.nativeElement.parentElement
     //let mapele = this.el.nativeElement.children[0].children[0]
     this.mapsvc.setTarget('map');
+  }
+
+  ngAfterViewInit() {
+    //hack resize after route change and container size change?
+    setTimeout(()=>{
+      this.mapsvc.map.updateSize();
+    },100)
     //this.mapsvc.map.setSize([parentele.clientHeight, parentele.clientWidth])
 
     /*
