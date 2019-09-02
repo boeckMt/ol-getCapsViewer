@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { format } from 'openlayers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 //import * as ogc from '../shared/ogc-wms'
 import * as wms from '../../../xmlns/www.opengis.net/wms';
@@ -27,12 +27,12 @@ export class OgcWmsService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      responseType:<any>'text' //force response as text for xml 
+      responseType: <any>'text' //force response as text for xml 
     };
-    
-    return this.http.post<string | Document | Node>('/proxy', JSON.stringify(body), httpOptions)
-    .map((res)=>{
+
+    return this.http.post<string | Document | Node>('/proxy', JSON.stringify(body), httpOptions).pipe(map((res) => {
       return <wms.WMS_CapabilitiesType>parser.read(res)
-    })
+    }))
+
   }
 }

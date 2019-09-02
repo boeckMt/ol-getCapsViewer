@@ -7,6 +7,24 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [angular](https://angular.io)
 - [cxsd](https://www.npmjs.com/package/cxsd)
 
+
+#### Features
+* WMS URL and Version as Input
+* Get the WMS GetCapabilities XML
+* Parse the WMS GetCapabilities with openlayers
+* Generate a Table with all Layers
+* Show Layer Details, add WMS-and Bbox-Layer on Table click
+* Zoom to the Layer Extent
+
+## Status: in development !!!
+* Check Layer crs and Extent...
+* Show further Capabilities like the [Geoportal Capabilities-Viewer](https://geoportal.bayern.de/getcapabilities)
+* Handle versions 1.1.1 and 1.3.0
+* Handle Projections...
+* Get Legend if available
+* Parse the WMS GetCapabilities with jsonix and w3c-schemas
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

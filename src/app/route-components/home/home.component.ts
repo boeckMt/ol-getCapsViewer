@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppStoreService } from '../../shared/app-store.service';
 import * as wms from '../../../../xmlns/www.opengis.net/wms';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
