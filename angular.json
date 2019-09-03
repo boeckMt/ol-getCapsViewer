@@ -46,9 +46,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@clr/icons/clr-icons.min.css",
-              "node_modules/@clr/ui/clr-ui.min.css",
-              "src/styles.scss"
+              "src/styles/main.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
