@@ -40,7 +40,7 @@ export class AppComponent {
   requestCaps() {
     this.store.setLoading(true);
     this.wmssvc.getWmsCaps(this.wmsurl, this.wmsversion).subscribe((result) => {
-      // console.log(result);
+      console.log(result);
       result['wmsurl'] = this.wmsurl;
       this.wmsversion = <any>result.version;
       this.store.setCaps(result);
