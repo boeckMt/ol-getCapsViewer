@@ -35,6 +35,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 * [] Parse the WMS GetCapabilities (OgcWmsService) with jsonix and w3c-schemas to better handle Versions
 
+## Getting started
+Run `npm install`
 
 ## Development server
 
