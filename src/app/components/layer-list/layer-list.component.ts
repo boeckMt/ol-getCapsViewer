@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map/map.service';
-import { layer, layer } from 'openlayers';
+import { layer } from 'openlayers';
 import { OgcWmsService } from '../../shared/ogc-wms.service';
 
 import * as wms from '../../../../xmlns/www.opengis.net/wms';
