@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map/map.service';
-import { layer } from 'openlayers';
+import { layer } from 'ol';
 import { OgcWmsService } from '../../shared/ogc-wms.service';
 
-import * as wms from '../../../../xmlns/www.opengis.net/wms';
-import { AppStoreService } from '../../shared/app-store.service';
 
 @Component({
   selector: 'ol-layer-list',
@@ -25,7 +23,4 @@ export class LayerListComponent implements OnInit{
     console.log(layer)
     this.mapsvc.removeOverlay(layer)
   }
-
-
-
 }

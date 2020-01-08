@@ -3,9 +3,27 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
 
 - [openlayers](http://openlayers.org)
+- [clarity design](https://clarity.design)
 - [json2ts](http://json2ts.com/)
 - [angular](https://angular.io)
 - [cxsd](https://www.npmjs.com/package/cxsd)
+
+
+#### Features
+* WMS URL and Version as Input
+* Get the WMS GetCapabilities XML
+* Parse the WMS GetCapabilities
+* Generate a Table with all Layers
+* Show Layer Details
+
+## Status: in development !!!
+* Check Layer crs and Extent...
+* Show further Capabilities like the [Geoportal Capabilities-Viewer](https://geoportal.bayern.de/getcapabilities)
+* Handle versions 1.1.1 and 1.3.0
+* Handle Projections...
+* Get Legend if available
+* Parse the WMS GetCapabilities with jsonix and w3c-schemas
+
 
 ## Development server
 

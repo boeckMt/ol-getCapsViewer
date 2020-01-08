@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { AppStoreService } from './shared/app-store.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { OgcWmsService } from './shared/ogc-wms.service';
 
 //import '@clr/icons';

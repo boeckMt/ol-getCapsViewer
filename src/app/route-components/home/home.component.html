@@ -1,6 +1,5 @@
-<div class="content-area">
-
-    <clr-tabs *ngIf="service && capability">
+<main class="content-area">
+    <clr-tabs *ngIf="service && capability; else homeView">
         <clr-tab>
             <button clrTabLink id="link1">Service</button>
             <clr-tab-content id="content1" *clrIfActive="false">
@@ -14,11 +13,10 @@
             </clr-tab-content>
         </clr-tab>
     </clr-tabs>
-</div>
-
-<!--
-<nav class="sidenav" [clr-nav-level]="2">
-    
-</nav>
-
--->
+    <ng-template #homeView>
+        <div class="preview-text">
+            <a href="http://www.opengeospatial.org/standards">OGC</a> Capabilities - Viewer
+            <p>Hit the search Button to show Capabilities for the provided Service</p>
+        </div>
+    </ng-template>
+</main>

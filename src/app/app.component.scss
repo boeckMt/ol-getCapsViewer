@@ -5,37 +5,78 @@ $footer-height: 128px;
 $footer-height-mobile: 112px;
 $aside-max-width: 250px;
 
+.progress {
+  height: 0.3em;
+}
 
+header {
+  height: $header-height;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
 
-
-header{
-    height: $header-height;
-    background: rgba(255, 255, 255, 0.8);
-    width: 100%;
-
-    position: absolute;
-    float: left;
-    z-index: 1;
+  position: absolute;
+  float: left;
+  z-index: 1;
 }
 
 //restyle search for icon with click
-.header .search-box label:before, .header .search label:before, header .search-box label:before, header .search label:before{
-    display: none;
+.header .search-box label:before,
+.header .search label:before,
+header .search-box label:before,
+header .search label:before {
+  display: none;
 }
 
-main{
-    //height: calc(100% - #{$header-height});
-    height: 100%;
+main {
+  //height: calc(100% - #{$header-height});
+  height: 100%;
 }
 
-aside{
-    top: $header-height;
-    height: calc(100% - #{$header-height});
-    width: $aside-max-width;
-    background: rgba(255, 255, 255, 0.8);
+.search-field {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  max-width: 75%;
+  padding: 0;
+  height: 2.5rem;
+  color: #fafafa;
+  opacity: 0.65;
+  label {
+    display: inline-block;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding-left: 1rem;
+    text-align: center;
+  }
+  input[type="text"] {
+    border: 0;
+    background: 0 0;
+    color: #fafafa;
+    padding: 0;
+    vertical-align: middle;
+  }
+}
 
-    position: absolute;
-    float: left;
-    z-index: 1;
-    overflow: auto;
+/*
+.search {
+  max-width: 75%;
+  width: 100%;
+  label {
+    max-width: 100%;
+  }
+}
+*/
+
+aside {
+  top: $header-height;
+  height: calc(100% - #{$header-height});
+  width: $aside-max-width;
+  background: rgba(255, 255, 255, 0.8);
+
+  position: absolute;
+  float: left;
+  z-index: 1;
+  overflow: auto;
 }

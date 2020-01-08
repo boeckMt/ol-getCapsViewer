@@ -1,9 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <clr-main-container>
     <div *ngIf="loading" class="progress loop top">
-        <progress></progress>
+        <progress class="progress"></progress>
     </div>
-    <clr-alert *ngIf="alert" [clrAlertType]="alert.type" [clrAlertAppLevel]="true" (clrAlertClosedChange)="alertClose()">
+    <clr-alert *ngIf="alert" [clrAlertType]="alert.type" [clrAlertAppLevel]="true"
+        (clrAlertClosedChange)="alertClose()">
         <clr-alert-item>
             <span class="alert-text">
                 {{alert.text}}
@@ -24,7 +25,7 @@
                 <span class="nav-text">Map</span>
             </a>
         </div>
-        <form class="search" (ngSubmit)="requestCaps()">
+        <form class="search-field" (ngSubmit)="requestCaps()">
             <label for="search_input">
                 <clr-icon shape="search" size="20" (click)="requestCaps()"></clr-icon>
                 <input [(ngModel)]="wmsurl" name="wmsurl" id="search_input" type="text" placeholder="Input WMS URL...">
@@ -37,7 +38,8 @@
                     <clr-icon shape="caret down"></clr-icon>
                 </button>
                 <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                    <a *ngFor="let version of wmsversions" clrDropdownItem [ngClass]="{'active': checkVersion(version)}" (click)="setVersion(version)">{{version}}</a>
+                    <a *ngFor="let version of wmsversions" clrDropdownItem [ngClass]="{'active': checkVersion(version)}"
+                        (click)="setVersion(version)">{{version}}</a>
                 </clr-dropdown-menu>
             </clr-dropdown>
         </div>

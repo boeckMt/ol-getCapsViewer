@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import * as wms from '../../../xmlns/www.opengis.net/wms';
-import { ClrAlert, Alerts } from '@clr/angular';
+import { ClrAlert, ClrAlerts } from '@clr/angular';
 
 
 type clrAlert = {

@@ -19,11 +19,21 @@ app.use(bodyParser.json({
 app.post('/proxy', (req, res) => {
   var proxyUrl = req.body.proxy;
   console.log(proxyUrl)
-  request.get({
+
+  let options:any = {
     //timeout: 1000,
     rejectUnauthorized: false,
-    url: proxyUrl
-  }, (error, response, body) => {
+    url: proxyUrl,
+  }
+
+  if(req.headers.authorization){
+    options.headers = {
+      authorization: req.headers.authorization
+    } 
+  }
+  
+
+  request.get(options, (error, response, body) => {
       if (error) {
         return console.error('proxy failed:', error);
       }
