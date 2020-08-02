@@ -1,9 +1,18 @@
 //depends on https://github.com/danrevah/ngx-pipes
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as wms from '../../../../xmlns/www.opengis.net/wms';
 import { MapService } from '../map/map.service';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
+interface IToggleLayerType extends wms.LayerType {
+  toggle?: boolean;
+  anchor?: string;
+}
+
+type requestKeys = keyof wms.CapabilityType['Request'];
+type layerKeys = keyof wms.CapabilityType['Layer'];
+
+const wgs84 = 'EPSG:4326';
 @Component({
   selector: 'wms-cap-capability',
   templateUrl: './wms-cap-capability.component.html',
@@ -30,12 +39,12 @@ export class WmsCapCapabilityComponent {
   }
 
   Capability: wms.CapabilityType;
-  CapabilityView = { anchor: 'capabilities', title: 'Caps.Capability' };
+  CapabilityView = { toggle: false, anchor: 'capabilities', title: 'Caps.Capability' };
   Request: wms.RequestType;
-  RequestView = { anchor: 'requesty', title: 'Caps.Capability.Request' };
-  Layer: wms.LayerType;
-  LayerView = { anchor: 'layer', title: 'Caps.Capability.Layer' };
-  layersarray: wms.LayerType[];
+  RequestView = { toggle: false, anchor: 'requesty', title: 'Caps.Capability.Request' };
+  Layer: IToggleLayerType;
+  LayerView = { toggle: false, anchor: 'layer', title: 'Caps.Capability.Layer' };
+  layersarray: IToggleLayerType[];
   url: string;
   constructor(private mapsvc: MapService, private router: Router, private route: ActivatedRoute) {
     this.layersarray = [];
@@ -51,24 +60,48 @@ export class WmsCapCapabilityComponent {
     if (this.capability.Layer) {
       this.Layer = this.capability.Layer;
 
+      this.layersarray = [];
       this.getAllLayers(this.Layer);
       // console.log(this.layersarray);
     }
 
   }
 
+  showDeepPropsRequest(key: requestKeys, obj: wms.CapabilityType['Request']) {
+    if (key === 'GetCapabilities' || key === 'GetFeatureInfo' || key === 'GetMap') {
+      return obj[key].Format;
+    }
+  }
 
-  getAllLayers(Layer: wms.LayerType) {
+  showDeepPropsLayer(key: layerKeys, obj: wms.CapabilityType['Layer']) {
+    if (key === 'AuthorityURL') {
+      return obj[key].map(i => `${i.name}: ${i.OnlineResource}`);
+    } else if (key === 'Layer') {
+      return JSON.stringify(obj[key].map(l => l.Title));
+    } else if (key === 'BoundingBox') {
+      // TODO: _BoundingBoxType wrong
+      // return obj[key].find(i => i === wgs84);
+      return obj[key];
+    } else {
+      return obj[key];
+    }
+
+  }
+
+  getAllLayers(Layer: IToggleLayerType) {
     if (Layer.Layer) {
-      this.layersarray = [];
       const layers = Layer.Layer;
-      layers.forEach((_layer) => {
-        // if(_layer.Name){
-        _layer['anchor'] = this.createAnchor(_layer.Title);
-        this.layersarray.push(_layer);
-        // }
-        this.getAllLayers(_layer);
+      if (Layer.Name) {
+        this.layersarray.push(Layer);
+      }
+      layers.forEach((l: IToggleLayerType) => {
+        l.anchor = this.createAnchor(l.Title);
+        this.getAllLayers(l);
       });
+    } else {
+      if (Layer.Name) {
+        this.layersarray.push(Layer);
+      }
     }
   }
 
@@ -76,19 +109,18 @@ export class WmsCapCapabilityComponent {
     return Title.replace(/\s/g, '-').replace(/[,.:()_#$%&{}§"]/g, '');
   }
 
-  toggleObject(layer: wms.LayerType) {
-    console.log(layer);
+  toggleObject(obj: any) {
     window.location.hash = '';
-    if (layer['toggle'] !== true) {
-      layer['toggle'] = true;
-      window.location.hash = layer['anchor'];
+    if (obj.toggle !== true) {
+      obj.toggle = true;
+      window.location.hash = obj.anchor;
     } else {
-      layer['toggle'] = false;
+      obj.toggle = false;
       window.location.hash = '';
     }
   }
 
-  addToMap(layer: wms.LayerType) {
+  addToMap(layer: IToggleLayerType) {
     // TODO get CRS - reproject...
     const ol_layer = this.mapsvc.createWmsLayer(layer, this.serviceurl);
     // console.log(ol_layer);

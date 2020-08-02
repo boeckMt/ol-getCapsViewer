@@ -10,11 +10,15 @@ interface IProxyPost {
   proxy: string;
 }
 
+interface ICapabilitiesTypeExt extends wms.WMS_CapabilitiesType {
+  wmsurl: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class OgcWmsService {
-  WMS_Capabilities: wms.WMS_CapabilitiesType;
+  WMS_Capabilities: ICapabilitiesTypeExt;
   constructor(private http: HttpClient) { }
 
   getWmsCaps(url: string, version: string) {
@@ -31,7 +35,7 @@ export class OgcWmsService {
     };
 
     return this.http.post<string | Document | Node>('/proxy', JSON.stringify(body), httpOptions).pipe(map((res) => {
-      return <wms.WMS_CapabilitiesType>parser.read(res);
+      return <ICapabilitiesTypeExt>parser.read(res);
     }));
 
   }

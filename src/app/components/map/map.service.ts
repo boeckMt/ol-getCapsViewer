@@ -31,10 +31,10 @@ export class MapService {
   ratio: number;
 
   constructor() {
-    this.map = <any>{};
-    this.view = <any>{};
-    this.baselayers = <any>{};
-    this.overlays = <any>{};
+    this.map = ( {} as any);
+    this.view = ( {} as any);
+    this.baselayers = ( {} as any);
+    this.overlays = ( {} as any);
 
     this.projection = 'EPSG:3857';
     this.zoom = 4;
@@ -50,21 +50,21 @@ export class MapService {
       preload: Infinity,
       source: new olTileWMS({
         url: 'https://geoservice.dlr.de/eoc/basemap/wms',
-        params: { 'LAYERS': 'litemap', 'TILED': true },
+        params: { LAYERS: 'litemap', TILED: true },
         serverType: 'geoserver',
         // Countries have transparency, so do not fade tiles:
         transition: 0
       })
     });
 
-    this.baselayers = new olLayerGroup(<any>{
+    this.baselayers = new olLayerGroup( {
       name: 'baselayers',
       layers: [baselayer]
-    });
+    } as any);
 
-    this.overlays = new olLayerGroup(<any>{
+    this.overlays = new olLayerGroup( {
       name: 'overlays'
-    });
+    } as any);
 
     const scalec = new ScaleLine();
     const fullc = new FullScreen();
@@ -117,20 +117,21 @@ export class MapService {
   }
 
   createWmsLayer(layer: wms.LayerType, wmsurl) {
-    return new olTileLayer(<any>{
+    console.log(layer)
+    return new olTileLayer({
       title: layer.Title,
-      anchor: layer['anchor'],
+      anchor: (layer as any).anchor,
       abstract: layer.Abstract,
-      extent: olTransformExtent(<any>layer.EX_GeographicBoundingBox, 'EPSG:4326', this.projection),
+      extent: olTransformExtent( layer.EX_GeographicBoundingBox as any, 'EPSG:4326', this.projection),
       source: new olTileWMS({
         url: wmsurl,
 
-        params: { 'LAYERS': layer.Name, 'TILED': true },
+        params: { LAYERS: layer.Name, TILED: true },
         serverType: 'geoserver',
         // Countries have transparency, so do not fade tiles:
         transition: 0
       })
-    });
+    } as any);
   }
 
   setProjection(code, proj4def, bbox) {
