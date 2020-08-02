@@ -13,7 +13,7 @@ export class MapComponent implements OnInit, AfterViewInit, AfterContentChecked 
   }
 
   ngOnInit() {
-    console.dir(this.el.nativeElement);
+    // console.dir(this.el.nativeElement);
     // let parentele = this.el.nativeElement.parentElement
     // let mapele = this.el.nativeElement.children[0].children[0]
     this.mapsvc.setTarget('map');

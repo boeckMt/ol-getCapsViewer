@@ -1,15 +1,18 @@
 <div class="">
   <h3>Layers</h3>
-  <input type="text" aria-label="Search in layers" name="search" placeholder="Search...">
 
+  <!--  <form clrForm>
+    <input clrInput placeholder="Fill me in, scotty!" name="name" [(ngModel)]="name" />
+    <input clrInput type="text" aria-label="Search in layers" name="search" placeholder="Search...">
+  </form> -->
 
-  <ul class="">
-    <li class="" *ngFor="let layer of layersarray">
-      <a routerLink="/home" fragment="{{layer.get('anchor')}}">
+  <ul class="layer-list">
+    <li class="layer-list-item" *ngFor="let layer of layersarray">
+      <a routerLink="/home" fragment="{{layer.get('anchor')}}" title="back to {{layer.get('anchor')}}">
         <clr-icon shape="caret" dir="left"></clr-icon>
       </a>
       {{layer.get('title')}}
-      <clr-icon shape="trash" (click)="removeLayer(layer)"></clr-icon>
+      <clr-icon shape="trash" (click)="removeLayer(layer)" title="remove layer"></clr-icon>
     </li>
   </ul>
 
