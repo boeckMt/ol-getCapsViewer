@@ -1,12 +1,12 @@
-//express proxy and static files -server for WMS viewer
-var express = require('express');
-var request = require('request');
-var bodyParser = require('body-parser');
+// express proxy and static files -server for WMS viewer
+import express from 'express';
+import bodyParser from 'body-parser';
+import request from 'request';
 
-var port = 9055;
-var app = express();
+const port = 9055;
+const app = express();
 
-app.use('/',express.static(`./`));
+app.use('/', express.static(`./`));
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -17,40 +17,40 @@ app.use(bodyParser.json({
 
 
 app.post('/proxy', (req, res) => {
-  var proxyUrl = req.body.proxy;
-  console.log(proxyUrl)
+  const proxyUrl = req.body.proxy;
+  console.log(proxyUrl);
 
-  let options:any = {
-    //timeout: 1000,
+  const options: any = {
+    // timeout: 1000,
     rejectUnauthorized: false,
     url: proxyUrl,
-  }
+  };
 
-  if(req.headers.authorization){
+  if (req.headers.authorization) {
     options.headers = {
       authorization: req.headers.authorization
-    } 
+    };
   }
-  
+
 
   request.get(options, (error, response, body) => {
-      if (error) {
-        return console.error('proxy failed:', error);
-      }
+    if (error) {
+      return console.error('proxy failed:', error);
+    }
 
-      if (response.headers['content-type'].lastIndexOf('text/html') >= 0) {
-        res.status(406).json({ error: 'The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request' })
-      } else {
-        res.set('Content-Type', response.headers['content-type']);
-        res.send(body);
-      }
+    if (response.headers['content-type'].lastIndexOf('text/html') >= 0) {
+      res.status(406).json({ error: 'The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request' });
+    } else {
+      res.set('Content-Type', response.headers['content-type']);
+      res.send(body);
+    }
 
-    });
+  });
 });
 
-var server = app.listen(port, () => {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('proxy server for wms-app listening at http://%s:%s', host, port);
-})
+const server = app.listen(port, () => {
+  const host = server.address().address;
+  const serverport = server.address().port;
+  console.log('proxy server for wms-app listening at http://%s:%s', host, serverport);
+});
 
