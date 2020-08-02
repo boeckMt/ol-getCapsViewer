@@ -1,10 +1,10 @@
 // express proxy and static files -server for WMS viewer
-let express = require('express');
-let request = require('request');
-let bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+import request from 'request';
 
-let port = 9055;
-let app = express();
+const port = 9055;
+const app = express();
 
 app.use('/', express.static(`./`));
 
@@ -48,9 +48,9 @@ app.post('/proxy', (req, res) => {
   });
 });
 
-let server = app.listen(port, () => {
+const server = app.listen(port, () => {
   const host = server.address().address;
-  const _port = server.address().port;
-  console.log('proxy server for wms-app listening at http://%s:%s', host, _port);
+  const serverport = server.address().port;
+  console.log('proxy server for wms-app listening at http://%s:%s', host, serverport);
 });
 

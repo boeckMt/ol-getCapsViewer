@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map/map.service';
+import { layer } from 'ol';
+import { OgcWmsService } from '../../shared/ogc-wms.service';
 import olBaseLayer from 'ol/layer/Base';
-
 
 @Component({
   selector: 'ol-layer-list',
