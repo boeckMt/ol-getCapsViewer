@@ -18,7 +18,7 @@ export class AppComponent {
   private subscriber1: Subscription;
   private subscriber2: Subscription;
 
-  wmsurl: string;
+  public wmsurl: string;
   wmsversion: '1.1.1' | '1.3.0' = '1.3.0';
   wmsversions: string[] = ['1.1.1', '1.3.0'];
 

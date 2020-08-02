@@ -1,48 +1,41 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <clr-main-container>
-    <div *ngIf="loading" class="progress loop top">
-        <progress class="progress"></progress>
+  <div *ngIf="loading" class="progress loop top">
+    <progress class="progress"></progress>
+  </div>
+  <clr-alert *ngIf="alert" [clrAlertType]="alert.type" [clrAlertAppLevel]="true" (clrAlertClosedChange)="alertClose()">
+    <clr-alert-item>
+      <span class="alert-text">
+        {{alert.text}}
+      </span>
+    </clr-alert-item>
+  </clr-alert>
+  <clr-header>
+    <div class="header-nav" [clr-nav-level]="1">
+      <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active">
+        <span class="nav-text">Home</span>
+      </a>
+      <a class="nav-link" href="#" [routerLink]="['/map']" routerLinkActive="active">
+        <span class="nav-text">Map</span>
+      </a>
     </div>
-    <clr-alert *ngIf="alert" [clrAlertType]="alert.type" [clrAlertAppLevel]="true"
-        (clrAlertClosedChange)="alertClose()">
-        <clr-alert-item>
-            <span class="alert-text">
-                {{alert.text}}
-            </span>
-            <!--
-<div class="alert-actions">
-                <button class="btn alert-action" (click)="alertAction()">{{alert.action}}</button>
-            </div>
-            -->
-        </clr-alert-item>
-    </clr-alert>
-    <clr-header>
-        <div class="header-nav" [clr-nav-level]="1">
-            <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active">
-                <span class="nav-text">Home</span>
-            </a>
-            <a class="nav-link" href="#" [routerLink]="['/map']" routerLinkActive="active">
-                <span class="nav-text">Map</span>
-            </a>
-        </div>
-        <form class="search-field" (ngSubmit)="requestCaps()">
-            <label for="search_input">
-                <clr-icon shape="search" size="20" (click)="requestCaps()"></clr-icon>
-                <input [(ngModel)]="wmsurl" name="wmsurl" id="search_input" type="text" placeholder="Input WMS URL...">
-            </label>
-        </form>
-        <div class="header-actions">
-            <clr-dropdown>
-                <button class="nav-icon" clrDropdownTrigger>
-                    <clr-icon shape="cog"></clr-icon>
-                    <clr-icon shape="caret down"></clr-icon>
-                </button>
-                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                    <a *ngFor="let version of wmsversions" clrDropdownItem [ngClass]="{'active': checkVersion(version)}"
-                        (click)="setVersion(version)">{{version}}</a>
-                </clr-dropdown-menu>
-            </clr-dropdown>
-        </div>
-    </clr-header>
-    <router-outlet></router-outlet>
+    <form class="search-field" (ngSubmit)="requestCaps()">
+      <label for="search_input">
+        <clr-icon shape="search" size="20" (click)="requestCaps()"></clr-icon>
+        <input [(ngModel)]="wmsurl" name="wmsurl" id="search_input" type="text" placeholder="Input WMS URL...">
+      </label>
+    </form>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger>
+          <clr-icon shape="cog"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a *ngFor="let version of wmsversions" clrDropdownItem [ngClass]="{'active': checkVersion(version)}"
+            (click)="setVersion(version)">{{version}}</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    </div>
+  </clr-header>
+  <router-outlet></router-outlet>
 </clr-main-container>

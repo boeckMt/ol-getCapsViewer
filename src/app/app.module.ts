@@ -16,7 +16,6 @@ import { MapService } from './components/map/map.service';
 
 //Components
 import { AppComponent } from './app.component';
-import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { MapComponent } from './components/map/map.component';
 import { LayerListComponent } from './components/layer-list/layer-list.component';
 import { LayerTreeComponent } from './components/layer-tree/layer-tree.component';
@@ -31,7 +30,6 @@ import { WmsCapCapabilityComponent } from './components/wms-cap-capability/wms-c
 @NgModule({
   declarations: [
     AppComponent,
-    AppHeaderComponent,
     HomeComponent,
     MapComponent,
     LayerListComponent,
