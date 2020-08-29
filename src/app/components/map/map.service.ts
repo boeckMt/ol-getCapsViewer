@@ -10,12 +10,15 @@ import olTileWMS from 'ol/source/TileWMS';
 
 import olProjection from 'ol/proj/Projection';
 import { transform as olTransform, transformExtent as olTransformExtent, get as getProjection } from 'ol/proj';
-import { applyTransform as olApplyTransform } from 'ol/extent';
 
 import ScaleLine from 'ol/control/ScaleLine';
 import FullScreen from 'ol/control/FullScreen';
 import { defaults as olDefaultControls } from 'ol/control';
 
+export interface IolWmsTileLayer extends olTileLayer {
+  title: string;
+  anchor: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,7 @@ export class MapService {
   map: olMap;
   view: olView;
   projection: olProjection;
+  epsgWgs84 = 'EPSG:4326';
   center: [number, number];
   zoom: number;
   baselayers: olLayerGroup;
@@ -31,14 +35,14 @@ export class MapService {
   ratio: number;
 
   constructor() {
-    this.map = ( {} as any);
-    this.view = ( {} as any);
-    this.baselayers = ( {} as any);
-    this.overlays = ( {} as any);
+    this.map = ({} as any);
+    this.view = ({} as any);
+    this.baselayers = ({} as any);
+    this.overlays = ({} as any);
 
-    this.projection = 'EPSG:3857';
+    this.projection = getProjection('EPSG:3857');
     this.zoom = 4;
-    this.center = olTransform([0, 45], 'EPSG:4326', this.projection),
+    this.center = olTransform([0, 45], this.epsgWgs84, this.projection) as any,
 
       this.view = new olView({
         projection: this.projection,
@@ -57,12 +61,12 @@ export class MapService {
       })
     });
 
-    this.baselayers = new olLayerGroup( {
+    this.baselayers = new olLayerGroup({
       name: 'baselayers',
       layers: [baselayer]
     } as any);
 
-    this.overlays = new olLayerGroup( {
+    this.overlays = new olLayerGroup({
       name: 'overlays'
     } as any);
 
@@ -118,26 +122,39 @@ export class MapService {
 
   createWmsLayer(layer: wms.LayerType, wmsurl) {
     console.log(layer)
-    return new olTileLayer({
+    let wgs84bbox = null;
+    if (layer.EX_GeographicBoundingBox) {
+      wgs84bbox = layer.EX_GeographicBoundingBox;
+    }
+    else if (layer.BoundingBox && layer.BoundingBox.find(i => i.CRS === this.epsgWgs84)) {
+      wgs84bbox = layer.BoundingBox.find(i => i.CRS === this.epsgWgs84);
+    }
+
+    const wmsSource = new olTileWMS({
+      url: wmsurl,
+      params: { LAYERS: layer.Name, TILED: true },
+      serverType: 'geoserver',
+      // Countries have transparency, so do not fade tiles:
+      transition: 0
+    });
+
+    const templayer: IolWmsTileLayer = new olTileLayer({
       title: layer.Title,
       anchor: (layer as any).anchor,
       abstract: layer.Abstract,
-      extent: olTransformExtent( layer.EX_GeographicBoundingBox as any, 'EPSG:4326', this.projection),
-      source: new olTileWMS({
-        url: wmsurl,
-
-        params: { LAYERS: layer.Name, TILED: true },
-        serverType: 'geoserver',
-        // Countries have transparency, so do not fade tiles:
-        transition: 0
-      })
-    } as any);
+      source: wmsSource
+    } as any) as IolWmsTileLayer;
+    if (wgs84bbox) {
+      const extent = olTransformExtent(wgs84bbox, this.epsgWgs84, this.projection);
+      templayer.setExtent(extent);
+    }
+    return templayer;
   }
 
   setProjection(code, proj4def, bbox) {
     if (code === null || proj4def === null || bbox === null) {
       // Nothing usable found, using EPSG:3857...';
-      this.projection = 'EPSG:3857';
+      this.projection = getProjection('EPSG:3857');
 
       this.view = new olView({
         projection: this.projection,
@@ -152,11 +169,9 @@ export class MapService {
     const newProjCode = 'EPSG:' + code;
     proj4.defs(newProjCode, proj4def);
     this.projection = getProjection(newProjCode);
-    const fromLonLat = olTransform('EPSG:4326', this.projection);
 
     // very approximate calculation of projection extent
-    const extent = olApplyTransform(
-      [bbox[1], bbox[2], bbox[3], bbox[0]], fromLonLat);
+    const extent = olTransformExtent([bbox[1], bbox[2], bbox[3], bbox[0]], this.epsgWgs84, this.projection);
     this.projection.setExtent(extent);
     this.view = new olView({
       projection: this.projection
