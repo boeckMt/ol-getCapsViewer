@@ -65,9 +65,14 @@
 </section>
 
 <span *ngIf="Layer">
-  <h3>All Layers</h3><small>(with att Name)</small>
+  <div class="layer-search">
+    <h3>All Layers</h3>
+    <small>(with att Name)</small>
+    <input clrInput placeholder="Layer Search" name="LayerSearch" [(ngModel)]="layerSearch" />
+  </div>
+ 
   <hr>
-  <span *ngFor="let _layer of layersarray">
+  <span *ngFor="let _layer of layersarray | orderBy: ['Title'] | filterBy: ['Title']: layerSearch">
     <div class="layer-title-expand clr-tree-node-content-container">
       <button class="clr-treenode-caret ng-tns-c8-288" type="button" (click)="toggleObject(_layer)">
         <clr-icon class="clr-treenode-caret-icon" shape="caret" dir="{{(_layer.toggle)?'down':'right'}}"></clr-icon>

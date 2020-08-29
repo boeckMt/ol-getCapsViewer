@@ -46,11 +46,12 @@ export class WmsCapCapabilityComponent {
   LayerView = { toggle: false, anchor: 'layer', title: 'Caps.Capability.Layer' };
   layersarray: IToggleLayerType[];
   url: string;
+  layerSearch: string = null;
   constructor(private mapsvc: MapService, private router: Router, private route: ActivatedRoute) {
     this.layersarray = [];
   }
 
-  initData(value?) {
+  initData(value?): void {
     this.url = this.serviceurl;
     this.Capability = value;
     if (this.capability.Request) {
@@ -122,9 +123,20 @@ export class WmsCapCapabilityComponent {
 
   addToMap(layer: IToggleLayerType) {
     // TODO get CRS - reproject...
-    const ol_layer = this.mapsvc.createWmsLayer(layer, this.serviceurl);
-    // console.log(ol_layer);
-    this.mapsvc.addOverlay(ol_layer);
+    const layers = [];
+    if (layer.Layer.length) {
+      layer.Layer.forEach(l => {
+        const olLayer = this.mapsvc.createWmsLayer(l, this.serviceurl);
+        layers.push(olLayer);
+      });
+    } else {
+      const olLayer = this.mapsvc.createWmsLayer(layer, this.serviceurl);
+      layers.push(olLayer);
+    }
+
+    layers.forEach(l => {
+      this.mapsvc.addOverlay(l);
+    });
     this.router.navigate(['map']);
   }
 }
