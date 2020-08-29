@@ -16,6 +16,7 @@ import FullScreen from 'ol/control/FullScreen';
 import { defaults as olDefaultControls } from 'ol/control';
 
 export interface IolWmsTileLayer extends olTileLayer {
+  id: string;
   title: string;
   anchor: string;
 }
@@ -113,7 +114,10 @@ export class MapService {
   }
 
   addOverlay(layer: olBaseLayer) {
-    this.overlays.getLayers().push(layer);
+    const overlays = this.overlays.getLayers();
+    if(!overlays.getArray().find(l => l.get('id') === layer.get('id'))){
+      overlays.push(layer);
+    }
   }
 
   removeOverlay(layer: olBaseLayer) {
@@ -121,7 +125,6 @@ export class MapService {
   }
 
   createWmsLayer(layer: wms.LayerType, wmsurl) {
-    console.log(layer)
     let wgs84bbox = null;
     if (layer.EX_GeographicBoundingBox) {
       wgs84bbox = layer.EX_GeographicBoundingBox;
@@ -139,7 +142,9 @@ export class MapService {
     });
 
     const templayer: IolWmsTileLayer = new olTileLayer({
+      visible: false,
       title: layer.Title,
+      id: `${layer.Title}_id`,
       anchor: (layer as any).anchor,
       abstract: layer.Abstract,
       source: wmsSource
