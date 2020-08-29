@@ -1,5 +1,11 @@
-<div class="">
-  <h3>Layers</h3>
+<div class="layer-list">
+  <div class="layer-list-title">
+    <h3>Layers</h3>
+    <button type="button" (click)="removeAllLayers()" title="remove all layer" class="btn btn-icon btn-danger"
+      aria-label="home">
+      <clr-icon shape="trash"></clr-icon>
+    </button>
+  </div>
 
   <!--  <form clrForm>
     <input clrInput placeholder="Fill me in, scotty!" name="name" [(ngModel)]="name" />
@@ -12,6 +18,8 @@
         <clr-icon shape="caret" dir="left"></clr-icon>
       </a>
       {{layer.get('title')}}
+      <span></span>
+      <clr-icon [attr.shape]="getLayerVisibleIcon(layer)" (click)="toggleLayer(layer)" title="remove layer"></clr-icon>
       <clr-icon shape="trash" (click)="removeLayer(layer)" title="remove layer"></clr-icon>
     </li>
   </ul>
