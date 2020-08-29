@@ -80,6 +80,7 @@
       <div class="clr-treenode-content">
         <h4 (click)="toggleObject(_layer)" id="{{_layer.anchor}}" class="margin-right-0_25">{{_layer.Title}}
         </h4>
+        <clr-icon *ngIf="_layer.Layer && _layer.Layer.length" shape="bullet-list"></clr-icon>
       </div>
       <button class="btn btn-icon" type="button" (click)="addToMap(_layer)">
         <clr-icon shape="map"></clr-icon> show on map

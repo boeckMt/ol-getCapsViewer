@@ -1,7 +1,7 @@
 //depends on https://github.com/danrevah/ngx-pipes
 import { Component, Input } from '@angular/core';
 import * as wms from '../../../../xmlns/www.opengis.net/wms';
-import { MapService } from '../map/map.service';
+import { MapService, IolWmsTileLayer } from '../map/map.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 interface IToggleLayerType extends wms.LayerType {
@@ -123,8 +123,8 @@ export class WmsCapCapabilityComponent {
 
   addToMap(layer: IToggleLayerType) {
     // TODO get CRS - reproject...
-    const layers = [];
-    if (layer.Layer.length) {
+    const layers: IolWmsTileLayer[] = [];
+    if (layer.Layer && layer.Layer.length) {
       layer.Layer.forEach(l => {
         const olLayer = this.mapsvc.createWmsLayer(l, this.serviceurl);
         layers.push(olLayer);
@@ -134,7 +134,10 @@ export class WmsCapCapabilityComponent {
       layers.push(olLayer);
     }
 
-    layers.forEach(l => {
+    layers.forEach((l, index) => {
+      if (index === 0) {
+        l.setVisible(true);
+      }
       this.mapsvc.addOverlay(l);
     });
     this.router.navigate(['map']);
