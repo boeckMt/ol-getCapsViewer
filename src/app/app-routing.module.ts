@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ExampleRouteComponent } from './route-components/example-route/example-route.component';
+import { HomeComponent } from './route-components/home/home.component';
+import { MapComponent } from './route-components/map/map.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'example', pathMatch: 'full', },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: 'example', component: ExampleRouteComponent,
+    path: 'home', component: HomeComponent,
     data: {
-      title: 'example'
+      title: 'Home'
     }
   },
+  {
+    path: 'map', component: MapComponent,
+    data: {
+      title: 'Map'
+    }
+  }
 ];
 
 @NgModule({

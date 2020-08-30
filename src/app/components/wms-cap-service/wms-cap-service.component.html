@@ -1,0 +1,44 @@
+<span *ngIf="Service">
+  <h3>Caps.Service</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of Service | omit: 'ContactInformation' | keys">
+        <th>{{key}}</th>
+        <td>{{Service[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+<span *ngIf="(ContactInformation)">
+  <h3>Caps.Service.ContactInformation</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of ContactInformation | omit: 'ContactPersonPrimary' : 'ContactAddress'  | keys">
+        <th>{{key}}</th>
+        <td>{{ContactInformation[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+<span *ngIf="(ContactPersonPrimary)">
+  <h3>Caps.Service.ContactInformation.ContactPersonPrimary</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of ContactPersonPrimary | keys">
+        <th>{{key}}</th>
+        <td>{{ContactPersonPrimary[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>
+<span *ngIf="(ContactAddress)">
+  <h3>Caps.Service.ContactInformation.ContactAddress</h3>
+  <table class="table table-vertical">
+    <tbody>
+      <tr *ngFor="let key of ContactAddress | keys">
+        <th>{{key}}</th>
+        <td>{{ContactAddress[key]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</span>

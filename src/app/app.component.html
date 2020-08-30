@@ -3,7 +3,27 @@
   <ukis-global-progress *ngIf="ui.progress" [(progress)]="ui.progress"></ukis-global-progress>
 
   <ukis-header [ukis-title]="title">
-    <a routerLink="/example" routerLinkActive="active" class="nav-link nav-text header-nav-el">example route</a>
+    <a routerLink="/home" routerLinkActive="active" class="nav-link nav-text header-nav-el">Home</a>
+    <a routerLink="/map" routerLinkActive="active" class="nav-link nav-text header-nav-el">Map</a>
+
+    <form class="search-field" (ngSubmit)="requestCaps()">
+      <label for="search_input">
+        <clr-icon shape="search" size="20" (click)="requestCaps()"></clr-icon>
+        <input [(ngModel)]="wmsurl" name="wmsurl" id="search_input" type="text" placeholder="Input WMS URL...">
+      </label>
+    </form>
+
+    <clr-dropdown class="header-action-el">
+      <button class="nav-icon" clrDropdownTrigger>
+        <clr-icon shape="cog"></clr-icon>
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a *ngFor="let version of wmsversions" clrDropdownItem [ngClass]="{'active': checkVersion(version)}"
+          (click)="setVersion(version)">{{version}}</a>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+    
   </ukis-header>
   <router-outlet></router-outlet>
 </clr-main-container>

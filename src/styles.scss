@@ -1,2 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "styles/ukis-theme";
+
+
+.table {
+  td.word-break {
+    word-break: break-word;
+  }
+}

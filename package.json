@@ -1,6 +1,6 @@
 {
-  "name": "ukis",
-  "version": "0.0.0",
+  "name": "ol-get-caps-viewer",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "ng:serve": "ng serve --proxy-config proxy.conf.json",
@@ -26,12 +26,17 @@
     "@angular/platform-browser-dynamic": "~10.0.6",
     "@angular/router": "~10.0.6",
     "@clr/angular": "4.0.0",
+    "@clr/icons": "4.0.0",
+    "@clr/ui": "4.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "ngx-pipes": "^2.7.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3",
-    "@clr/ui": "4.0.0",
-    "@clr/icons": "4.0.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0"
+    "@dlr-eoc/base-layers-raster": "7.1.0",
+    "@dlr-eoc/core-ui": "7.1.0",
+    "@dlr-eoc/layer-control": "7.1.0",
+    "@dlr-eoc/map-ol": "7.1.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.5",

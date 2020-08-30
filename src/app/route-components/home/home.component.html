@@ -1,0 +1,26 @@
+<main class="content-area">
+  <clr-tabs *ngIf="service && capability; else homeView">
+    <clr-tab>
+      <button clrTabLink id="link1">Service</button>
+      <clr-tab-content id="content1" *clrIfActive="false">
+        <wms-cap-service [service]="service"></wms-cap-service>
+      </clr-tab-content>
+    </clr-tab>
+    <clr-tab>
+      <button clrTabLink>Capability</button>
+      <clr-tab-content *clrIfActive="true">
+        <wms-cap-capability [capability]="capability" [serviceurl]="caps.wmsurl"></wms-cap-capability>
+      </clr-tab-content>
+    </clr-tab>
+  </clr-tabs>
+  <ng-template #homeView>
+    <div class="preview-text">
+      <a href="http://www.opengeospatial.org/standards">OGC</a> Capabilities - Viewer
+      <p>Hit the search Button to show Capabilities for the provided Service</p>
+    </div>
+  </ng-template>
+</main>
+
+<!-- <section class="footer ukis-footer">
+  <p>footer</p>
+</section> -->
