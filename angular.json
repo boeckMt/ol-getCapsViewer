@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ol-getCapsViewer": {
+    "ukis": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ol-getCapsViewer",
+            "outputPath": "dist/ukis",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ol-getCapsViewer:build"
+            "browserTarget": "ukis:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ol-getCapsViewer:build:production"
+              "browserTarget": "ukis:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ol-getCapsViewer:build"
+            "browserTarget": "ukis:build"
           }
         },
         "test": {
@@ -120,19 +120,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ol-getCapsViewer:serve"
+            "devServerTarget": "ukis:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ol-getCapsViewer:serve:production"
+              "devServerTarget": "ukis:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ol-getCapsViewer",
+  "defaultProject": "ukis",
   "cli": {
-    "analytics": false
+    "analytics": "5afd12d2-4a88-4d3a-a99c-57cd24b8a52d"
   }
 }

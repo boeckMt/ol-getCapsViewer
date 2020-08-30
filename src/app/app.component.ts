@@ -1,77 +1,77 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { AppStoreService } from './shared/app-store.service';
-import { Subscription } from 'rxjs';
-import { OgcWmsService } from './shared/ogc-wms.service';
+import { Component } from '@angular/core';
 
-//import '@clr/icons';
-//import '@clr/icons/shapes/all-shapes';
+import './components/icons/ukis';
+
+import { AlertService, IAlert } from './components/global-alert/alert.service';
+import { ProgressService, IProgress } from './components/global-progress/progress.service';
+import { Router } from '@angular/router';
+
+interface IUi {
+  floating: boolean;
+  flipped: boolean;
+  alert: null | IAlert;
+  progress: null | IProgress;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  //encapsulation: ViewEncapsulation.None
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  alert: any = false;
-  loading = false;
-  private subscriber1: Subscription;
-  private subscriber2: Subscription;
+  title = '';
+  shortTitle = '';
 
-  public wmsurl: string;
-  wmsversion: '1.1.1' | '1.3.0' = '1.3.0';
-  wmsversions: string[] = ['1.1.1', '1.3.0'];
+  ui: IUi = {
+    floating: false,
+    flipped: false,
+    alert: null,
+    progress: null
+  };
 
-  constructor(private store: AppStoreService, private wmssvc: OgcWmsService) {
-    this.loading = store.getLoading();
-    this.alert = store.getAlert();
-    //'http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xml'; //'https://maps.dwd.de/geoserver/dwd/wms';
-    this.wmsurl = 'https://geoservice.dlr.de/eoc/basemap/wms';
+  constructor(
+    private alertService: AlertService,
+    private progressService: ProgressService,
+    public router: Router
+  ) {
+    this.init();
+  }
 
-    this.subscriber1 = this.store.loading$.subscribe((loading) => {
-      this.loading = loading;
+  init() {
+    this.getHtmlMeta(['title', 'version', 'description', 'short-title']);
+
+    if (this['TITLE']) {
+      this.title = this['TITLE'];
+    }
+    if (this['SHORT-TITLE']) {
+      this.shortTitle = this['SHORT-TITLE'];
+    }
+
+    this.alertService.alert$.subscribe((ev) => {
+      this.setAlert(ev);
     });
 
-    this.subscriber2 = this.store.alert$.subscribe((alert) => {
-      this.alert = alert;
+    this.progressService.progress$.subscribe((ev) => {
+      this.showProgress(ev);
     });
   }
 
-  requestCaps() {
-    this.store.setLoading(true);
-    this.wmssvc.getWmsCaps(this.wmsurl, this.wmsversion).subscribe((result) => {
-      console.log(result);
-      result['wmsurl'] = this.wmsurl;
-      this.wmsversion = <any>result.version;
-      this.store.setCaps(result);
-      this.store.setLoading(false);
-    }, (error) => {
-      console.log(error);
-      this.store.setLoading(false);
-      this.store.setAlert({
-        type: 'alert-danger',
-        action: 'Close',
-        text: JSON.stringify(error)
-      });
-    });
-  }
-  alertAction() {
-    console.log('do an action');
-  }
-  alertClose() {
-    this.store.setAlert(null);
+  showProgress = (progress: IProgress) => {
+    this.ui.progress = progress;
   }
 
-  setVersion(version: '1.1.1' | '1.3.0') {
-    this.wmsversion = version;
-    console.log(this.wmsversion);
+  setAlert = (alert: IAlert) => {
+    this.ui.alert = alert;
   }
 
-  checkVersion(version: '1.1.1' | '1.3.0') {
-    if (this.wmsversion === version) {
-      return true;
-    } else {
-      return false;
+  getHtmlMeta(names: string[]) {
+    const ref = document.getElementsByTagName('meta');
+    for (let i = 0, len = ref.length; i < len; i++) {
+      const meta = ref[i];
+      const name = meta.getAttribute('name');
+      if (names.includes(name)) {
+        this[name.toUpperCase()] = meta.getAttribute('content') || meta.getAttribute('value');
+      }
     }
   }
 }
