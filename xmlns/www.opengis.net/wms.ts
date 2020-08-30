@@ -398,6 +398,8 @@ interface _WMS_CapabilitiesType extends BaseType {
 	Capability: CapabilityType;
 	/** General service metadata. */
 	Service: ServiceType;
+	/** custom extension to store the url */
+	wmsurl?: string;
 }
 export interface WMS_CapabilitiesType extends _WMS_CapabilitiesType { constructor: { new(): WMS_CapabilitiesType }; }
 
