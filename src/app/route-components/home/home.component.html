@@ -9,7 +9,8 @@
     <clr-tab>
       <button clrTabLink>Capability</button>
       <clr-tab-content *clrIfActive="true">
-        <wms-cap-capability [capability]="capability" [serviceurl]="caps.wmsurl"></wms-cap-capability>
+        <wms-cap-capability [capability]="capability" [serviceurl]="caps.wmsurl" [version]="caps.version">
+        </wms-cap-capability>
       </clr-tab-content>
     </clr-tab>
   </clr-tabs>

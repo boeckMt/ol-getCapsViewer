@@ -7,7 +7,8 @@ import { MapOlService, IMapControls } from '@dlr-eoc/map-ol';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
+  providers: [MapStateService, MapOlService]
 })
 export class MapComponent implements OnInit {
   @HostBinding('class') class = 'content-container';

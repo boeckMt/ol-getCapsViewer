@@ -2,6 +2,8 @@
 import { Component, Input } from '@angular/core';
 import * as wms from '../../../../xmlns/www.opengis.net/wms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { createWMSLayer } from 'src/app/shared/layer-from-caps';
+import { LayersService } from '@dlr-eoc/services-layers';
 
 interface IToggleLayerType extends wms.LayerType {
   toggle?: boolean;
@@ -37,6 +39,14 @@ export class WmsCapCapabilityComponent {
     this.url = value;
   }
 
+  @Input()
+  get version(): string {
+    return this.serviceVersion;
+  }
+  set version(value: string) {
+    this.serviceVersion = value;
+  }
+
   Capability: wms.CapabilityType;
   CapabilityView = { toggle: false, anchor: 'capabilities', title: 'Caps.Capability' };
   Request: wms.RequestType;
@@ -44,9 +54,10 @@ export class WmsCapCapabilityComponent {
   Layer: IToggleLayerType;
   LayerView = { toggle: false, anchor: 'layer', title: 'Caps.Capability.Layer' };
   layersarray: IToggleLayerType[];
-  url: string;
+  protected url: string;
+  protected serviceVersion: string;
   layerSearch: string = null;
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private layerSvc: LayersService) {
     this.layersarray = [];
   }
 
@@ -123,8 +134,9 @@ export class WmsCapCapabilityComponent {
   addToMap(layer: IToggleLayerType) {
     // TODO get CRS - reproject...
 
-    // const olLayer = this.mapsvc.createLayerOrGroup(layer, this.serviceurl);
-    // this.mapsvc.addOverlay(olLayer);
+    // only simple test implementation
+    const wmslayer = createWMSLayer(layer, this.serviceurl, this.version);
+    this.layerSvc.addLayer(wmslayer, 'Layers'); // this is not working with -> providers: [LayersService, MapStateService, MapOlService] in map route
 
     this.router.navigate(['map']);
   }

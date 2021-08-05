@@ -5,7 +5,7 @@ import './components/icons/ukis';
 import { AlertService, IAlert } from './components/global-alert/alert.service';
 import { ProgressService, IProgress } from './components/global-progress/progress.service';
 import { Router } from '@angular/router';
-import { dwdcaps } from '../../tmp/capabilities';
+// import { dwdcaps } from '../../tmp/capabilities';
 import { OgcWmsService } from './shared/ogc-wms.service';
 
 interface IUi {
@@ -42,14 +42,14 @@ export class AppComponent {
     public wmsSvc: OgcWmsService
   ) {
     // this.wmsurl = 'https://geoservice.dlr.de/eoc/basemap/wms';
-    // this.wmsurl = 'http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xml';
-    this.wmsurl = 'https://maps.dwd.de/geoserver/dwd/wms';
+    this.wmsurl = 'http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xml';
+    // this.wmsurl = 'https://maps.dwd.de/geoserver/dwd/wms';
     this.init();
   }
 
   requestCaps(): void {
 
-    /* this.progressService.progress({
+    this.progressService.progress({
       indeterminate: true
     });
     this.wmsSvc.getWmsCaps(this.wmsurl, this.wmsversion).subscribe((result) => {
@@ -66,13 +66,13 @@ export class AppComponent {
         closeable: true,
         text: JSON.stringify(error)
       });
-    }); */
+    });
 
 
     /** for test oly */
-    this.wmsversion = dwdcaps.version as any;
+    /* this.wmsversion = dwdcaps.version as any;
     console.log(dwdcaps);
-    this.wmsSvc.setCaps(dwdcaps as any);
+    this.wmsSvc.setCaps(dwdcaps as any); */
   }
 
   setVersion(version: '1.1.1' | '1.3.0'): void {
