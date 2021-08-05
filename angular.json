@@ -46,10 +46,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -131,8 +134,5 @@
       }
     }
   },
-  "defaultProject": "ukis",
-  "cli": {
-    "analytics": "5afd12d2-4a88-4d3a-a99c-57cd24b8a52d"
-  }
+  "defaultProject": "ukis"
 }
